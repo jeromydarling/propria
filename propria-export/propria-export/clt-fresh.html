@@ -1,0 +1,262 @@
+<!-- START:v-clt -->
+<div class="pv" id="v-clt"><div class="pv-inner" id="vid_v-clt">
+<div class="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <button class="topbar-hamburger" onclick="openHamburger()">
+      <svg viewBox="0 0 18 14"><path d="M0 1h18M0 7h18M0 13h18" stroke-linecap="round"/></svg>
+    </button>
+    <div class="topbar-brand">
+      <div class="topbar-name">Propria<span>.</span></div>
+      <div class="topbar-org">Rondo Community Land Trust</div>
+    </div>
+    <button class="topbar-compass" onclick="openCompass()">
+      <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4v1M8 11v1M4 8h1M11 8h1"/><circle cx="8" cy="8" r="1.5"/></svg>
+      <div class="compass-dot"></div>
+    </button>
+  </div>
+
+  <!-- DESKTOP SIDEBAR (hidden on mobile) -->
+  <div class="desktop-sidebar">
+    <div style="padding:18px;border-bottom:1px solid rgba(245,240,232,0.1)">
+      <div style="font-family:var(--serif-display);font-size:19px;font-weight:500;color:var(--parchment)">Propria<span style="color:var(--terra-light)">.</span></div>
+      <div style="font-size:11px;color:rgba(245,240,232,0.4);margin-top:2px">Rondo Community Land Trust</div>
+    </div>
+    <div style="padding:14px 18px 4px;font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.28)">Core</div>
+    <div class="dsc-item active" onclick="showScreen('dashboard')">Dashboard</div>
+    <div class="dsc-item" onclick="showScreen('stewardship')">Stewardship</div>
+    <div class="dsc-item" onclick="showScreen('pipeline')">Pipeline</div>
+    <div class="dsc-item" onclick="showScreen('praeco')">Praeco</div>
+    <div class="dsc-item" onclick="showScreen('finances')">Finances</div>
+  </div>
+
+  <!-- SCREENS -->
+  <div class="screens">
+
+    <!-- DASHBOARD -->
+    <div class="screen active" id="screen-dashboard">
+      <div class="dash-hero">
+        <div class="dash-greeting">Good morning,</div>
+        <div class="dash-name"><em>Sarah</em></div>
+        <div style="font-size:12px;color:rgba(245,240,232,0.5);margin-bottom:16px">April 1, 2026 · Rondo CLT</div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">In stewardship</div>
+            <div class="stat-val">47</div>
+            <div class="stat-sub up">+2 this quarter</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Lease collected</div>
+            <div class="stat-val">94%</div>
+            <div class="stat-sub warn">3 overdue</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Active applicants</div>
+            <div class="stat-val">12</div>
+            <div class="stat-sub" style="color:rgba(245,240,232,0.4)">7 in education</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Check-ins due</div>
+            <div class="stat-val">7</div>
+            <div class="stat-sub warn">By Apr 30</div>
+          </div>
+        </div>
+      </div>
+      <div class="dash-ground"></div>
+
+      <div style="padding:16px 16px 8px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint)">Needs attention</div>
+          <div style="font-size:12px;color:var(--forest);font-weight:500;cursor:pointer">View all</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin:0 16px">
+        <div class="feed-item" onclick="showScreen('stewardship')">
+          <div class="feed-avatar av-coral">MT</div>
+          <div class="feed-body">
+            <div class="feed-name">Maria Torres — 14 Oak St.</div>
+            <div class="feed-detail">No response to 2 check-in attempts</div>
+          </div>
+          <div class="feed-meta">
+            <span class="dir-pill dir-cura">Cura</span>
+          </div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-avatar av-amber">JW</div>
+          <div class="feed-body">
+            <div class="feed-name">James Walker — 22 Elm Ave.</div>
+            <div class="feed-detail">Ground lease 9 days overdue</div>
+          </div>
+          <div class="feed-meta">
+            <span class="dir-pill dir-reconciliatio">Reconciliatio</span>
+          </div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-avatar av-blue">KJ</div>
+          <div class="feed-body">
+            <div class="feed-name">Keisha Johnson</div>
+            <div class="feed-detail">Income docs expired · Education stalled</div>
+          </div>
+          <div class="feed-meta">
+            <span class="dir-pill dir-itiner">Itiner</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEWARDSHIP (placeholder) -->
+    <div class="screen" id="screen-stewardship">
+      <div class="section-pad">
+        <h2 style="font-family:var(--serif-display);font-size:22px;color:var(--ink);margin-bottom:16px">Stewardship</h2>
+        <p style="color:var(--ink-light)">47 families in active stewardship</p>
+      </div>
+    </div>
+
+    <!-- PIPELINE (placeholder) -->
+    <div class="screen" id="screen-pipeline">
+      <div class="section-pad">
+        <h2 style="font-family:var(--serif-display);font-size:22px;color:var(--ink);margin-bottom:16px">Pipeline</h2>
+        <p style="color:var(--ink-light)">12 active applicants</p>
+      </div>
+    </div>
+
+    <!-- PRAECO (placeholder) -->
+    <div class="screen" id="screen-praeco">
+      <div class="section-pad">
+        <h2 style="font-family:var(--serif-display);font-size:22px;color:var(--ink);margin-bottom:16px">Praeco</h2>
+        <p style="color:var(--ink-light)">Communications hub</p>
+      </div>
+    </div>
+
+    <!-- FINANCES (placeholder) -->
+    <div class="screen" id="screen-finances">
+      <div class="section-pad">
+        <h2 style="font-family:var(--serif-display);font-size:22px;color:var(--ink);margin-bottom:16px">Finances</h2>
+        <p style="color:var(--ink-light)">Financial overview</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-item active" id="nav-dashboard" onclick="showScreen('dashboard')">
+      <svg class="nav-icon" viewBox="0 0 22 22"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="12" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="12" width="7" height="7" rx="1.5"/><rect x="12" y="12" width="7" height="7" rx="1.5"/></svg>
+      <span class="nav-label">Dashboard</span>
+    </button>
+    <button class="nav-item" id="nav-stewardship" onclick="showScreen('stewardship')">
+      <svg class="nav-icon" viewBox="0 0 22 22"><circle cx="11" cy="8" r="4"/><path d="M4 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+      <span class="nav-label">Stewardship</span>
+      <span class="nav-badge">3</span>
+    </button>
+    <button class="nav-item" id="nav-pipeline" onclick="showScreen('pipeline')">
+      <svg class="nav-icon" viewBox="0 0 22 22"><path d="M4 6h14M4 11h10M4 16h6"/></svg>
+      <span class="nav-label">Pipeline</span>
+      <span class="nav-badge gold">7</span>
+    </button>
+    <button class="nav-item" id="nav-praeco" onclick="showScreen('praeco')">
+      <svg class="nav-icon" viewBox="0 0 22 22"><path d="M4 6h14v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z"/><path d="M4 6l7 5 7-5"/></svg>
+      <span class="nav-label">Praeco</span>
+    </button>
+    <button class="nav-item" id="nav-finances" onclick="showScreen('finances')">
+      <svg class="nav-icon" viewBox="0 0 22 22"><path d="M4 18h14M6 18V10m4 8V7m4 11V12m4 6V9"/></svg>
+      <span class="nav-label">Finances</span>
+    </button>
+  </div>
+
+</div>
+
+<!-- HAMBURGER MENU -->
+<div class="hamburger-overlay" id="hamburgerOverlay" onclick="closeHamburger(event)">
+  <div class="hamburger-menu">
+    <div class="hm-header">
+      <div class="hm-brand">Propria<span>.</span></div>
+      <div class="hm-org">Rondo Community Land Trust</div>
+    </div>
+    <div class="hm-section">Property</div>
+    <div class="hm-item" onclick="showScreen('dashboard');closeHamburgerDirect()">
+      <svg viewBox="0 0 16 16"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+      Dashboard
+    </div>
+    <div class="hm-item" onclick="showScreen('stewardship');closeHamburgerDirect()">
+      <svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="3"/><path d="M2 14c0-2.5 2.7-4.5 6-4.5s6 2 6 4.5"/></svg>
+      Stewardship
+      <span class="hm-badge">3</span>
+    </div>
+    <div class="hm-item" onclick="showScreen('pipeline');closeHamburgerDirect()">
+      <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h5"/></svg>
+      Pipeline
+      <span class="hm-badge" style="background:var(--gold)">7</span>
+    </div>
+    <div class="hm-section">Account</div>
+    <div class="hm-item" onclick="closeHamburgerDirect()">
+      <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><path d="M8 2v1M8 13v1M2 8h1M13 8h1M4.2 4.2l.7.7M11.1 11.1l.7.7M4.2 11.8l.7-.7M11.1 4.9l.7-.7"/></svg>
+      Settings
+    </div>
+    <div class="hm-spacer"></div>
+    <div class="hm-user">
+      <div class="hm-avatar">SC</div>
+      <div>
+        <div class="hm-user-name">Sarah Chen</div>
+        <div class="hm-user-role">Stewardship coordinator</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NRI COMPASS DRAWER -->
+<div class="compass-overlay" id="compassOverlay" onclick="closeCompass(event)">
+  <div class="compass-drawer">
+    <div class="compass-handle"></div>
+    <div class="compass-header">
+      <div class="compass-header-dot"></div>
+      <div class="compass-header-title">NRI Compass</div>
+    </div>
+    <div class="compass-body">
+      <p style="font-size:14px;color:var(--ink-mid);line-height:1.6">Natural Relational Intelligence — your stewardship copilot.</p>
+    </div>
+    <div class="compass-input-row">
+      <input class="compass-input" placeholder="Ask about a family or situation...">
+      <button class="compass-send">
+        <svg viewBox="0 0 16 16"><path d="M14 8H2M8 2l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+</div></div><!-- END:v-clt -->
+
+<script>
+// CLT App Navigation
+function showScreen(name) {
+  document.querySelectorAll('#vid_v-clt .screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#vid_v-clt .nav-item').forEach(n => n.classList.remove('active'));
+  var screen = document.getElementById('screen-' + name);
+  var nav = document.getElementById('nav-' + name);
+  if (screen) screen.classList.add('active');
+  if (nav) nav.classList.add('active');
+}
+
+function openHamburger() {
+  document.getElementById('hamburgerOverlay').classList.add('open');
+}
+function closeHamburger(e) {
+  if (e.target.id === 'hamburgerOverlay') {
+    closeHamburgerDirect();
+  }
+}
+function closeHamburgerDirect() {
+  document.getElementById('hamburgerOverlay').classList.remove('open');
+}
+
+function openCompass() {
+  document.getElementById('compassOverlay').classList.add('open');
+}
+function closeCompass(e) {
+  if (e.target.id === 'compassOverlay') {
+    document.getElementById('compassOverlay').classList.remove('open');
+  }
+}
+</script>

@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Propria — Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --forest:#1B3A2D;--forest-mid:#2C5A45;--forest-light:#3D7A5F;
+  --terra:#B85C38;--terra-light:#D4784F;
+  --gold:#C4963A;--gold-pale:#FDF6E3;
+  --parchment:#F5F0E8;--parchment-dk:#EDE5D0;
+  --cream:#FAF7F2;
+  --ink:#1A1A14;--ink-mid:#3A3A2E;--ink-light:#6B6B58;--ink-faint:#9A9A88;
+  --border:rgba(26,26,20,0.1);--border-light:rgba(26,26,20,0.06);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --serif-display:'Playfair Display',Georgia,serif;
+  --serif-body:'Source Serif 4',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --nav-h:60px;
+  --top-h:52px;
+}
+html,body{
+  height:100%;width:100%;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.5;
+  overflow:hidden;
+  position:fixed;
+  touch-action:pan-y;
+}
+
+/* ── SHELL ── */
+.app{
+  display:flex;flex-direction:column;
+  height:100%;width:100%;
+  position:relative;overflow:hidden;
+}
+
+/* ── TOP BAR ── */
+.topbar{
+  background:var(--forest);
+  height:var(--top-h);
+  display:flex;align-items:center;
+  padding:0 16px;gap:12px;
+  flex-shrink:0;
+  position:relative;
+  z-index:50;
+}
+.topbar-brand{
+  font-family:var(--serif-display);
+  font-size:19px;font-weight:700;
+  color:var(--parchment);letter-spacing:-0.02em;
+  flex:1;
+}
+.topbar-brand span{color:var(--terra-light)}
+.topbar-org{font-size:11px;color:rgba(245,240,232,0.45);font-weight:300;display:block;margin-top:-2px}
+.topbar-hamburger{
+  width:38px;height:38px;
+  border-radius:8px;
+  background:rgba(245,240,232,0.1);
+  border:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;
+}
+.topbar-hamburger svg{stroke:var(--parchment);fill:none;width:18px;height:18px;stroke-width:1.5}
+.topbar-compass-btn{
+  width:38px;height:38px;
+  border-radius:8px;
+  background:rgba(245,240,232,0.08);
+  border:1px solid rgba(245,240,232,0.14);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;
+  position:relative;
+}
+.topbar-compass-btn svg{stroke:var(--gold);fill:none;width:17px;height:17px;stroke-width:1.5}
+.compass-indicator{
+  position:absolute;top:7px;right:7px;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--gold);
+  animation:pulse 2.2s ease-in-out infinite;
+  border:1.5px solid var(--forest);
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
+
+/* ── SCREENS ── */
+.screens{flex:1;overflow:hidden;position:relative}
+.screen{
+  position:absolute;inset:0;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  background:var(--cream);
+  display:none;
+  padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + 16px);
+}
+.screen.active{display:block}
+.screen::-webkit-scrollbar{width:0}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  background:white;
+  border-top:0.5px solid var(--border);
+  height:calc(var(--nav-h) + var(--safe-bottom));
+  padding-bottom:var(--safe-bottom);
+  display:flex;align-items:stretch;
+  flex-shrink:0;
+  position:relative;z-index:50;
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:3px;cursor:pointer;
+  padding:8px 4px 6px;
+  border:none;background:none;
+  position:relative;
+  transition:opacity 0.15s;
+}
+.nav-item:active{opacity:0.7}
+.nav-icon{width:22px;height:22px;stroke:var(--ink-faint);fill:none;stroke-width:1.4;flex-shrink:0}
+.nav-item.active .nav-icon{stroke:var(--forest)}
+.nav-label{font-size:10px;color:var(--ink-faint);font-weight:400;line-height:1}
+.nav-item.active .nav-label{color:var(--forest);font-weight:500}
+.nav-badge{
+  position:absolute;top:6px;right:calc(50% - 14px);
+  background:var(--terra);color:white;
+  font-size:9px;font-weight:500;
+  padding:1px 4px;border-radius:8px;
+  min-width:15px;text-align:center;line-height:1.4;
+}
+.nav-badge.gold{background:var(--gold)}
+
+/* ── HAMBURGER MENU ── */
+.hamburger-overlay{
+  position:fixed;inset:0;
+  background:rgba(26,26,20,0.5);
+  z-index:200;
+  display:none;
+}
+.hamburger-overlay.open{display:block}
+.hamburger-menu{
+  position:absolute;top:0;left:0;bottom:0;width:280px;
+  background:var(--forest);
+  display:flex;flex-direction:column;
+  transform:translateX(-100%);
+  transition:transform 0.26s cubic-bezier(0.22,1,0.36,1);
+  overflow-y:auto;
+}
+.hamburger-overlay.open .hamburger-menu{transform:translateX(0)}
+.hm-header{
+  padding:20px 18px 14px;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+  flex-shrink:0;
+}
+.hm-brand-name{font-family:var(--serif-display);font-size:20px;font-weight:500;color:var(--parchment);letter-spacing:-0.02em}
+.hm-brand-name span{color:var(--terra-light)}
+.hm-org{font-size:11px;color:rgba(245,240,232,0.4);margin-top:3px;font-weight:300}
+.hm-section{padding:16px 18px 5px;font-size:10px;font-weight:500;letter-spacing:0.13em;text-transform:uppercase;color:rgba(245,240,232,0.28)}
+.hm-item{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;border-radius:7px;margin:1px 8px;
+  cursor:pointer;font-size:14px;
+  color:rgba(245,240,232,0.6);font-weight:400;
+  transition:background 0.15s;
+}
+.hm-item:active{background:rgba(255,255,255,0.1)}
+.hm-icon{width:16px;height:16px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.4;opacity:0.7}
+.hm-spacer{flex:1;min-height:20px}
+.hm-user{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;border-top:1px solid rgba(255,255,255,0.07);
+  flex-shrink:0;
+}
+.hm-avatar{width:32px;height:32px;border-radius:50%;background:rgba(245,240,232,0.14);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--parchment);flex-shrink:0}
+.hm-user-name{font-size:13px;color:rgba(245,240,232,0.85)}
+.hm-user-role{font-size:11px;color:rgba(245,240,232,0.35);font-weight:300}
+
+/* ── NRI COMPASS DRAWER ── */
+.compass-overlay{
+  position:fixed;inset:0;
+  background:rgba(26,26,20,0.4);
+  z-index:300;display:none;
+}
+.compass-overlay.open{display:block}
+.compass-drawer{
+  position:absolute;bottom:0;left:0;right:0;
+  height:88%;
+  background:var(--forest);
+  border-radius:16px 16px 0 0;
+  display:flex;flex-direction:column;
+  transform:translateY(100%);
+  transition:transform 0.28s cubic-bezier(0.22,1,0.36,1);
+}
+.compass-overlay.open .compass-drawer{transform:translateY(0)}
+.compass-handle{
+  width:36px;height:4px;border-radius:2px;
+  background:rgba(245,240,232,0.25);
+  margin:10px auto 0;flex-shrink:0;
+}
+.compass-header{
+  padding:14px 18px 12px;
+  border-bottom:1px solid rgba(245,240,232,0.1);
+  display:flex;align-items:flex-start;justify-content:space-between;
+  flex-shrink:0;
+}
+.compass-title-row{display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.compass-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 2.2s ease-in-out infinite;flex-shrink:0}
+.compass-title{font-size:14px;font-weight:500;color:var(--parchment)}
+.compass-posture{font-size:12px;color:rgba(245,240,232,0.45);font-style:italic;font-family:var(--serif-body)}
+.compass-close{background:rgba(245,240,232,0.1);border:none;color:rgba(245,240,232,0.6);width:30px;height:30px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.compass-body{flex:1;overflow-y:auto;padding:14px 16px}
+.compass-body::-webkit-scrollbar{width:0}
+.compass-section-label{font-size:10px;font-weight:500;letter-spacing:0.13em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin:14px 0 8px}
+.compass-section-label:first-child{margin-top:0}
+.nudge-card{background:rgba(245,240,232,0.07);border:1px solid rgba(245,240,232,0.11);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+.nudge-dir{font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:4px}
+.nudge-dir.cura{color:var(--gold)}
+.nudge-dir.reconciliatio{color:#E8956D}
+.nudge-dir.custodia{color:#7ECFAB}
+.nudge-dir.itiner{color:#7DB8ED}
+.nudge-msg{font-size:13px;color:rgba(245,240,232,0.82);line-height:1.5;font-weight:300}
+.nudge-action{font-size:12px;color:var(--terra-light);margin-top:7px;cursor:pointer}
+.nudge-dismiss{float:right;font-size:10px;color:rgba(245,240,232,0.25);cursor:pointer;margin-top:-2px}
+.qp-chip{width:100%;text-align:left;background:rgba(245,240,232,0.07);border:0.5px solid rgba(245,240,232,0.14);border-radius:7px;padding:11px 13px;font-size:13px;color:rgba(245,240,232,0.65);cursor:pointer;font-weight:300;font-family:var(--sans);margin-bottom:7px;display:block;transition:background 0.15s}
+.qp-chip:active{background:rgba(245,240,232,0.13)}
+.compass-input-row{
+  padding:12px 14px calc(12px + var(--safe-bottom));
+  border-top:1px solid rgba(245,240,232,0.1);
+  display:flex;gap:8px;align-items:center;flex-shrink:0;
+}
+.compass-input{flex:1;background:rgba(245,240,232,0.08);border:0.5px solid rgba(245,240,232,0.15);border-radius:22px;padding:10px 16px;font-size:14px;color:var(--parchment);font-family:var(--sans);outline:none}
+.compass-input::placeholder{color:rgba(245,240,232,0.3)}
+.compass-send{width:38px;height:38px;background:var(--terra);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.compass-send svg{stroke:white;fill:none;width:15px;height:15px;stroke-width:1.5}
+
+/* ── SHARED COMPONENTS ── */
+.section-pad{padding:16px}
+.card{background:white;border:0.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.card:last-child{margin-bottom:0}
+.card-header{padding:13px 16px;border-bottom:0.5px solid var(--border-light);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:14px;font-weight:500;color:var(--ink)}
+.card-action{font-size:12px;color:var(--forest);font-weight:500;cursor:pointer}
+.card-meta{font-size:11px;color:var(--ink-faint)}
+
+.tag{font-size:10px;font-weight:500;padding:3px 8px;border-radius:3px;letter-spacing:0.03em;white-space:nowrap;display:inline-block}
+.tag-coral{background:#FAECE7;color:#712B13}
+.tag-amber{background:#FAEEDA;color:#633806}
+.tag-blue{background:#E6F1FB;color:#0C447C}
+.tag-green{background:#E1F5EE;color:#085041}
+.tag-gray{background:var(--parchment);color:var(--ink-light)}
+.tag-gold{background:var(--gold-pale);color:#854F0B}
+
+.btn{font-family:var(--sans);font-size:13px;font-weight:400;padding:10px 16px;border-radius:8px;border:0.5px solid var(--border);background:white;color:var(--ink-mid);cursor:pointer;transition:all 0.15s;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center}
+.btn:active{opacity:0.8;transform:scale(0.98)}
+.btn.primary{background:var(--forest);color:var(--parchment);border-color:var(--forest);font-weight:500}
+.btn.warn{background:var(--terra);color:var(--parchment);border-color:var(--terra)}
+.btn.full{width:100%}
+
+/* ── DASHBOARD SCREEN ── */
+.dash-hero{background:var(--forest);padding:16px 16px 20px}
+.dash-greeting{font-size:13px;color:rgba(245,240,232,0.55);font-weight:300;margin-bottom:2px}
+.dash-name{font-family:var(--serif-display);font-size:24px;font-weight:500;color:var(--parchment);letter-spacing:-0.02em;line-height:1.1;margin-bottom:16px}
+.dash-name em{font-style:italic;color:var(--terra-light)}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat-card{background:rgba(245,240,232,0.1);border-radius:10px;padding:12px 14px}
+.stat-label{font-size:10px;color:rgba(245,240,232,0.5);margin-bottom:4px;font-weight:400}
+.stat-val{font-family:var(--serif-display);font-size:26px;font-weight:400;color:var(--parchment);line-height:1;letter-spacing:-0.02em}
+.stat-sub{font-size:10px;margin-top:3px}
+.stat-sub.up{color:#8DCFAD}
+.stat-sub.warn{color:#E8956D}
+.stat-sub.muted{color:rgba(245,240,232,0.4)}
+.dash-ground{height:3px;background:linear-gradient(90deg,var(--terra) 0%,var(--gold) 50%,var(--terra) 100%)}
+
+.feed-item{display:flex;gap:12px;padding:13px 16px;border-bottom:0.5px solid var(--border-light);cursor:pointer;transition:background 0.12s;align-items:flex-start}
+.feed-item:last-child{border-bottom:none}
+.feed-item:active{background:var(--cream)}
+.feed-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
+.av-coral{background:#FAECE7;color:#712B13}
+.av-blue{background:#E6F1FB;color:#0C447C}
+.av-amber{background:#FAEEDA;color:#633806}
+.av-teal{background:#E1F5EE;color:#085041}
+.av-purple{background:#EEEDFE;color:#3C3489}
+.av-gray{background:var(--parchment);color:var(--ink-light)}
+.feed-body{flex:1;min-width:0}
+.feed-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.feed-detail{font-size:12px;color:var(--ink-light);line-height:1.4;font-weight:300}
+.feed-meta{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.dir-pill{font-size:10px;font-weight:500;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.dir-cura{background:#FDF6E3;color:#854F0B}
+.dir-reconciliatio{background:#FAECE7;color:#712B13}
+.dir-custodia{background:#E1F5EE;color:#085041}
+.dir-itiner{background:#E6F1FB;color:#0C447C}
+.feed-time{font-size:10px;color:var(--ink-faint)}
+
+.task-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:0.5px solid var(--border-light);cursor:pointer}
+.task-item:last-child{border-bottom:none}
+.task-item:active{background:var(--cream)}
+.task-check{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0;position:relative;cursor:pointer}
+.task-check.done{background:var(--forest);border-color:var(--forest)}
+.task-check.done::after{content:'';position:absolute;top:4px;left:6px;width:5px;height:8px;border:1.5px solid white;border-top:none;border-left:none;transform:rotate(42deg)}
+.task-text{font-size:13px;color:var(--ink);flex:1}
+.task-text.done{color:var(--ink-faint);text-decoration:line-through}
+.task-tag{font-size:10px;color:var(--ink-faint);white-space:nowrap}
+
+/* ── STEWARDSHIP SCREEN ── */
+.profile-block{background:white;border-bottom:0.5px solid var(--border);padding:16px}
+.profile-row{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
+.profile-av{width:50px;height:50px;border-radius:50%;background:#FAECE7;display:flex;align-items:center;justify-content:center;font-family:var(--serif-display);font-size:18px;font-weight:400;color:#712B13;flex-shrink:0}
+.profile-name{font-family:var(--serif-display);font-size:20px;font-weight:500;color:var(--forest);letter-spacing:-0.02em;line-height:1.1;margin-bottom:3px}
+.profile-addr{font-size:12px;color:var(--ink-light);font-weight:300}
+.profile-tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.profile-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.profile-stat-card{background:var(--parchment);border-radius:8px;padding:10px 12px;text-align:center}
+.profile-stat-val{font-family:var(--serif-display);font-size:18px;font-weight:400;color:var(--forest);letter-spacing:-0.02em}
+.profile-stat-label{font-size:9px;color:var(--ink-faint);margin-top:1px}
+
+.nri-banner-mob{background:var(--forest);padding:12px 16px;display:flex;gap:10px;align-items:flex-start}
+.nri-banner-mob-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 2.2s ease-in-out infinite;flex-shrink:0;margin-top:4px}
+.nri-banner-mob-body{flex:1}
+.nri-banner-mob-dir{font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.nri-banner-mob-msg{font-size:12px;color:rgba(245,240,232,0.82);line-height:1.45;font-weight:300;margin-bottom:6px}
+.nri-banner-mob-action{font-size:12px;color:var(--terra-light);cursor:pointer;font-weight:500}
+
+.record-tabs-mob{background:white;border-bottom:0.5px solid var(--border);display:flex;overflow-x:auto;flex-shrink:0}
+.record-tabs-mob::-webkit-scrollbar{display:none}
+.record-tab-mob{padding:12px 16px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-0.5px;white-space:nowrap;font-weight:400;flex-shrink:0}
+.record-tab-mob.active{color:var(--forest);border-bottom-color:var(--forest);font-weight:500}
+
+.log-entry-mob{display:flex;gap:12px;padding:14px 16px;border-bottom:0.5px solid var(--border-light)}
+.log-entry-mob:last-child{border-bottom:none}
+.log-left{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;width:40px}
+.log-date-num{font-family:var(--serif-display);font-size:16px;font-weight:400;color:var(--forest);line-height:1;letter-spacing:-0.01em}
+.log-date-mo{font-size:9px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.07em}
+.log-dot-mob{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--border);background:white;margin-top:4px}
+.log-dot-mob.contact{background:var(--forest-light);border-color:var(--forest-light)}
+.log-dot-mob.attempted{background:var(--terra);border-color:var(--terra)}
+.log-dot-mob.milestone{background:var(--gold);border-color:var(--gold)}
+.log-dot-mob.payment{background:var(--parchment-dk);border-color:var(--ink-faint)}
+.log-dot-mob.maintenance{background:#85B7EB;border-color:#378ADD}
+.log-right{flex:1;min-width:0}
+.log-type-mob{font-size:10px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px}
+.log-type-mob.contact{color:var(--forest-light)}
+.log-type-mob.attempted{color:var(--terra)}
+.log-type-mob.milestone{color:#854F0B}
+.log-type-mob.payment{color:var(--ink-faint)}
+.log-type-mob.maintenance{color:#185FA5}
+.log-summary-mob{font-size:14px;color:var(--ink);font-weight:400;margin-bottom:2px}
+.log-detail-mob{font-size:12px;color:var(--ink-light);line-height:1.45;font-weight:300}
+.log-author-mob{font-size:10px;color:var(--ink-faint);margin-top:4px}
+
+.log-form-mob{padding:14px 16px;background:white;border-top:0.5px solid var(--border)}
+.log-form-label{font-size:11px;color:var(--ink-light);margin-bottom:6px}
+.log-select-mob{width:100%;font-family:var(--sans);font-size:13px;padding:10px 12px;border:0.5px solid var(--border);border-radius:8px;background:white;color:var(--ink);outline:none;margin-bottom:8px;-webkit-appearance:none}
+.log-textarea-mob{width:100%;border:0.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;font-family:var(--serif-body);color:var(--ink);background:white;outline:none;resize:none;line-height:1.55;font-weight:300;margin-bottom:8px}
+.log-textarea-mob:focus{border-color:var(--forest-light)}
+.nri-assist-mob{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.nri-assist-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2.2s ease-in-out infinite}
+.nri-assist-text{font-size:12px;color:var(--gold);font-weight:500}
+.log-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* Pastoral */
+.pastoral-mob{padding:14px 16px;background:#FDF6E3;border-top:1px solid #F0D4A0}
+.pastoral-mob-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#854F0B;margin-bottom:5px}
+.pastoral-mob-text{font-size:13px;color:#633806;font-family:var(--serif-body);font-weight:300;line-height:1.55;font-style:italic}
+
+/* ── PIPELINE SCREEN ── */
+.pipeline-stage-banner{background:white;border-bottom:0.5px solid var(--border);padding:14px 16px}
+.stage-label{font-size:11px;color:var(--ink-faint);margin-bottom:8px}
+.stage-steps-mob{display:flex;gap:0;align-items:center;position:relative}
+.stage-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;cursor:pointer}
+.stage-step:not(:last-child)::after{content:'';position:absolute;top:10px;left:50%;width:100%;height:1px;background:var(--border);z-index:0}
+.stage-step.done:not(:last-child)::after{background:var(--forest-light)}
+.stage-circle{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border);background:white;display:flex;align-items:center;justify-content:center;z-index:1;position:relative;flex-shrink:0}
+.stage-step.done .stage-circle{background:var(--forest-light);border-color:var(--forest-light)}
+.stage-step.done .stage-circle::after{content:'';position:absolute;top:4px;left:6px;width:4px;height:7px;border:1.5px solid white;border-top:none;border-left:none;transform:rotate(42deg)}
+.stage-step.current .stage-circle{border-color:var(--gold);background:var(--gold-pale)}
+.stage-step.current .stage-inner{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.stage-step.blocked .stage-circle{border-color:var(--terra);background:#FAECE7}
+.stage-step.blocked .stage-inner{width:7px;height:7px;border-radius:50%;background:var(--terra)}
+.stage-lbl{font-size:8px;color:var(--ink-faint);text-align:center;line-height:1.2;max-width:40px}
+.stage-step.current .stage-lbl{color:#854F0B;font-weight:500}
+.stage-step.blocked .stage-lbl{color:var(--terra);font-weight:500}
+
+.action-banner-mob{background:#FAECE7;border:0.5px solid #F0C4B0;border-radius:10px;padding:14px;margin-bottom:14px}
+.action-banner-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#712B13;margin-bottom:5px}
+.action-banner-msg{font-size:13px;color:#4A1B0C;line-height:1.5;margin-bottom:10px;font-weight:300}
+
+.doc-item-mob{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:0.5px solid var(--border-light);cursor:pointer}
+.doc-item-mob:last-child{border-bottom:none}
+.doc-item-mob:active{background:var(--cream)}
+.doc-status-mob{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.doc-ok{background:#E1F5EE}
+.doc-ok svg{stroke:#085041}
+.doc-exp{background:#FAECE7}
+.doc-exp svg{stroke:#712B13}
+.doc-miss{background:var(--parchment);border:1px dashed var(--border)}
+.doc-pend{background:var(--gold-pale)}
+.doc-pend svg{stroke:#854F0B}
+.doc-name-mob{font-size:13px;color:var(--ink);flex:1;line-height:1.3}
+.doc-name-mob.exp{color:var(--terra)}
+.doc-name-mob.miss{color:var(--ink-faint)}
+.doc-date-mob{font-size:10px;color:var(--ink-faint);white-space:nowrap}
+.doc-date-mob.exp{color:var(--terra)}
+
+.edu-prog-row{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:0.5px solid var(--border-light)}
+.edu-track{flex:1;height:6px;background:var(--parchment-dk);border-radius:3px;overflow:hidden}
+.edu-fill{height:100%;background:var(--forest-light);border-radius:3px}
+.edu-pct{font-size:12px;font-weight:500;color:var(--forest)}
+.edu-stall{font-size:11px;color:var(--terra)}
+
+.mod-item{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:12px 16px;border-bottom:0.5px solid var(--border-light);cursor:pointer}
+.mod-item:last-child{border-bottom:none}
+.mod-item:active{background:var(--cream)}
+.mod-item.stalled-row{background:#FDF6E3}
+.mod-num{font-family:var(--serif-display);font-size:15px;font-weight:400;color:var(--ink-faint);text-align:center}
+.mod-num.done{color:var(--forest-light)}
+.mod-num.cur{color:#854F0B}
+.mod-num.lock{color:var(--parchment-dk)}
+.mod-title{font-size:13px;color:var(--ink);line-height:1.3}
+.mod-title.done{color:var(--ink-light)}
+.mod-title.lock{color:var(--ink-faint)}
+.mod-sub{font-size:10px;color:var(--ink-faint);margin-top:1px;font-weight:300}
+.mod-badge{font-size:10px;font-weight:500;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.mb-done{background:#E1F5EE;color:#085041}
+.mb-cur{background:var(--gold-pale);color:#854F0B}
+.mb-lock{background:var(--parchment);color:var(--ink-faint)}
+.mb-stall{background:#FAECE7;color:#712B13}
+
+/* ── PRAECO SCREEN ── */
+.praeco-tabs-mob{background:white;border-bottom:0.5px solid var(--border);display:flex}
+.praeco-tab-mob{flex:1;padding:13px 8px;font-size:12px;color:var(--ink-light);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-0.5px;text-align:center;font-weight:400;transition:color 0.15s}
+.praeco-tab-mob.active{color:var(--forest);border-bottom-color:var(--forest);font-weight:500}
+.praeco-panel{display:none}
+.praeco-panel.active{display:block}
+
+.praeco-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px;padding-bottom:0}
+.praeco-stat{background:var(--parchment);border-radius:10px;padding:12px 14px}
+.praeco-stat-label{font-size:10px;color:var(--ink-light);margin-bottom:4px}
+.praeco-stat-val{font-family:var(--serif-display);font-size:22px;font-weight:400;color:var(--forest);letter-spacing:-0.02em;line-height:1}
+.praeco-stat-sub{font-size:10px;margin-top:3px}
+.praeco-stat-sub.up{color:var(--forest-light)}
+.praeco-stat-sub.warn{color:var(--terra)}
+
+.gmail-strip-mob{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--gold-pale);border-bottom:0.5px solid #E8D9A8;margin:14px 0 0}
+.gmail-dot-mob{width:7px;height:7px;border-radius:50%;background:#2C7A5C;flex-shrink:0}
+.gmail-text-mob{font-size:12px;color:#633806;font-weight:300}
+.gmail-text-mob strong{font-weight:500}
+
+.campaign-item-mob{display:flex;gap:12px;padding:13px 16px;border-bottom:0.5px solid var(--border-light);cursor:pointer;align-items:flex-start}
+.campaign-item-mob:last-child{border-bottom:none}
+.campaign-item-mob:active{background:var(--cream)}
+.campaign-name-mob{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:2px;line-height:1.3}
+.campaign-detail-mob{font-size:11px;color:var(--ink-light);font-weight:300}
+.campaign-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.status-pill{font-size:10px;font-weight:500;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.sp-sent{background:#E1F5EE;color:#085041}
+.sp-draft{background:var(--parchment);color:var(--ink-light)}
+.sp-sched{background:#E6F1FB;color:#0C447C}
+
+.event-item-mob{display:flex;gap:12px;padding:13px 16px;border-bottom:0.5px solid var(--border-light);cursor:pointer;align-items:flex-start}
+.event-item-mob:last-child{border-bottom:none}
+.event-item-mob:active{background:var(--cream)}
+.event-date-mob{background:var(--parchment);border-radius:8px;padding:6px 8px;text-align:center;flex-shrink:0;min-width:44px}
+.event-month-mob{font-size:9px;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.07em}
+.event-day-mob{font-family:var(--serif-display);font-size:20px;font-weight:400;color:var(--forest);line-height:1;letter-spacing:-0.02em}
+.event-body-mob{flex:1;min-width:0}
+.event-name-mob{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:2px;line-height:1.3}
+.event-detail-mob{font-size:11px;color:var(--ink-light);font-weight:300;margin-bottom:5px}
+.rsvp-bar-mob{display:flex;height:4px;border-radius:2px;overflow:hidden}
+.rsvp-fill-mob{background:var(--forest-light)}
+.rsvp-empty-mob{background:var(--parchment-dk);flex:1}
+.event-rsvp-label{font-size:10px;color:var(--ink-faint);margin-top:3px}
+.event-right-mob{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.evt-public{background:#E1F5EE;color:#085041}
+.evt-homeowner{background:var(--gold-pale);color:#854F0B}
+.evt-waitlist{background:#E6F1FB;color:#0C447C}
+
+/* Site preview mobile */
+.site-preview-mob{margin:14px 16px 0;background:white;border:0.5px solid var(--border);border-radius:10px;overflow:hidden}
+.preview-bar-mob{background:var(--parchment);padding:8px 12px;display:flex;align-items:center;gap:8px}
+.preview-dots-mob{display:flex;gap:4px}
+.preview-dot-mob{width:8px;height:8px;border-radius:50%;background:var(--parchment-dk)}
+.preview-url-mob{flex:1;background:white;border:0.5px solid var(--border);border-radius:3px;padding:3px 8px;font-size:10px;color:var(--ink-light)}
+.preview-live{font-size:9px;font-weight:500;background:#E1F5EE;color:#085041;padding:2px 6px;border-radius:2px;white-space:nowrap}
+.sim-nav-mob{background:var(--forest);padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
+.sim-brand-mob{font-family:var(--serif-display);font-size:13px;font-weight:500;color:var(--parchment)}
+.sim-apply-mob{font-size:10px;font-weight:500;background:var(--terra);color:white;padding:4px 10px;border-radius:3px}
+.sim-hero-mob{background:var(--forest);padding:16px 14px;position:relative;overflow:hidden}
+.sim-lines-mob{position:absolute;inset:0;opacity:0.04;background-image:repeating-linear-gradient(0deg,var(--parchment) 0,var(--parchment) 1px,transparent 1px,transparent 28px)}
+.sim-h1-mob{font-family:var(--serif-display);font-size:17px;font-weight:500;color:var(--parchment);line-height:1.2;letter-spacing:-0.02em;margin-bottom:6px}
+.sim-h1-mob em{color:var(--terra-light);font-style:italic}
+.sim-sub-mob{font-size:10px;color:rgba(245,240,232,0.6);line-height:1.5;font-weight:300;margin-bottom:10px}
+.sim-cta-mob{font-size:10px;font-weight:500;background:var(--terra);color:white;padding:6px 12px;border-radius:3px;display:inline-block}
+.sim-ground-mob{height:3px;background:linear-gradient(90deg,var(--terra),var(--gold),var(--terra))}
+.sim-stats-mob{display:grid;grid-template-columns:repeat(3,1fr);background:var(--parchment-dk)}
+.sim-stat-mob{padding:10px 8px;text-align:center;border-right:0.5px solid var(--border)}
+.sim-stat-mob:last-child{border-right:none}
+.sim-sn-mob{font-family:var(--serif-display);font-size:15px;font-weight:400;color:var(--forest);letter-spacing:-0.02em}
+.sim-sl-mob{font-size:8px;color:var(--ink-light);margin-top:1px}
+
+.site-pages-mob{padding:14px 16px 0}
+.page-row-mob{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:0.5px solid var(--border-light);cursor:pointer}
+.page-row-mob:last-child{border-bottom:none}
+.page-row-mob:active{opacity:0.7}
+.page-icon-mob{width:32px;height:32px;border-radius:7px;background:var(--parchment);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.page-icon-mob svg{width:14px;height:14px;stroke:var(--ink-light);fill:none;stroke-width:1.4}
+.page-name-mob{font-size:13px;color:var(--ink);flex:1}
+.page-status-live{font-size:10px;color:var(--forest-light);font-weight:500}
+.page-status-draft{font-size:10px;color:var(--ink-faint)}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,26,20,0.5);z-index:400;display:none;align-items:flex-end}
+.modal-overlay.open{display:flex}
+.modal-sheet{background:white;border-radius:16px 16px 0 0;width:100%;padding:20px 18px calc(20px + var(--safe-bottom));max-height:85vh;overflow-y:auto}
+.modal-sheet::-webkit-scrollbar{width:0}
+.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--parchment-dk);margin:0 auto 16px}
+.modal-title{font-size:16px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.modal-nri{display:flex;align-items:flex-start;gap:7px;padding:10px 12px;background:var(--gold-pale);border-radius:8px;margin-bottom:14px}
+.modal-nri-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2.2s ease-in-out infinite;flex-shrink:0;margin-top:3px}
+.modal-nri-text{font-size:12px;color:#633806;font-weight:300;line-height:1.4}
+.modal-label{font-size:11px;color:var(--ink-light);margin-bottom:5px}
+.modal-input{width:100%;border:0.5px solid var(--border);border-radius:8px;padding:12px;font-size:14px;font-family:var(--sans);color:var(--ink);outline:none;margin-bottom:12px}
+.modal-input:focus{border-color:var(--forest-light)}
+.modal-textarea{width:100%;border:0.5px solid var(--border);border-radius:8px;padding:12px;font-size:14px;font-family:var(--serif-body);color:var(--ink);outline:none;resize:none;line-height:1.6;font-weight:300;margin-bottom:12px}
+.modal-textarea:focus{border-color:var(--forest-light)}
+.modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* ── DESKTOP RESPONSIVE ── */
+/* 769px+: center app as phone frame */
+@media(min-width:769px){
+  html,body{
+    background:#D0CBC0;
+    position:static;
+    overflow:auto;
+    height:auto;
+  }
+  .app{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:430px;
+    height:min(860px,calc(100vh - 32px));
+    border-radius:16px;
+    box-shadow:0 16px 64px rgba(0,0,0,0.25),0 2px 8px rgba(0,0,0,0.12);
+    overflow:hidden;
+  }
+  .hamburger-overlay,
+  .compass-overlay,
+  .compassOverlay,
+  .modal-overlay{
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:430px;
+    height:min(860px,calc(100vh - 32px));
+    border-radius:16px;
+    overflow:hidden;
+  }
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <button class="topbar-hamburger" onclick="openHamburger()">
+      <svg viewBox="0 0 18 14"><path d="M0 1h18M0 7h18M0 13h18" stroke-linecap="round"/></svg>
+    </button>
+    <div class="topbar-brand">
+      Propria<span>.</span>
+      <span class="topbar-org">Rondo Community Land Trust</span>
+    </div>
+    <button class="topbar-compass-btn" onclick="openCompass()">
+      <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4v1M8 11v1M4 8h1M11 8h1"/><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none" style="fill:var(--gold)"/></svg>
+      <div class="compass-indicator"></div>
+    </button>
+  </div>
+
+  <!-- SCREENS -->
+  <div class="screens">
+
+    <!-- ── DASHBOARD ── -->
+    <div class="screen active" id="screen-dashboard">
+      <div class="dash-hero">
+        <div class="dash-greeting">Good morning, Sarah</div>
+        <div class="dash-name">Tuesday, April 1 —<br><em>here's what needs you.</em></div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">In stewardship</div>
+            <div class="stat-val">47</div>
+            <div class="stat-sub up">+2 this quarter</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Lease collected</div>
+            <div class="stat-val">94%</div>
+            <div class="stat-sub warn">3 overdue</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Applicants</div>
+            <div class="stat-val">12</div>
+            <div class="stat-sub muted">7 in education</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Check-ins due</div>
+            <div class="stat-val">7</div>
+            <div class="stat-sub warn">By end of quarter</div>
+          </div>
+        </div>
+      </div>
+      <div class="dash-ground"></div>
+
+      <div style="padding:16px 16px 8px">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint)">Needs attention</div>
+      </div>
+
+      <div class="card" style="margin:0 16px 14px">
+        <div class="feed-item" onclick="showScreen('stewardship')">
+          <div class="feed-avatar av-coral">MT</div>
+          <div class="feed-body">
+            <div class="feed-name">Maria Torres</div>
+            <div class="feed-detail">No response to 2 check-in attempts. 23 days since last contact.</div>
+          </div>
+          <div class="feed-meta">
+            <span class="dir-pill dir-cura">Cura</span>
+            <span class="feed-time">23d</span>
+          </div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-avatar av-coral">JW</div>
+          <div class="feed-body">
+            <div class="feed-name">James & Denise Walker</div>
+            <div class="feed-detail">Ground lease 9 days overdue. $52. No prior late history.</div>
+          </div>
+          <div class="feed-meta">
+            <span class="dir-pill dir-reconciliatio">Reconciliatio</span>
+            <span class="feed-time">9d</span>
+          </div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-avatar av-amber">RD</div>
+          <div class="feed-body">
+            <div class="feed-name">Roberto & Ana Diaz</div>
+            <div class="feed-detail">Annual check-in due this month. No appointment scheduled.</div>
+          </div>
+          <div class="feed-meta">
+            <span class="dir-pill dir-custodia">Custodia</span>
+            <span class="feed-time">Apr 30</span>
+          </div>
+        </div>
+        <div class="feed-item" onclick="showScreen('pipeline')">
+          <div class="feed-avatar av-blue">KJ</div>
+          <div class="feed-body">
+            <div class="feed-name">Keisha Johnson</div>
+            <div class="feed-detail">Income docs expired 17 days ago. Education stalled at Module 7.</div>
+          </div>
+          <div class="feed-meta">
+            <span class="dir-pill dir-itiner">Itiner</span>
+            <span class="feed-time">17d</span>
+          </div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-avatar av-purple">PM</div>
+          <div class="feed-body">
+            <div class="feed-name">Patricia & Leon Moore</div>
+            <div class="feed-detail">Maintenance request open 31 days. No contractor update.</div>
+          </div>
+          <div class="feed-meta">
+            <span class="dir-pill dir-reconciliatio">Reconciliatio</span>
+            <span class="feed-time">31d</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:0 16px 8px">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint)">Today's tasks</div>
+      </div>
+      <div class="card" style="margin:0 16px">
+        <div class="task-item">
+          <div class="task-check done" onclick="toggleTask(this)"></div>
+          <div class="task-text done">Call Walker family re: overdue payment</div>
+        </div>
+        <div class="task-item">
+          <div class="task-check" onclick="toggleTask(this)"></div>
+          <div class="task-text">Schedule Diaz annual check-in</div>
+          <span class="task-tag">Custodia</span>
+        </div>
+        <div class="task-item">
+          <div class="task-check" onclick="toggleTask(this)"></div>
+          <div class="task-text">Email Keisha Johnson — expired docs</div>
+          <span class="task-tag">Itiner</span>
+        </div>
+        <div class="task-item">
+          <div class="task-check" onclick="toggleTask(this)"></div>
+          <div class="task-text">Follow up Ace Contracting · 56 Thomas</div>
+          <span class="task-tag">Maintenance</span>
+        </div>
+        <div class="task-item">
+          <div class="task-check" onclick="toggleTask(this)"></div>
+          <div class="task-text">Initiate Okafor lease renewal</div>
+          <span class="task-tag">Custodia</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEWARDSHIP ── -->
+    <div class="screen" id="screen-stewardship">
+      <div class="profile-block">
+        <div class="profile-row">
+          <div class="profile-av">MT</div>
+          <div>
+            <div class="profile-name">Maria Torres</div>
+            <div class="profile-addr">14 Oak St, Saint Paul &nbsp;·&nbsp; (651) 555-0147</div>
+          </div>
+        </div>
+        <div class="profile-tag-row">
+          <span class="tag tag-green">Homeowner · Year 6</span>
+          <span class="tag tag-gold">Check-in overdue</span>
+          <span class="tag tag-coral">Disengagement</span>
+          <span class="tag tag-blue">Lease current</span>
+        </div>
+        <div class="profile-stat-row">
+          <div class="profile-stat-card">
+            <div class="profile-stat-val">6.2</div>
+            <div class="profile-stat-label">Years in home</div>
+          </div>
+          <div class="profile-stat-card">
+            <div class="profile-stat-val">$14.2k</div>
+            <div class="profile-stat-label">Equity accrued</div>
+          </div>
+          <div class="profile-stat-card">
+            <div class="profile-stat-val" style="color:var(--terra)">23d</div>
+            <div class="profile-stat-label">Since contact</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nri-banner-mob">
+        <div class="nri-banner-mob-dot"></div>
+        <div class="nri-banner-mob-body">
+          <div class="nri-banner-mob-dir">Cura</div>
+          <div class="nri-banner-mob-msg">Maria hasn't responded to 2 attempts. Her last 3 contacts were staff-initiated. NRI suggests a life stressor — phone over email, keep it short and human.</div>
+          <div class="nri-banner-mob-action" onclick="openContactModal()">Draft outreach message →</div>
+        </div>
+      </div>
+
+      <div class="record-tabs-mob" id="stewardship-tabs">
+        <div class="record-tab-mob active" onclick="switchStewardshipTab('history', this)">Contact history</div>
+        <div class="record-tab-mob" onclick="switchStewardshipTab('lease', this)">Lease & finances</div>
+        <div class="record-tab-mob" onclick="switchStewardshipTab('life', this)">Life events</div>
+        <div class="record-tab-mob" onclick="switchStewardshipTab('note', this)">Pastoral note</div>
+      </div>
+
+      <div id="stew-history">
+        <div class="card" style="margin:14px 16px">
+          <div class="card-header"><span class="card-title">Contact history</span><span class="card-action" onclick="openContactModal()">+ Log</span></div>
+          <div class="log-entry-mob">
+            <div class="log-left"><div class="log-date-num">8</div><div class="log-date-mo">Mar</div><div class="log-dot-mob attempted"></div></div>
+            <div class="log-right"><div class="log-type-mob attempted">Attempted — no response</div><div class="log-summary-mob">Email re: annual check-in</div><div class="log-detail-mob">Second unanswered outreach in 6 weeks. No reply received.</div><div class="log-author-mob">Sarah Chen</div></div>
+          </div>
+          <div class="log-entry-mob">
+            <div class="log-left"><div class="log-date-num">21</div><div class="log-date-mo">Jan</div><div class="log-dot-mob attempted"></div></div>
+            <div class="log-right"><div class="log-type-mob attempted">Attempted — no response</div><div class="log-summary-mob">Phone call — voicemail left</div><div class="log-detail-mob">Following up on December maintenance request. No callback.</div><div class="log-author-mob">Sarah Chen</div></div>
+          </div>
+          <div class="log-entry-mob">
+            <div class="log-left"><div class="log-date-num">14</div><div class="log-date-mo">Dec</div><div class="log-dot-mob maintenance"></div></div>
+            <div class="log-right"><div class="log-type-mob maintenance">Maintenance request</div><div class="log-summary-mob">Bathroom pipe — minor leak</div><div class="log-detail-mob">Submitted via portal. Resolved Dec 22 by Ace Contracting.</div><div class="log-author-mob">Via homeowner portal</div></div>
+          </div>
+          <div class="log-entry-mob">
+            <div class="log-left"><div class="log-date-num">18</div><div class="log-date-mo">Oct</div><div class="log-dot-mob contact"></div></div>
+            <div class="log-right"><div class="log-type-mob contact">Contact — phone</div><div class="log-summary-mob">Annual check-in — Year 5</div><div class="log-detail-mob">45 min. Working two part-time jobs since career switch in September. Kids doing well — older daughter started high school. Warm but tired.</div><div class="log-author-mob">Sarah Chen</div></div>
+          </div>
+          <div class="log-entry-mob">
+            <div class="log-left"><div class="log-date-num">5</div><div class="log-date-mo">Jun</div><div class="log-dot-mob milestone"></div></div>
+            <div class="log-right"><div class="log-type-mob milestone">Milestone</div><div class="log-summary-mob">Attended spring gathering</div><div class="log-detail-mob">Came with both children. Helped with setup. Positive engagement.</div><div class="log-author-mob">Sarah Chen</div></div>
+          </div>
+        </div>
+        <div class="log-form-mob" style="margin:0 16px;border-radius:12px;border:0.5px solid var(--border)">
+          <div class="log-form-label">Log a contact</div>
+          <select class="log-select-mob"><option>Phone call</option><option>Email</option><option>In-person</option><option>Attempted — no response</option><option>Life event</option><option>Note</option></select>
+          <textarea class="log-textarea-mob" rows="3" placeholder="What happened, what was said, what you noticed…"></textarea>
+          <div class="nri-assist-mob"><div class="nri-assist-dot"></div><span class="nri-assist-text">NRI can draft this note</span></div>
+          <div class="log-btns"><button class="btn full">Save note</button><button class="btn primary full">Log + send</button></div>
+        </div>
+      </div>
+
+      <div id="stew-lease" style="display:none;padding:14px 16px">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Ground lease</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border-light)">
+            <div style="background:white;padding:12px 14px"><div style="font-size:10px;color:var(--ink-faint);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.06em">Status</div><div style="font-size:14px;font-weight:500;color:var(--forest-light)">Current</div></div>
+            <div style="background:white;padding:12px 14px"><div style="font-size:10px;color:var(--ink-faint);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.06em">Monthly</div><div style="font-size:14px;font-weight:500;color:var(--ink)">$48.00</div></div>
+            <div style="background:white;padding:12px 14px"><div style="font-size:10px;color:var(--ink-faint);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.06em">Payment streak</div><div style="font-size:14px;font-weight:500;color:var(--forest-light)">74/74 on time</div></div>
+            <div style="background:white;padding:12px 14px"><div style="font-size:10px;color:var(--ink-faint);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.06em">Lease expires</div><div style="font-size:14px;font-weight:500;color:var(--ink)">Oct 2034</div></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-header"><span class="card-title">Equity tracker</span></div>
+          <div style="padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-light);margin-bottom:7px"><span>Purchase (2019)</span><span>Resale today</span></div>
+            <div style="height:8px;background:var(--parchment-dk);border-radius:4px;overflow:hidden;margin-bottom:12px"><div style="width:38%;height:100%;background:var(--forest-light);border-radius:4px"></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
+              <div><div style="font-family:var(--serif-display);font-size:16px;font-weight:400;color:var(--forest);letter-spacing:-0.02em">$187k</div><div style="font-size:9px;color:var(--ink-faint);margin-top:1px">Original</div></div>
+              <div><div style="font-family:var(--serif-display);font-size:16px;font-weight:400;color:var(--gold);letter-spacing:-0.02em">$14.2k</div><div style="font-size:9px;color:var(--ink-faint);margin-top:1px">Equity</div></div>
+              <div><div style="font-family:var(--serif-display);font-size:16px;font-weight:400;color:var(--forest);letter-spacing:-0.02em">$201k</div><div style="font-size:9px;color:var(--ink-faint);margin-top:1px">Est. resale</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="stew-life" style="display:none;padding:14px 16px">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Life events</span><span class="card-action">+ Add</span></div>
+          <div class="log-entry-mob" style="border-bottom:0.5px solid var(--border-light)">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--parchment);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--ink-light)" stroke-width="1.4"><path d="M8 2v12M5 5l3-3 3 3"/></svg></div>
+            <div class="log-right"><div class="log-summary-mob">Career transition — new jobs</div><div class="log-detail-mob">September 2025 — switched to two part-time positions</div></div>
+          </div>
+          <div class="log-entry-mob" style="border-bottom:0.5px solid var(--border-light)">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--parchment);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--ink-light)" stroke-width="1.4"><rect x="3" y="3" width="10" height="10" rx="1"/><path d="M6 7h4M8 6v4"/></svg></div>
+            <div class="log-right"><div class="log-summary-mob">Daughter started high school</div><div class="log-detail-mob">Fall 2025</div></div>
+          </div>
+          <div class="log-entry-mob">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--parchment);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--ink-light)" stroke-width="1.4"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/></svg></div>
+            <div class="log-right"><div class="log-summary-mob">Moved into home — Year 1</div><div class="log-detail-mob">October 2019</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="stew-note" style="display:none;padding:14px 16px">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Pastoral note</span><span class="card-action">Edit</span></div>
+          <div class="pastoral-mob">
+            <div class="pastoral-mob-label">Confidential · staff only</div>
+            <div class="pastoral-mob-text">"Maria is quietly resilient. She doesn't ask for help easily. The career change last fall was a significant stressor — worth being gentle and not transactional in the next outreach. She responds better to human connection than task-oriented check-ins."</div>
+            <div style="font-size:10px;color:#854F0B;margin-top:6px">Added by Sarah Chen · Nov 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:14px"></div>
+      <div style="padding:0 16px 4px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button class="btn full" onclick="openContactModal()">Draft message</button>
+        <button class="btn primary full">Schedule check-in</button>
+      </div>
+    </div>
+
+    <!-- ── PIPELINE ── -->
+    <div class="screen" id="screen-pipeline">
+      <div class="profile-block">
+        <div class="profile-row">
+          <div style="width:50px;height:50px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-family:var(--serif-display);font-size:18px;font-weight:400;color:#0C447C;flex-shrink:0">KJ</div>
+          <div>
+            <div class="profile-name">Keisha Johnson</div>
+            <div class="profile-addr"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cda6a8a4bea5ace3a7a2a5a3bea2a38daaa0aca4a1e3aea2a0">[email&#160;protected]</a> &nbsp;·&nbsp; (651) 555-0293</div>
+          </div>
+        </div>
+        <div class="profile-tag-row">
+          <span class="tag tag-coral">Docs expired</span>
+          <span class="tag tag-amber">Education stalled</span>
+          <span class="tag tag-blue">Income-qualified</span>
+          <span class="tag tag-green">Waitlist #4</span>
+        </div>
+        <div class="profile-stat-row">
+          <div class="profile-stat-card">
+            <div class="profile-stat-val">60%</div>
+            <div class="profile-stat-label">Education</div>
+          </div>
+          <div class="profile-stat-card">
+            <div class="profile-stat-val" style="color:var(--terra)">17d</div>
+            <div class="profile-stat-label">Docs expired</div>
+          </div>
+          <div class="profile-stat-card">
+            <div class="profile-stat-val">#4</div>
+            <div class="profile-stat-label">Waitlist</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-stage-banner">
+        <div class="stage-label">Application stage</div>
+        <div class="stage-steps-mob">
+          <div class="stage-step done"><div class="stage-circle"></div><div class="stage-lbl">Applied</div></div>
+          <div class="stage-step done"><div class="stage-circle"></div><div class="stage-lbl">Eligible</div></div>
+          <div class="stage-step done"><div class="stage-circle"></div><div class="stage-lbl">Income</div></div>
+          <div class="stage-step blocked"><div class="stage-circle"><div class="stage-inner"></div></div><div class="stage-lbl">Docs</div></div>
+          <div class="stage-step current"><div class="stage-circle"><div class="stage-inner"></div></div><div class="stage-lbl">Education</div></div>
+          <div class="stage-step"><div class="stage-circle"></div><div class="stage-lbl">Counselor</div></div>
+          <div class="stage-step"><div class="stage-circle"></div><div class="stage-lbl">Waitlist</div></div>
+          <div class="stage-step"><div class="stage-circle"></div><div class="stage-lbl">Matched</div></div>
+        </div>
+      </div>
+
+      <div style="padding:14px 16px 0">
+        <div class="action-banner-mob">
+          <div class="action-banner-label">Action needed</div>
+          <div class="action-banner-msg">Two income documents expired March 14. Keisha has 13 days before her application is placed on hold. No contact has been made since the lapse.</div>
+          <button class="btn warn full" onclick="openDocModal()">Send document request via NRI</button>
+        </div>
+      </div>
+
+      <div style="padding:0 16px">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Documents</span><span class="card-action" onclick="openDocModal()">Request missing →</span></div>
+          <div class="doc-item-mob"><div class="doc-status-mob doc-ok"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg></div><span class="doc-name-mob">Photo ID</span><span class="doc-date-mob">Verified Feb 8</span></div>
+          <div class="doc-item-mob"><div class="doc-status-mob doc-ok"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg></div><span class="doc-name-mob">Social Security documentation</span><span class="doc-date-mob">Verified Feb 8</span></div>
+          <div class="doc-item-mob"><div class="doc-status-mob doc-exp"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l6 6M8 2L2 8"/></svg></div><span class="doc-name-mob exp">Income verification — employer letter</span><span class="doc-date-mob exp">Expired Mar 14</span></div>
+          <div class="doc-item-mob"><div class="doc-status-mob doc-exp"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l6 6M8 2L2 8"/></svg></div><span class="doc-name-mob exp">Tax returns 2023 + 2024</span><span class="doc-date-mob exp">Expired Mar 14</span></div>
+          <div class="doc-item-mob"><div class="doc-status-mob doc-ok"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg></div><span class="doc-name-mob">3 months bank statements</span><span class="doc-date-mob">Verified Feb 12</span></div>
+          <div class="doc-item-mob"><div class="doc-status-mob doc-miss"></div><span class="doc-name-mob miss">Rental history — landlord letter</span><span class="doc-date-mob">Not submitted</span></div>
+          <div class="doc-item-mob"><div class="doc-status-mob doc-pend"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke-width="1.5"><circle cx="5" cy="5" r="3.5"/><path d="M5 3v2.5l1.5 1"/></svg></div><span class="doc-name-mob">Child support / benefits docs</span><span class="doc-date-mob">Pending</span></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-header"><span class="card-title">Homebuyer education</span><span class="card-meta">CLT-specific</span></div>
+          <div class="edu-prog-row"><div class="edu-track"><div class="edu-fill" style="width:60%"></div></div><span class="edu-pct">60%</span><span class="edu-stall">Stalled 21d</span></div>
+          <div class="mod-item"><div class="mod-num done">1</div><div><div class="mod-title done">Introduction to homeownership</div><div class="mod-sub">Feb 10 · Quiz 94%</div></div><span class="mod-badge mb-done">Done</span></div>
+          <div class="mod-item"><div class="mod-num done">2</div><div><div class="mod-title done">The CLT model</div><div class="mod-sub">Feb 14 · Quiz 88%</div></div><span class="mod-badge mb-done">Done</span></div>
+          <div class="mod-item"><div class="mod-num done">3</div><div><div class="mod-title done">Understanding ground leases</div><div class="mod-sub">Feb 18 · Quiz 92%</div></div><span class="mod-badge mb-done">Done</span></div>
+          <div class="mod-item"><div class="mod-num done">4</div><div><div class="mod-title done">Resale formulas & shared equity</div><div class="mod-sub">Feb 22 · Quiz 85%</div></div><span class="mod-badge mb-done">Done</span></div>
+          <div class="mod-item"><div class="mod-num done">5</div><div><div class="mod-title done">Budgeting for homeownership</div><div class="mod-sub">Feb 28 · Quiz 90%</div></div><span class="mod-badge mb-done">Done</span></div>
+          <div class="mod-item"><div class="mod-num done">6</div><div><div class="mod-title done">Credit and mortgage readiness</div><div class="mod-sub">Mar 6 · Quiz 78%</div></div><span class="mod-badge mb-done">Done</span></div>
+          <div class="mod-item stalled-row"><div class="mod-num cur">7</div><div><div class="mod-title" style="color:#854F0B;font-weight:500">Rights & responsibilities of CLT homeownership</div><div class="mod-sub" style="color:#854F0B">Started Mar 10 · 21 days idle</div></div><span class="mod-badge mb-stall">Stalled</span></div>
+          <div class="mod-item"><div class="mod-num lock">8</div><div><div class="mod-title lock">Maintenance & capital planning</div><div class="mod-sub">Unlocks after Module 7</div></div><span class="mod-badge mb-lock">Locked</span></div>
+          <div class="mod-item"><div class="mod-num lock">9</div><div><div class="mod-title lock">Community governance</div><div class="mod-sub">Unlocks after Module 8</div></div><span class="mod-badge mb-lock">Locked</span></div>
+          <div class="mod-item"><div class="mod-num lock">10</div><div><div class="mod-title lock">The closing process</div><div class="mod-sub">Unlocks after Module 9</div></div><span class="mod-badge mb-lock">Locked</span></div>
+          <div style="padding:12px 16px;border-top:0.5px solid var(--border-light)">
+            <button class="btn primary full" style="font-size:13px">Send Module 7 reminder via NRI</button>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;padding:12px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="background:var(--parchment);border-radius:10px;padding:12px 14px;text-align:center">
+            <div style="font-family:var(--serif-display);font-size:32px;font-weight:400;color:var(--forest);letter-spacing:-0.02em;line-height:1">74</div>
+            <div style="font-size:10px;color:var(--ink-faint);margin-top:2px">Waitlist score · #4 of 34</div>
+            <div style="font-size:10px;color:var(--forest-light);margin-top:5px;line-height:1.4">Complete docs + education → score 89 → position #2</div>
+          </div>
+          <div style="background:var(--parchment);border-radius:10px;padding:12px 14px">
+            <div style="font-size:11px;font-weight:500;color:var(--ink-light);margin-bottom:8px">Eligibility</div>
+            <div style="font-size:12px;color:var(--ink-light);margin-bottom:4px;font-weight:300">Income: <strong style="color:var(--forest-light)">$54,200 · 72% AMI</strong></div>
+            <div style="font-size:12px;color:var(--ink-light);margin-bottom:4px;font-weight:300">First-time buyer: <strong style="color:var(--forest-light)">Yes</strong></div>
+            <div style="font-size:12px;color:var(--ink-light);margin-bottom:4px;font-weight:300">Credit score: <strong style="color:var(--forest-light)">692</strong></div>
+            <div style="font-size:12px;color:var(--ink-light);font-weight:300">Pre-approval: <strong style="color:#854F0B">In progress</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PRAECO ── -->
+    <div class="screen" id="screen-praeco">
+      <div style="background:white;border-bottom:0.5px solid var(--border);padding:14px 16px 0">
+        <div style="font-family:var(--serif-display);font-size:19px;font-weight:500;color:var(--forest);letter-spacing:-0.02em;margin-bottom:2px">Praeco <span style="font-size:10px;font-weight:400;font-family:var(--sans);background:var(--gold-pale);color:#854F0B;padding:2px 7px;border-radius:3px;letter-spacing:0.07em;text-transform:uppercase;vertical-align:middle">Herald</span></div>
+        <div style="font-size:11px;color:var(--ink-light);margin-bottom:12px">Email · Events · Website &nbsp;·&nbsp; rondoclt.org</div>
+      </div>
+      <div class="praeco-tabs-mob">
+        <div class="praeco-tab-mob active" onclick="switchPraecoTab('email',this)">Email</div>
+        <div class="praeco-tab-mob" onclick="switchPraecoTab('events',this)">Events</div>
+        <div class="praeco-tab-mob" onclick="switchPraecoTab('site',this)">Website</div>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="praeco-panel active" id="praeco-email">
+        <div class="praeco-stat-grid">
+          <div class="praeco-stat"><div class="praeco-stat-label">Sent this month</div><div class="praeco-stat-val">847</div><div class="praeco-stat-sub up">3 campaigns</div></div>
+          <div class="praeco-stat"><div class="praeco-stat-label">Avg. open rate</div><div class="praeco-stat-val">41%</div><div class="praeco-stat-sub up">+12% vs last mo</div></div>
+          <div class="praeco-stat"><div class="praeco-stat-label">Waitlist size</div><div class="praeco-stat-val">34</div><div class="praeco-stat-sub warn">Last nurtured 47d ago</div></div>
+          <div class="praeco-stat"><div class="praeco-stat-label">Gmail account</div><div class="praeco-stat-val" style="font-size:14px;padding-top:4px">Connected</div><div class="praeco-stat-sub up">rondoclt@gmail</div></div>
+        </div>
+        <div class="gmail-strip-mob"><div class="gmail-dot-mob"></div><div class="gmail-text-mob"><strong>Gmail connected</strong> — emails come from your own account</div></div>
+        <div style="padding:14px 16px 0">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Campaigns</span><span class="card-action">+ New</span></div>
+            <div class="campaign-item-mob"><div style="flex:1"><div class="campaign-name-mob">April homeowner newsletter</div><div class="campaign-detail-mob">All homeowners (47) · NRI-drafted</div></div><div class="campaign-right"><span class="status-pill sp-sched">Scheduled Apr 3</span><span style="font-size:10px;color:var(--ink-faint)">47 recipients</span></div></div>
+            <div class="campaign-item-mob"><div style="flex:1"><div class="campaign-name-mob">Resale alert — 14 Oak St.</div><div class="campaign-detail-mob">Matched waitlist (8 families) · Auto-triggered</div></div><div class="campaign-right"><span class="status-pill sp-sent">Sent Mar 28</span><span style="font-size:10px;color:var(--ink-faint)">62% opened · 3 inquiries</span></div></div>
+            <div class="campaign-item-mob"><div style="flex:1"><div class="campaign-name-mob">Spring gathering — save the date</div><div class="campaign-detail-mob">Homeowners + waitlist (81)</div></div><div class="campaign-right"><span class="status-pill sp-sent">Sent Mar 15</span><span style="font-size:10px;color:var(--ink-faint)">48% opened · 29 RSVPs</span></div></div>
+            <div class="campaign-item-mob"><div style="flex:1"><div class="campaign-name-mob">Waitlist nurture — Q1 update</div><div class="campaign-detail-mob">Waitlist families (34)</div></div><div class="campaign-right"><span class="status-pill sp-sent">Sent Feb 12</span><span style="font-size:10px;color:var(--ink-faint)">38% opened</span></div></div>
+            <div class="campaign-item-mob"><div style="flex:1"><div class="campaign-name-mob">CLT 101 info session invite</div><div class="campaign-detail-mob">Waitlist + inquiries (41)</div></div><div class="campaign-right"><span class="status-pill sp-draft">Draft</span><span style="font-size:10px;color:var(--ink-faint)">Not sent</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EVENTS -->
+      <div class="praeco-panel" id="praeco-events">
+        <div class="praeco-stat-grid">
+          <div class="praeco-stat"><div class="praeco-stat-label">Upcoming events</div><div class="praeco-stat-val">4</div><div class="praeco-stat-sub">Next 60 days</div></div>
+          <div class="praeco-stat"><div class="praeco-stat-label">Total RSVPs</div><div class="praeco-stat-val">61</div><div class="praeco-stat-sub up">Across all events</div></div>
+          <div class="praeco-stat"><div class="praeco-stat-label">Assembly RSVP</div><div class="praeco-stat-val">30%</div><div class="praeco-stat-sub warn">Low — nudge ready</div></div>
+          <div class="praeco-stat"><div class="praeco-stat-label">Public pages</div><div class="praeco-stat-val">3</div><div class="praeco-stat-sub up">Accepting RSVPs</div></div>
+        </div>
+        <div style="padding:14px 16px 0">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Events</span><span class="card-action">+ New event</span></div>
+            <div class="event-item-mob">
+              <div class="event-date-mob"><div class="event-month-mob">Apr</div><div class="event-day-mob">5</div></div>
+              <div class="event-body-mob">
+                <div class="event-name-mob">CLT 101 Info Session</div>
+                <div class="event-detail-mob">Virtual · 6–7:30 PM · Prospective applicants</div>
+                <div style="display:flex;align-items:center;gap:8px"><div class="rsvp-bar-mob" style="width:72px"><div class="rsvp-fill-mob" style="width:60%"></div><div class="rsvp-empty-mob"></div></div><span class="event-rsvp-label">18 / 30</span></div>
+              </div>
+              <div class="event-right-mob"><span class="tag evt-waitlist">Waitlist</span></div>
+            </div>
+            <div class="event-item-mob">
+              <div class="event-date-mob"><div class="event-month-mob">Apr</div><div class="event-day-mob">19</div></div>
+              <div class="event-body-mob">
+                <div class="event-name-mob">Spring Community Gathering</div>
+                <div class="event-detail-mob">Rondo Park · 2–5 PM · All homeowners</div>
+                <div style="display:flex;align-items:center;gap:8px"><div class="rsvp-bar-mob" style="width:72px"><div class="rsvp-fill-mob" style="width:62%"></div><div class="rsvp-empty-mob"></div></div><span class="event-rsvp-label">29 / 47</span></div>
+              </div>
+              <div class="event-right-mob"><span class="tag evt-homeowner">Homeowners</span></div>
+            </div>
+            <div class="event-item-mob" style="background:#FDF6E3">
+              <div class="event-date-mob" style="background:#F0D4A0"><div class="event-month-mob">Apr</div><div class="event-day-mob" style="color:var(--terra)">22</div></div>
+              <div class="event-body-mob">
+                <div class="event-name-mob">Annual Homeowner Assembly</div>
+                <div class="event-detail-mob">Rondo Ed Center · 6:30 PM · Required attendance</div>
+                <div style="display:flex;align-items:center;gap:8px"><div class="rsvp-bar-mob" style="width:72px"><div class="rsvp-fill-mob" style="width:30%;background:var(--terra)"></div><div class="rsvp-empty-mob"></div></div><span class="event-rsvp-label" style="color:var(--terra)">14 / 47</span></div>
+              </div>
+              <div class="event-right-mob"><span class="tag evt-homeowner">Homeowners</span><span style="font-size:10px;color:var(--terra)">Low turnout</span></div>
+            </div>
+            <div class="event-item-mob">
+              <div class="event-date-mob"><div class="event-month-mob">May</div><div class="event-day-mob">10</div></div>
+              <div class="event-body-mob">
+                <div class="event-name-mob">Financial Wellness Workshop</div>
+                <div class="event-detail-mob">Rondo Library · 10 AM · Open to all</div>
+                <div style="font-size:10px;color:var(--ink-faint)">0 / 25 RSVPs · Page not published</div>
+              </div>
+              <div class="event-right-mob"><span class="tag tag-gray">Public</span></div>
+            </div>
+          </div>
+          <div style="margin-top:14px;background:#FAEEDA;border:0.5px solid #F0D4A0;border-radius:10px;padding:13px">
+            <div style="font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#854F0B;margin-bottom:5px">Assembly RSVP nudge</div>
+            <div style="font-size:13px;color:#4A1B0C;line-height:1.45;margin-bottom:10px;font-weight:300">Only 30% of homeowners have RSVP'd for the Apr 22 assembly. NRI suggests sending a personal reminder to the 33 who haven't responded.</div>
+            <button class="btn warn full">Send assembly reminder via NRI</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SITE -->
+      <div class="praeco-panel" id="praeco-site">
+        <div class="site-preview-mob">
+          <div class="preview-bar-mob">
+            <div class="preview-dots-mob"><div class="preview-dot-mob"></div><div class="preview-dot-mob"></div><div class="preview-dot-mob"></div></div>
+            <div class="preview-url-mob">rondoclt.org</div>
+            <span class="preview-live">Live</span>
+          </div>
+          <div class="sim-nav-mob"><div class="sim-brand-mob">Rondo CLT</div><span class="sim-apply-mob">Apply now</span></div>
+          <div class="sim-hero-mob">
+            <div class="sim-lines-mob"></div>
+            <div style="font-size:9px;font-weight:500;letter-spacing:0.11em;text-transform:uppercase;color:var(--gold);margin-bottom:7px">Rondo Community Land Trust · Saint Paul, MN</div>
+            <div class="sim-h1-mob">Homeownership rooted<br>in <em>community.</em></div>
+            <div class="sim-sub-mob">The Rondo CLT provides permanently affordable homeownership for Saint Paul families.</div>
+            <span class="sim-cta-mob">Apply for a home</span>
+          </div>
+          <div class="sim-ground-mob"></div>
+          <div class="sim-stats-mob">
+            <div class="sim-stat-mob"><div class="sim-sn-mob">47</div><div class="sim-sl-mob">Families</div></div>
+            <div class="sim-stat-mob"><div class="sim-sn-mob">12yr</div><div class="sim-sl-mob">Serving Rondo</div></div>
+            <div class="sim-stat-mob"><div class="sim-sn-mob">$0</div><div class="sim-sl-mob">Foreclosures</div></div>
+          </div>
+        </div>
+        <div class="site-pages-mob">
+          <div style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px">Pages</div>
+          <div class="page-row-mob"><div class="page-icon-mob"><svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/><path d="M6 14v-4h4v4"/></svg></div><div style="flex:1"><div class="page-name-mob">Home</div><div class="page-status-live">Live · rondoclt.org</div></div></div>
+          <div class="page-row-mob"><div class="page-icon-mob"><svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h5"/></svg></div><div style="flex:1"><div class="page-name-mob">Available homes</div><div class="page-status-live">Live · auto-updates from Resale Engine</div></div></div>
+          <div class="page-row-mob"><div class="page-icon-mob"><svg viewBox="0 0 16 16"><path d="M5 2h6a1 1 0 0 1 1 1v12l-4-2.2L4 15V3a1 1 0 0 1 1-1z"/></svg></div><div style="flex:1"><div class="page-name-mob">Apply</div><div class="page-status-live">Live · feeds Applicant Pipeline</div></div></div>
+          <div class="page-row-mob"><div class="page-icon-mob"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="3"/><path d="M2 14c0-2.5 2.7-4.5 6-4.5s6 2 6 4.5"/></svg></div><div style="flex:1"><div class="page-name-mob">Our homeowners</div><div class="page-status-live">Live · 4 ambassador stories</div></div></div>
+          <div class="page-row-mob"><div class="page-icon-mob"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1"/><path d="M5 2v2M11 2v2M2 7h12"/></svg></div><div style="flex:1"><div class="page-name-mob">Events</div><div class="page-status-live">Live · auto-updates from Praeco</div></div></div>
+          <div class="page-row-mob"><div class="page-icon-mob"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div style="flex:1"><div class="page-name-mob">About / Contact</div><div class="page-status-live">Live</div></div></div>
+          <div class="page-row-mob"><div class="page-icon-mob" style="background:#FAECE7"><svg viewBox="0 0 16 16" style="stroke:#712B13"><path d="M8 2v12M4 6l4-4 4 4"/></svg></div><div style="flex:1"><div class="page-name-mob">Donate</div><div class="page-status-draft">Draft · not published</div></div></div>
+        </div>
+        <div style="padding:14px 16px">
+          <div class="card">
+            <div class="card-header"><span class="card-title">NRI site assistant</span></div>
+            <div style="padding:13px 14px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:12px;color:var(--ink-light);line-height:1.5;font-weight:300">Your About page copy hasn't been updated in 8 months.</div>
+              <button class="btn full" style="font-size:12px">Refresh About page copy</button>
+              <button class="btn full" style="font-size:12px">Generate homeowner story prompt</button>
+              <button class="btn full" style="font-size:12px">Translate site to Spanish</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── FINANCES (stub) ── -->
+    <div class="screen" id="screen-finances">
+      <div style="padding:40px 24px;text-align:center">
+        <div style="font-family:var(--serif-display);font-size:22px;color:var(--forest);margin-bottom:8px">Finances</div>
+        <div style="font-size:14px;color:var(--ink-light);font-weight:300">Ground lease, invoicing, Stripe Connect, and reporting. Coming next.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-item active" id="nav-dashboard" onclick="showScreen('dashboard')">
+      <svg class="nav-icon" viewBox="0 0 22 22"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="12" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="12" width="7" height="7" rx="1.5"/><rect x="12" y="12" width="7" height="7" rx="1.5"/></svg>
+      <span class="nav-label">Dashboard</span>
+    </button>
+    <button class="nav-item" id="nav-stewardship" onclick="showScreen('stewardship')">
+      <svg class="nav-icon" viewBox="0 0 22 22"><circle cx="11" cy="8" r="4"/><path d="M3 19c0-3.5 3.6-6 8-6s8 2.5 8 6"/></svg>
+      <span class="nav-label">Stewardship</span>
+      <span class="nav-badge">3</span>
+    </button>
+    <button class="nav-item" id="nav-pipeline" onclick="showScreen('pipeline')">
+      <svg class="nav-icon" viewBox="0 0 22 22"><path d="M3 6h16M3 11h11M3 16h7"/></svg>
+      <span class="nav-label">Pipeline</span>
+      <span class="nav-badge gold">7</span>
+    </button>
+    <button class="nav-item" id="nav-praeco" onclick="showScreen('praeco')">
+      <svg class="nav-icon" viewBox="0 0 22 22"><path d="M3 6h16v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6z"/><path d="M3 6l8 7 8-7"/></svg>
+      <span class="nav-label">Praeco</span>
+    </button>
+    <button class="nav-item" id="nav-finances" onclick="showScreen('finances')">
+      <svg class="nav-icon" viewBox="0 0 22 22"><path d="M3 18h16M5 18V8m4 10V5m4 13V10m4 8V7"/></svg>
+      <span class="nav-label">Finances</span>
+    </button>
+  </div>
+
+</div>
+
+<!-- HAMBURGER MENU -->
+<div class="hamburger-overlay" id="hamburgerOverlay" onclick="closeHamburger(event)">
+  <div class="hamburger-menu">
+    <div class="hm-header">
+      <div class="hm-brand-name">Propria<span>.</span></div>
+      <div class="hm-org">Rondo Community Land Trust</div>
+    </div>
+    <div class="hm-section">Property</div>
+    <div class="hm-item" onclick="closeHamburgerMenu()"><svg class="hm-icon" viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/><path d="M6 14v-4h4v4"/></svg>Asset management</div>
+    <div class="hm-item" onclick="closeHamburgerMenu()"><svg class="hm-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2 1.5"/></svg>Maintenance <span style="margin-left:auto;background:var(--terra);color:white;font-size:10px;padding:1px 5px;border-radius:8px">1</span></div>
+    <div class="hm-section">Community</div>
+    <div class="hm-item" onclick="closeHamburgerMenu()"><svg class="hm-icon" viewBox="0 0 16 16"><path d="M5 2h6a1 1 0 0 1 1 1v12l-4-2.2L4 15V3a1 1 0 0 1 1-1z"/></svg>Resale engine</div>
+    <div class="hm-item" onclick="closeHamburgerMenu()"><svg class="hm-icon" viewBox="0 0 16 16"><rect x="2" y="5" width="12" height="9" rx="1"/><path d="M5 5V3.5a3 3 0 0 1 6 0V5"/></svg>Governance</div>
+    <div class="hm-section">Settings</div>
+    <div class="hm-item" onclick="closeHamburgerMenu()"><svg class="hm-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><path d="M8 2v1M8 13v1M2 8h1M13 8h1M4.2 4.2l.7.7M11.1 11.1l.7.7M4.2 11.8l.7-.7M11.1 4.9l.7-.7"/></svg>CLT settings</div>
+    <div class="hm-item" onclick="closeHamburgerMenu()"><svg class="hm-icon" viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="3"/><path d="M2 14c0-2.5 2.7-4.5 6-4.5s6 2 6 4.5"/></svg>My account</div>
+    <div class="hm-spacer"></div>
+    <div class="hm-user">
+      <div class="hm-avatar">SC</div>
+      <div>
+        <div class="hm-user-name">Sarah Chen</div>
+        <div class="hm-user-role">Stewardship coordinator</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NRI COMPASS DRAWER -->
+<div class="compass-overlay" id="compassOverlay" onclick="closeCompass(event)">
+  <div class="compass-drawer">
+    <div class="compass-handle"></div>
+    <div class="compass-header">
+      <div>
+        <div class="compass-title-row"><div class="compass-dot"></div><span class="compass-title">NRI Compass</span></div>
+        <div class="compass-posture">Cura — here's what needs your attention today.</div>
+      </div>
+      <button class="compass-close" onclick="document.getElementById('compassOverlay').classList.remove('open')">✕</button>
+    </div>
+    <div class="compass-body">
+      <div class="compass-section-label">Today's movement</div>
+      <div class="nudge-card">
+        <span class="nudge-dismiss" onclick="this.closest('.nudge-card').remove()">dismiss</span>
+        <div class="nudge-dir cura">Cura</div>
+        <div class="nudge-msg">Maria Torres hasn't responded to 2 check-in attempts. Last contact was 23 days ago. Phone recommended over email — history suggests she responds better to voice.</div>
+        <div class="nudge-action" onclick="showScreen('stewardship');document.getElementById('compassOverlay').classList.remove('open')">→ Open Maria's record</div>
+      </div>
+      <div class="nudge-card">
+        <span class="nudge-dismiss" onclick="this.closest('.nudge-card').remove()">dismiss</span>
+        <div class="nudge-dir reconciliatio">Reconciliatio</div>
+        <div class="nudge-msg">3 homeowners have ground lease payments overdue, totaling $156. Walker family has no prior late history — likely an oversight.</div>
+        <div class="nudge-action">→ Send payment reminders</div>
+      </div>
+      <div class="nudge-card">
+        <span class="nudge-dismiss" onclick="this.closest('.nudge-card').remove()">dismiss</span>
+        <div class="nudge-dir itiner">Itiner</div>
+        <div class="nudge-msg">Keisha Johnson's income docs expired 17 days ago. Education stalled at Module 7. Her waitlist position is at risk without action this week.</div>
+        <div class="nudge-action" onclick="showScreen('pipeline');document.getElementById('compassOverlay').classList.remove('open')">→ Open Keisha's record</div>
+      </div>
+      <div class="compass-section-label">Ask NRI</div>
+      <button class="qp-chip">Who needs a check-in call this week?</button>
+      <button class="qp-chip">Draft a follow-up message to Maria Torres</button>
+      <button class="qp-chip">What's the status of the Hernandez application?</button>
+      <button class="qp-chip">Summarize ground lease health this month</button>
+    </div>
+    <div class="compass-input-row">
+      <input class="compass-input" type="text" placeholder="Ask NRI anything…">
+      <button class="compass-send"><svg viewBox="0 0 16 16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8H2M9 3l5 5-5 5"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contactModal" onclick="closeModalOnOverlay(event,'contactModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Draft outreach — Maria Torres</div>
+    <div class="modal-nri"><div class="modal-nri-dot"></div><div class="modal-nri-text">NRI drafted this from contact history and the pastoral note. Edit freely before sending.</div></div>
+    <div class="modal-label">Subject</div>
+    <input class="modal-input" type="text" value="Checking in — hope all is well">
+    <div class="modal-label">Message</div>
+    <textarea class="modal-textarea" rows="8">Hi Maria,
+
+I've been thinking of you and wanted to reach out. It's been a little while since we've had a chance to connect, and I wanted to see how you and the kids are doing.
+
+No agenda — just a genuine check-in. If you have 15 or 20 minutes sometime in the next few weeks, I'd love to catch up by phone.
+
+Warmly,
+Sarah</textarea>
+    <div class="modal-btns">
+      <button class="btn full" onclick="document.getElementById('contactModal').classList.remove('open')">Cancel</button>
+      <button class="btn primary full" onclick="document.getElementById('contactModal').classList.remove('open')">Send via Gmail</button>
+    </div>
+  </div>
+</div>
+
+<!-- DOC REQUEST MODAL -->
+<div class="modal-overlay" id="docModal" onclick="closeModalOnOverlay(event,'docModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Document request — Keisha Johnson</div>
+    <div class="modal-nri"><div class="modal-nri-dot"></div><div class="modal-nri-text">NRI drafted this. It names exactly what's needed and why, without creating alarm.</div></div>
+    <div class="modal-label">Sending to</div>
+    <div style="font-size:14px;font-weight:500;color:var(--ink);margin-bottom:12px"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bdd6d8d4ced5dc93d7d2d5d3ced2d3fddad0dcd4d193ded2d0">[email&#160;protected]</a></div>
+    <div class="modal-label">Subject</div>
+    <input class="modal-input" type="text" value="A quick update needed on your Rondo CLT application">
+    <div class="modal-label">Message</div>
+    <textarea class="modal-textarea" rows="10">Hi Keisha,
+
+Your application is moving along well — you're at position #4 on the waitlist, and your quiz scores have been excellent.
+
+Two documents need to be renewed to keep your application active:
+
+  · Updated employer income verification letter
+  · 2024 tax return (now available to submit)
+
+These expired on March 14 as part of our standard 6-month refresh. You can upload them through the portal in a few minutes.
+
+You also have 4 modules left in the course. Finishing those will move your waitlist score significantly — from #4 to #2.
+
+Let me know if you have any questions.
+
+Warmly,
+Sarah Chen</textarea>
+    <div class="modal-btns">
+      <button class="btn full" onclick="document.getElementById('docModal').classList.remove('open')">Cancel</button>
+      <button class="btn primary full" onclick="document.getElementById('docModal').classList.remove('open')">Send via Gmail</button>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+  closeHamburgerDirect();
+}
+
+function openHamburger() {
+  document.getElementById('hamburgerOverlay').classList.add('open');
+}
+function closeHamburger(e) {
+  if (e.target === document.getElementById('hamburgerOverlay')) {
+    closeHamburgerDirect();
+  }
+}
+function closeHamburgerDirect() {
+  document.getElementById('hamburgerOverlay').classList.remove('open');
+}
+function closeHamburgerMenu() {
+  closeHamburgerDirect();
+}
+
+function openCompass() {
+  document.getElementById('compassOverlay').classList.add('open');
+}
+function closeCompass(e) {
+  if (e.target === document.getElementById('compassOverlay')) {
+    document.getElementById('compassOverlay').classList.remove('open');
+  }
+}
+
+function openContactModal() {
+  document.getElementById('contactModal').classList.add('open');
+}
+function openDocModal() {
+  document.getElementById('docModal').classList.add('open');
+}
+function closeModalOnOverlay(e, id) {
+  if (e.target.classList.contains('modal-overlay')) {
+    document.getElementById(id).classList.remove('open');
+  }
+}
+
+function toggleTask(el) {
+  el.classList.toggle('done');
+  const text = el.nextElementSibling;
+  if (text) text.classList.toggle('done');
+}
+
+function switchStewardshipTab(tab, el) {
+  ['history','lease','life','note'].forEach(t => {
+    document.getElementById('stew-' + t).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.record-tab-mob').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function switchPraecoTab(tab, el) {
+  document.querySelectorAll('.praeco-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('praeco-' + tab).classList.add('active');
+  document.querySelectorAll('.praeco-tab-mob').forEach(t => t.c
