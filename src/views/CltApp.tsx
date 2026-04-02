@@ -5,6 +5,9 @@ export default function CltApp() {
   const [screen, setScreen] = useState('dashboard')
   const [hamburgerOpen, setHamburgerOpen] = useState(false)
   const [compassOpen, setCompassOpen] = useState(false)
+  const [stewTab, setStewTab] = useState('contact')
+  const [praecoTab, setPraecoTab] = useState('email')
+  const [govTab, setGovTab] = useState('board')
 
   function go(name: string) {
     setScreen(name)
@@ -135,7 +138,9 @@ export default function CltApp() {
             <div className={sc('stewardship')}>
               <div className="profile-hero"><div className="profile-av">MT</div><div style={{flex:1}}><div className="profile-name">Maria Torres</div><div className="profile-addr">14 Oak Street · Saint Paul, MN 55104</div><div className="profile-tags"><span className="profile-tag cura">Cura signal</span><span className="profile-tag year">Year 6</span><span className="profile-tag year">Since 2020</span></div></div></div>
               <div className="nri-banner"><div className="nri-banner-dot"></div><div className="nri-banner-text">Maria hasn't responded to 2 check-in attempts. Last contact 23 days ago. NRI suggests a door knock or emergency contact outreach.</div></div>
-              <div className="tab-bar"><div className="tab active">Contact history</div><div className="tab">Lease &amp; finances</div><div className="tab">Life events</div><div className="tab">Pastoral note</div></div>
+              <div className="tab-bar"><div className={stewTab==='contact'?'tab active':'tab'} onClick={()=>setStewTab('contact')}>Contact history</div><div className={stewTab==='lease'?'tab active':'tab'} onClick={()=>setStewTab('lease')}>Lease &amp; finances</div><div className={stewTab==='life'?'tab active':'tab'} onClick={()=>setStewTab('life')}>Life events</div><div className={stewTab==='note'?'tab active':'tab'} onClick={()=>setStewTab('note')}>Pastoral note</div></div>
+              {/* Contact history tab */}
+              {stewTab==='contact' && <>
               <div style={{padding:'12px 14px',display:'flex',gap:8}}><button className="btn primary" style={{flex:1}}>+ Log contact</button><button className="btn" style={{flex:1}}>Schedule check-in</button></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="contact-log-row"><div className="contact-log-icon"><svg viewBox="0 0 16 16"><path d="M2 4h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4z"/><path d="M2 4l6 5 6-5"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Email sent</div><div className="contact-log-note">Sent spring assembly invitation and check-in scheduling link. No reply.</div></div><div className="contact-log-time">Mar 24</div></div>
@@ -143,6 +148,50 @@ export default function CltApp() {
                 <div className="contact-log-row"><div className="contact-log-icon"><svg viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 0-2 2 10 10 0 0 0 10 10 2 2 0 0 0 2-2v-2a1 1 0 0 0-1-1l-2.5-.5a1 1 0 0 0-1 .5L8.8 10C7.3 9.3 6.7 8.7 6 7.2l.5-.7a1 1 0 0 0 .5-1L6.5 3A1 1 0 0 0 5.5 2H4z"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Phone call — answered</div><div className="contact-log-note">Annual check-in completed by phone. Mentioned possible interest in resale in 2–3 years.</div></div><div className="contact-log-time">Jan 15</div></div>
                 <div className="contact-log-row"><div className="contact-log-icon"><svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Home visit</div><div className="contact-log-note">Year 5 annual check-in. Unit in good condition. Mentioned bathroom faucet dripping.</div></div><div className="contact-log-time">Nov 2024</div></div>
               </div>
+              </>}
+
+              {/* Lease & finances tab */}
+              {stewTab==='lease' && <>
+              <div className="equity-bar-wrap">
+                <div className="equity-bar-top"><span className="equity-label">Accumulated equity</span><span className="equity-val">$14,200</span></div>
+                <div className="equity-track"><div className="equity-fill" style={{width:'62%'}}></div></div>
+                <div style={{fontSize:11,color:'var(--ink-faint)',marginTop:5}}>62% of estimated resale appreciation share</div>
+              </div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="card-header"><span className="card-title">Ground lease</span></div>
+                <div className="finance-stat"><span className="finance-label">Monthly payment</span><span className="finance-val">$48</span></div>
+                <div className="finance-stat"><span className="finance-label">Payments on time</span><span className="finance-val green">74 of 74</span></div>
+                <div className="finance-stat"><span className="finance-label">Lease start date</span><span className="finance-val">March 2020</span></div>
+                <div className="finance-stat"><span className="finance-label">Next renewal</span><span className="finance-val">October 2034</span></div>
+                <div className="finance-stat"><span className="finance-label">Current status</span><span className="finance-val green">Current</span></div>
+              </div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="card-header"><span className="card-title">Resale formula</span></div>
+                <div className="finance-stat"><span className="finance-label">Purchase price (2020)</span><span className="finance-val">$187,000</span></div>
+                <div className="finance-stat"><span className="finance-label">Appreciation share (30%)</span><span className="finance-val">$12,000</span></div>
+                <div className="finance-stat"><span className="finance-label">Improvement credit</span><span className="finance-val">$2,800</span></div>
+                <div className="finance-stat"><span className="finance-label">Est. resale max</span><span className="finance-val green">$201,800</span></div>
+              </div>
+              </>}
+
+              {/* Life events tab */}
+              {stewTab==='life' && <>
+              <div style={{padding:'12px 14px',display:'flex',gap:8}}><button className="btn primary" style={{flex:1}}>+ Log life event</button></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="contact-log-row"><div className="contact-log-icon" style={{background:'#FDF6E3'}}><svg viewBox="0 0 16 16"><path d="M8 2l1.5 4.5H14l-3.7 2.7 1.4 4.3L8 11 4.3 13.5l1.4-4.3L2 6.5h4.5z"/></svg></div><div className="contact-log-body"><div className="contact-log-type">5-year homeownership milestone</div><div className="contact-log-note">Maria celebrated 5 years in the home. Sent recognition letter.</div></div><div className="contact-log-time">Mar 2025</div></div>
+                <div className="contact-log-row"><div className="contact-log-icon" style={{background:'#E1F5EE'}}><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Employment change</div><div className="contact-log-note">Maria started new job at Hennepin County. Income verified for lease compliance.</div></div><div className="contact-log-time">Aug 2023</div></div>
+                <div className="contact-log-row"><div className="contact-log-icon" style={{background:'#FAECE7'}}><svg viewBox="0 0 16 16"><circle cx="8" cy="5" r="2.5"/><path d="M4 12c0-2 1.8-3.5 4-3.5s4 1.5 4 3.5"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Household change</div><div className="contact-log-note">Adult child moved out. Household updated in record.</div></div><div className="contact-log-time">Jun 2022</div></div>
+              </div>
+              </>}
+
+              {/* Pastoral note tab */}
+              {stewTab==='note' && <div style={{padding:14}}>
+                <div style={{background:'white',border:'0.5px solid var(--border)',borderRadius:10,padding:14,marginBottom:12}}>
+                  <div style={{fontSize:11,color:'var(--ink-faint)',marginBottom:8}}>Last updated Nov 2024 · Sarah Chen · Confidential</div>
+                  <div style={{fontFamily:'var(--serif-body)',fontSize:14,color:'var(--ink)',lineHeight:1.7,fontWeight:300}}>Maria is a strong, independent homeowner who takes great pride in her home. She mentioned in passing that she may want to sell in the next 2–3 years to be closer to her daughter's school district. No urgency — but worth flagging in the resale pipeline when the time comes. She appreciated the 5-year recognition letter.</div>
+                </div>
+                <button className="btn primary full">Edit pastoral note</button>
+              </div>}
             </div>
 
             {/* PIPELINE */}
@@ -180,13 +229,39 @@ export default function CltApp() {
             {/* PRAECO */}
             <div className={sc('praeco')}>
               <div className="screen-header"><div className="screen-header-title">Praeco</div><div className="screen-header-sub">Herald · Communications, events &amp; community</div></div>
-              <div className="tab-bar"><div className="tab active">Email</div><div className="tab">Events</div><div className="tab">Website</div></div>
-              <div style={{padding:'10px 14px 6px',display:'flex',alignItems:'center',gap:8}}><div style={{flex:1,fontSize:12,color:'var(--ink-light)'}}>Gmail connected</div><button className="btn primary">+ Compose</button></div>
+              <div className="tab-bar"><div className={praecoTab==='email'?'tab active':'tab'} onClick={()=>setPraecoTab('email')}>Email</div><div className={praecoTab==='events'?'tab active':'tab'} onClick={()=>setPraecoTab('events')}>Events</div><div className={praecoTab==='website'?'tab active':'tab'} onClick={()=>setPraecoTab('website')}>Website</div></div>
+              {praecoTab==='email' && <>
+              <div style={{padding:'10px 14px 6px',display:'flex',alignItems:'center',gap:8}}><div style={{flex:1,fontSize:12,color:'var(--ink-light)'}}>Gmail connected · sarah@rondoclt.org</div><button className="btn primary">+ Compose</button></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="contact-log-row"><div style={{flex:1}}><div style={{fontSize:13,fontWeight:500,color:'var(--ink)',marginBottom:2}}>Spring Assembly — all 47 homeowners</div><div style={{fontSize:12,color:'var(--ink-faint)'}}>Sent Mar 28 · 68% open · 23% clicked</div></div><span className="tag tag-green">Sent</span></div>
                 <div className="contact-log-row"><div style={{flex:1}}><div style={{fontSize:13,fontWeight:500,color:'var(--ink)',marginBottom:2}}>Ground lease reminder — 3 overdue</div><div style={{fontSize:12,color:'var(--ink-faint)'}}>Sent Mar 25 · 100% open rate</div></div><span className="tag tag-green">Sent</span></div>
                 <div className="contact-log-row"><div style={{flex:1}}><div style={{fontSize:13,fontWeight:500,color:'var(--ink)',marginBottom:2}}>Welcome to Rondo CLT — new homeowners</div><div style={{fontSize:12,color:'var(--ink-faint)'}}>Draft · NRI-generated · not sent</div></div><span className="tag tag-amber">Draft</span></div>
               </div>
+              </>}
+              {praecoTab==='events' && <>
+              <div style={{padding:'10px 14px 6px',display:'flex',justifyContent:'space-between',alignItems:'center'}}><span style={{fontSize:12,color:'var(--ink-light)'}}>2 upcoming events</span><button className="btn primary">+ Create event</button></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="card-header"><span className="card-title">Spring Community Gathering</span><span className="tag tag-green">Apr 12</span></div>
+                <div style={{padding:'12px 14px'}}><div style={{fontSize:12,color:'var(--ink-light)',marginBottom:8}}>Rondo Rec Center · 3–6 PM · 47 invited</div><div style={{height:6,background:'var(--parchment-dk)',borderRadius:3,overflow:'hidden',marginBottom:5}}><div style={{width:'62%',height:'100%',background:'var(--forest-light)',borderRadius:3}}></div></div><div style={{fontSize:11,color:'var(--ink-faint)'}}>29 of 47 RSVP'd (62%)</div></div>
+              </div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="card-header"><span className="card-title">Annual Homeowner Assembly</span><span className="tag tag-amber">Apr 22</span></div>
+                <div style={{padding:'12px 14px'}}><div style={{fontSize:12,color:'var(--ink-light)',marginBottom:8}}>Rondo CLT Office · 6–8 PM · 47 invited</div><div style={{height:6,background:'var(--parchment-dk)',borderRadius:3,overflow:'hidden',marginBottom:5}}><div style={{width:'30%',height:'100%',background:'var(--gold)',borderRadius:3}}></div></div><div style={{fontSize:11,color:'var(--terra)'}}>14 of 47 RSVP'd (30%) — low attendance alert</div><button className="btn full warn" style={{marginTop:10}}>Send RSVP reminder</button></div>
+              </div>
+              </>}
+              {praecoTab==='website' && <div style={{padding:14}}>
+                <div style={{background:'white',border:'0.5px solid var(--border)',borderRadius:10,overflow:'hidden',marginBottom:12}}>
+                  <div style={{background:'var(--forest)',padding:'10px 12px',display:'flex',alignItems:'center',justifyContent:'space-between'}}><span style={{fontSize:12,color:'var(--gold)',fontWeight:500}}>rondoclt.org</span><span className="tag tag-green">Live</span></div>
+                  <div style={{padding:12}}><button className="btn full">✦ NRI site assistant</button></div>
+                </div>
+                <div className="card">
+                  <div className="card-header"><span className="card-title">Pages</span></div>
+                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>Home</div><span className="tag tag-green">Live</span></div>
+                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>About our CLT</div><span className="tag tag-green">Live</span></div>
+                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>Apply for a home</div><span className="tag tag-green">Live</span></div>
+                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>News &amp; events</div><span className="tag tag-amber">Draft</span></div>
+                </div>
+              </div>}
             </div>
 
             {/* RESALE */}
@@ -244,7 +319,8 @@ export default function CltApp() {
             {/* GOVERNANCE */}
             <div className={sc('governance')}>
               <div className="screen-header"><div className="screen-header-title">Governance</div><div className="screen-header-sub">Board · Assembly · Documents · Volunteers</div></div>
-              <div className="tab-bar"><div className="tab active">Board</div><div className="tab">Assembly</div><div className="tab">Documents</div><div className="tab">Volunteers</div></div>
+              <div className="tab-bar"><div className={govTab==='board'?'tab active':'tab'} onClick={()=>setGovTab('board')}>Board</div><div className={govTab==='assembly'?'tab active':'tab'} onClick={()=>setGovTab('assembly')}>Assembly</div><div className={govTab==='documents'?'tab active':'tab'} onClick={()=>setGovTab('documents')}>Documents</div><div className={govTab==='volunteers'?'tab active':'tab'} onClick={()=>setGovTab('volunteers')}>Volunteers</div></div>
+              {govTab==='board' && <>
               <div style={{padding:'10px 14px 4px',display:'flex',justifyContent:'space-between',alignItems:'center'}}><span style={{fontSize:12,color:'var(--ink-light)'}}>7 board members · Next meeting Apr 18</span><button className="btn">Meeting agenda</button></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="gov-member-row"><div className="gov-av">CR</div><div style={{flex:1}}><div className="gov-name">Constance Rivera</div><div className="gov-role">Chair · Term ends 2026</div></div><span className="tag tag-forest">Chair</span></div>
@@ -253,6 +329,24 @@ export default function CltApp() {
                 <div className="gov-member-row"><div className="gov-av">SL</div><div style={{flex:1}}><div className="gov-name">Samuel Lee</div><div className="gov-role">Homeowner rep · Term ends 2025</div></div><span className="tag tag-amber">Up for election</span></div>
                 <div className="gov-member-row"><div className="gov-av">+3</div><div style={{flex:1}}><div className="gov-name">3 more members</div></div></div>
               </div>
+              </>}
+              {govTab==='assembly' && <div style={{padding:'10px 14px'}}>
+                <div className="card"><div className="card-header"><span className="card-title">Annual Homeowner Assembly</span><span className="tag tag-amber">Apr 22</span></div>
+                <div style={{padding:'12px 14px'}}><div style={{fontSize:12,color:'var(--terra)',fontWeight:500,marginBottom:8}}>Only 30% RSVP'd — send reminder</div><div style={{fontSize:13,color:'var(--ink)',fontWeight:500,marginBottom:6}}>Agenda</div><div style={{display:'flex',flexDirection:'column',gap:6,marginBottom:12}}>{['1. Year in review — staff report','2. Financial report — Thomas Wheeler','3. Board election — Samuel Lee seat','4. Homeowner open forum','5. Community updates'].map((a,i)=><div key={i} style={{fontSize:13,color:'var(--ink-mid)',fontWeight:300}}>{a}</div>)}</div><button className="btn full warn">Send RSVP reminder</button></div></div>
+              </div>}
+              {govTab==='documents' && <>
+                <div style={{padding:'10px 14px',display:'flex',justifyContent:'flex-end'}}><button className="btn primary">+ Upload document</button></div>
+                <div className="card" style={{margin:'0 14px 14px'}}>
+                  {['Ground lease template 2024','Board meeting minutes — Mar 2025','Financial statements — 2024','Homeowner handbook v3.2','Resale formula policy'].map((d,i)=><div key={i} className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>{d}</div><span className="tag tag-blue">PDF</span></div>)}
+                </div>
+              </>}
+              {govTab==='volunteers' && <div style={{padding:14}}>
+                <div className="stat-row" style={{marginBottom:14}}><div className="stat-card"><div className="stat-label">Hours logged</div><div className="stat-val">142</div><div className="stat-sub muted">This year</div></div><div className="stat-card"><div className="stat-label">Active volunteers</div><div className="stat-val">18</div><div className="stat-sub up">Good health</div></div></div>
+                <div className="card"><div className="card-header"><span className="card-title">Spring Gathering helpers needed</span></div>
+                <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Setup crew (3 people)</span><span className="cl-meta">Filled</span></div>
+                <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Food coordinators (2 people)</span><span className="cl-meta">Filled</span></div>
+                <div className="cl-row"><div className="cl-box"></div><span className="cl-text">Cleanup crew (2 people)</span><span className="cl-meta" style={{color:'var(--terra)'}}>0 of 2</span></div></div>
+              </div>}
             </div>
 
             {/* FINANCES */}
