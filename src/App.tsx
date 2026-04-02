@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
 import './App.css'
 import Marketing from './views/Marketing'
 import CltApp from './views/CltApp'
@@ -9,44 +10,59 @@ import CounselorCert from './views/CounselorCert'
 import CounselorDash from './views/CounselorDash'
 import Directory from './views/Directory'
 
-const VIEWS = [
-  { id: 'v-mkt', label: 'Marketing', component: Marketing },
-  { id: 'v-clt', label: 'CLT App', component: CltApp },
-  { id: 'v-hw', label: 'Homeowner', component: Homeowner },
-  { id: 'v-grd', label: 'Gardener', component: Gardener },
-  { id: 'v-edu', label: 'Education', component: Education },
-  { id: 'v-crt', label: 'Counselor Cert', component: CounselorCert },
-  { id: 'v-dsh', label: 'Counselor Dash', component: CounselorDash },
-  { id: 'v-dir', label: 'Directory', component: Directory },
-] as const
+const NAV_ITEMS = [
+  { path: '/', label: 'Marketing' },
+  { path: '/app', label: 'CLT App' },
+  { path: '/homeowner', label: 'Homeowner' },
+  { path: '/gardener', label: 'Gardener' },
+  { path: '/education', label: 'Education' },
+  { path: '/certification', label: 'Counselor Cert' },
+  { path: '/counselor', label: 'Counselor Dash' },
+  { path: '/directory', label: 'Directory' },
+]
 
-function App() {
-  const [activeView, setActiveView] = useState('v-mkt')
+function DevNav() {
+  const [open, setOpen] = useState(false)
+  const location = useLocation()
 
   return (
-    <>
-      <div className="sw">
-        <div className="sw-logo">Propria<span>.</span></div>
-        <div className="sw-sep" />
-        {VIEWS.map(v => (
-          <button
-            key={v.id}
-            className={'sw-btn' + (activeView === v.id ? ' on' : '')}
-            onClick={() => setActiveView(v.id)}
-          >
-            {v.label}
-          </button>
-        ))}
-      </div>
-
-      {VIEWS.map(v => (
-        <div key={v.id} className={'pv' + (activeView === v.id ? ' on' : '')} id={v.id}>
-          <div className="pv-inner" id={'vid_' + v.id}>
-            <v.component />
-          </div>
+    <div className="dev-nav">
+      {open && (
+        <div className="dev-nav-menu">
+          {NAV_ITEMS.map(item => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={location.pathname === item.path ? 'active' : ''}
+              onClick={() => setOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
-      ))}
-    </>
+      )}
+      <button className="dev-nav-toggle" onClick={() => setOpen(!open)}>
+        {open ? '×' : 'DEV'}
+      </button>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<Marketing />} />
+        <Route path="/app" element={<CltApp />} />
+        <Route path="/homeowner" element={<Homeowner />} />
+        <Route path="/gardener" element={<Gardener />} />
+        <Route path="/education" element={<Education />} />
+        <Route path="/certification" element={<CounselorCert />} />
+        <Route path="/counselor" element={<CounselorDash />} />
+        <Route path="/directory" element={<Directory />} />
+      </Routes>
+      <DevNav />
+    </HashRouter>
   )
 }
 
