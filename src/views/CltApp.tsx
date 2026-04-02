@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import './CltApp.css'
+import MagicImport from './MagicImport'
 
 function Sheet({ open, onClose, children }: { open: boolean; onClose: () => void; children: ReactNode }) {
   if (!open) return null
@@ -22,7 +23,6 @@ export default function CltApp() {
   const [praecoTab, setPraecoTab] = useState('email')
   const [govTab, setGovTab] = useState('board')
   const [finTab, setFinTab] = useState('overview')
-  const [importStep, setImportStep] = useState<'upload'|'parsing'|'preview'|'done'>('upload')
   const [leaseGenerating, setLeaseGenerating] = useState(false)
   const [leaseGenerated, setLeaseGenerated] = useState(false)
 
@@ -453,38 +453,8 @@ export default function CltApp() {
             </div>
 
             {/* MAGIC IMPORT */}
-            <div className={sc('import')}>
-              <div className="screen-header"><div className="screen-header-title">Magic Import</div><div className="screen-header-sub">Upload your spreadsheet. We'll figure it out.</div></div>
-              <div style={{padding:14}}>
-                {importStep==='upload' && <div onClick={()=>{setImportStep('parsing');setTimeout(()=>setImportStep('preview'),2000)}} style={{border:'2px dashed var(--border)',borderRadius:16,padding:'40px 20px',textAlign:'center',cursor:'pointer',background:'white'}}>
-                  <div style={{fontSize:40,marginBottom:12}}>📁</div>
-                  <div style={{fontFamily:'var(--serif-display)',fontSize:18,fontWeight:500,color:'var(--forest)',marginBottom:6}}>Drop your files here</div>
-                  <div style={{fontSize:13,color:'var(--ink-light)',lineHeight:1.6,marginBottom:12}}>CSV, Excel, PDF, or photos of paper records</div>
-                  <div style={{display:'inline-block',padding:'8px 20px',borderRadius:8,background:'var(--forest)',color:'var(--parchment)',fontSize:13,fontWeight:500}}>Choose files</div>
-                  <div style={{fontSize:11,color:'var(--ink-faint)',marginTop:10}}>.csv, .xlsx, .xls, .pdf, .jpg, .png</div>
-                </div>}
-                {importStep==='parsing' && <div style={{textAlign:'center',padding:'40px 20px'}}>
-                  <div style={{width:56,height:56,borderRadius:'50%',background:'var(--gold-pale)',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 16px',fontSize:24,animation:'pulse 1.5s ease-in-out infinite'}}>✦</div>
-                  <div style={{fontFamily:'var(--serif-display)',fontSize:20,fontWeight:500,color:'var(--forest)',marginBottom:6}}>Analyzing your data...</div>
-                  <div style={{fontSize:13,color:'var(--ink-light)'}}>NRI is parsing and mapping fields</div>
-                </div>}
-                {importStep==='preview' && <>
-                  <div style={{background:'#E1F5EE',border:'1px solid #8DCFAD',borderRadius:12,padding:'12px 16px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}><span style={{fontSize:20}}>✓</span><div><div style={{fontSize:13,fontWeight:500,color:'#085041'}}>Found 47 homeowners, 3 applicants, 47 properties</div></div></div>
-                  <div className="card" style={{marginBottom:14}}>
-                    {[{n:'Maria Torres',a:'14 Oak St · Since 2020'},{n:'James Walker',a:'88 Iglehart Ave · Since 2019'},{n:'Patricia Moore',a:'56 Thomas Ave · Since 2021'},{n:'Roberto Diaz',a:'221 Minnehaha Ave · Since 2018'}].map((h,i)=>
-                      <div key={i} className="feed-item"><div className="feed-avatar av-teal">{h.n.split(' ').map(w=>w[0]).join('')}</div><div className="feed-body"><div className="feed-name">{h.n}</div><div className="feed-detail">{h.a}</div></div><span className="tag tag-green">Active</span></div>
-                    )}
-                    <div style={{padding:'8px 14px',fontSize:12,color:'var(--ink-faint)',textAlign:'center'}}>+ 43 more</div>
-                  </div>
-                  <div style={{display:'flex',gap:10}}><button className="btn" style={{flex:1}} onClick={()=>setImportStep('upload')}>Start over</button><button className="btn primary" style={{flex:2}} onClick={()=>setImportStep('done')}>Import 47 records →</button></div>
-                </>}
-                {importStep==='done' && <div style={{textAlign:'center',padding:'40px 20px'}}>
-                  <div style={{width:56,height:56,borderRadius:'50%',background:'#E1F5EE',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 16px',fontSize:24}}>✓</div>
-                  <div style={{fontFamily:'var(--serif-display)',fontSize:20,fontWeight:500,color:'var(--forest)',marginBottom:6}}>Import complete</div>
-                  <div style={{fontSize:13,color:'var(--ink-light)',marginBottom:20}}>47 homeowners, 3 applicants, and 47 properties imported.</div>
-                  <button className="btn primary" onClick={()=>setImportStep('upload')}>Import another file</button>
-                </div>}
-              </div>
+            <div className={sc('import')} style={{overflow:'auto'}}>
+              <MagicImport />
             </div>
 
             {/* GROUND LEASE GENERATOR */}
