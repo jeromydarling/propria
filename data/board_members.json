@@ -1,0 +1,6 @@
+[
+  {"id":"brd-001","name":"Constance Rivera","role":"Chair","term_ends":"2026","initials":"CR"},
+  {"id":"brd-002","name":"Thomas Wheeler","role":"Treasurer","term_ends":"2027","initials":"TW"},
+  {"id":"brd-003","name":"Amara Gomez","role":"Secretary","term_ends":"2026","initials":"AG"},
+  {"id":"brd-004","name":"Samuel Lee","role":"Homeowner rep","term_ends":"2025","initials":"SL","up_for_election":true}
+]

@@ -1,0 +1,18 @@
+{
+  "contact_logged": "custodia",
+  "maintenance_request": "custodia",
+  "ground_lease_paid": "custodia",
+  "check_in_completed": "custodia",
+  "lease_payment_overdue": "reconciliatio",
+  "contact_overdue_30d": "reconciliatio",
+  "risk_flag_raised": "reconciliatio",
+  "application_submitted": "itiner",
+  "stage_advanced": "itiner",
+  "education_module_done": "itiner",
+  "session_completed": "itiner",
+  "counselor_assigned": "itiner",
+  "event_rsvp": "cura",
+  "community_message": "cura",
+  "new_homeowner_joined": "cura",
+  "birthday_upcoming": "cura"
+}

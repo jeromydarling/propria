@@ -1,0 +1,8 @@
+[
+  {"id":"cns-001","name":"Sarah Wilkins","org":"LSS Financial Counseling","certifications":["HUD-Approved","CLT-Certified"],"languages":["English","Spanish"],"availability":"available","clt_cert_status":"certified","ceu_hours":4.0,"active_clients":5,"completion_rate":0.94},
+  {"id":"cns-002","name":"Marcus Chen","org":"Twin Cities Housing Alliance","certifications":["HUD-Approved","CLT-Certified"],"languages":["English","Mandarin"],"availability":"available"},
+  {"id":"cns-003","name":"Amira Hassan","org":"Bridgewater Community Services","certifications":["HUD-Approved","CLT-Certified"],"languages":["English","Somali"],"availability":"unavailable"},
+  {"id":"cns-004","name":"David Rodriguez","org":"Catholic Charities","certifications":["HUD-Approved","CLT-Certified"],"languages":["English","Spanish"],"availability":"available"},
+  {"id":"cns-005","name":"Lisa Thornton","org":"Urban League Housing","certifications":["HUD-Approved"],"languages":["English"],"availability":"available"},
+  {"id":"cns-006","name":"James Okonkwo","org":"Neighborhood Housing Services","certifications":["HUD-Approved","CLT-Certified"],"languages":["English"],"availability":"available"}
+]

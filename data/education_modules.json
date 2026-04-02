@@ -1,0 +1,8 @@
+[
+  {"id":"edu-001","module_number":1,"title":"Your Financial Picture as a CLT Buyer","lessons":4,"passing_threshold":70},
+  {"id":"edu-002","module_number":2,"title":"How a CLT Works","lessons":5,"passing_threshold":70},
+  {"id":"edu-003","module_number":3,"title":"Your Ground Lease — Line by Line","lessons":8,"passing_threshold":70,"covers":"all 8 ground lease provisions"},
+  {"id":"edu-004","module_number":4,"title":"Resale Formula Deep Dive","lessons":6,"passing_threshold":70,"covers":"3 formula types with worked examples"},
+  {"id":"edu-005","module_number":5,"title":"Your CLT's Programs","lessons":3,"passing_threshold":70,"editable_per_clt":true},
+  {"id":"edu-006","module_number":6,"title":"Final Assessment","lessons":1,"passing_threshold":70,"question_count":20,"is_final":true}
+]

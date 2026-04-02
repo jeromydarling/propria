@@ -1,0 +1,7 @@
+[
+  {"id":"prop-001","address":"14 Oak Street","city":"Saint Paul","state":"MN","zip":"55104","homeowner_id":"hw-001","status":"resale_in_progress","bedrooms":3,"bathrooms":1.5,"sqft":1240,"year_built":1948,"last_inspection":"2026-02","next_inspection":"2026-10","condition":"good","resale_stage":5},
+  {"id":"prop-002","address":"88 Iglehart Avenue","city":"Saint Paul","state":"MN","zip":"55104","homeowner_id":"hw-002","status":"active","year_built":1952,"next_inspection":"2026-06","condition":"good"},
+  {"id":"prop-003","address":"56 Thomas Avenue","city":"Saint Paul","state":"MN","zip":"55104","homeowner_id":"hw-003","status":"active","open_maintenance":true,"maintenance_days_open":31,"contractor":"Ace Contracting"},
+  {"id":"prop-004","address":"221 Minnehaha Avenue","city":"Saint Paul","state":"MN","zip":"55104","homeowner_id":"hw-004","status":"active","year_built":1961,"condition":"good"},
+  {"id":"prop-005","address":"33 Charles Avenue","city":"Saint Paul","state":"MN","zip":"55104","homeowner_id":"hw-005","status":"active"}
+]

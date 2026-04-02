@@ -233,6 +233,196 @@ export default function Marketing() {
         </div>
       </section>
 
+      {/* PRODUCT SHOWCASE — Mini-preview slider */}
+      <div className="ground-line" />
+      <section style={{background:'var(--forest)',padding:'80px 0 90px',overflow:'hidden'}}>
+        <div style={{maxWidth:1100,margin:'0 auto',padding:'0 2.5rem'}}>
+          <p className="section-eyebrow" style={{color:'var(--gold)'}}>See It In Action</p>
+          <h2 style={{fontFamily:'var(--serif-display)',fontSize:'clamp(30px,4vw,46px)',fontWeight:500,lineHeight:1.15,color:'var(--parchment)',letterSpacing:'-0.02em',maxWidth:600,marginBottom:'1rem'}}>Every screen. <em style={{fontStyle:'italic',color:'var(--terra-light)'}}>Every workflow.</em></h2>
+          <p style={{fontFamily:'var(--serif-body)',fontSize:17,fontWeight:300,color:'rgba(245,240,232,0.6)',lineHeight:1.65,maxWidth:520,marginBottom:'2.5rem'}}>From stewardship dashboards to resale engines, from homebuyer education to AI-powered site builders — scroll through what your team sees every day.</p>
+        </div>
+        <div style={{overflowX:'auto',WebkitOverflowScrolling:'touch',scrollSnapType:'x mandatory',display:'flex',gap:20,paddingLeft:'max(2.5rem, calc((100vw - 1100px)/2 + 2.5rem))',paddingRight:40,paddingBottom:16}}>
+          {[
+            {title:'Dashboard',sub:'Sarah\'s morning view — who needs attention today',content:(
+              <div style={{background:'var(--forest)',padding:'12px 14px 14px'}}>
+                <div style={{fontFamily:'var(--serif-display)',fontSize:13,fontWeight:500,color:'var(--parchment)',marginBottom:2}}>Good morning, <em style={{color:'var(--terra-light)'}}>Sarah</em></div>
+                <div style={{fontSize:8,color:'rgba(245,240,232,0.4)',marginBottom:10}}>Tuesday, April 1, 2026 · Rondo CLT</div>
+                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6}}>
+                  {[{l:'Families',v:'47',s:'+2'},{l:'Lease',v:'94%',s:'3 due'},{l:'Applicants',v:'12',s:'7 in ed.'},{l:'Check-ins',v:'7',s:'Apr 30'}].map((s,i)=>
+                    <div key={i} style={{background:'rgba(245,240,232,0.1)',borderRadius:6,padding:'8px 10px'}}>
+                      <div style={{fontSize:7,color:'rgba(245,240,232,0.5)'}}>{s.l}</div>
+                      <div style={{fontFamily:'var(--serif-display)',fontSize:16,color:'var(--parchment)',lineHeight:1}}>{s.v}</div>
+                      <div style={{fontSize:7,color:'#8DCFAD'}}>{s.s}</div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ),feed:(
+              <div style={{padding:'8px 10px'}}>
+                <div style={{fontSize:7,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)',marginBottom:6}}>Needs attention</div>
+                {[{i:'MT',n:'Maria Torres',d:'No response · 23d',c:'#FAECE7',t:'#712B13',p:'Cura',pc:'#FDF6E3',ptc:'#854F0B'},{i:'JW',n:'James Walker',d:'Lease 9d overdue',c:'#FAECE7',t:'#712B13',p:'Reconciliatio',pc:'#FAECE7',ptc:'#712B13'},{i:'KJ',n:'Keisha Johnson',d:'Docs expired',c:'#E6F1FB',t:'#0C447C',p:'Itiner',pc:'#E6F1FB',ptc:'#0C447C'}].map((f,i)=>
+                  <div key={i} style={{display:'flex',gap:6,padding:'5px 0',borderBottom:'0.5px solid var(--border-light)',alignItems:'center'}}>
+                    <div style={{width:22,height:22,borderRadius:'50%',background:f.c,display:'flex',alignItems:'center',justifyContent:'center',fontSize:7,fontWeight:500,color:f.t,flexShrink:0}}>{f.i}</div>
+                    <div style={{flex:1,minWidth:0}}><div style={{fontSize:9,fontWeight:500,color:'var(--ink)'}}>{f.n}</div><div style={{fontSize:7,color:'var(--ink-light)'}}>{f.d}</div></div>
+                    <span style={{fontSize:7,fontWeight:500,padding:'1px 5px',borderRadius:2,background:f.pc,color:f.ptc}}>{f.p}</span>
+                  </div>
+                )}
+              </div>
+            )},
+            {title:'Stewardship',sub:'Maria Torres — contact history, lease data, life events',content:(
+              <div style={{background:'var(--forest)',padding:'10px 14px',display:'flex',gap:8,alignItems:'center'}}>
+                <div style={{width:28,height:28,borderRadius:'50%',background:'rgba(245,240,232,0.14)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:9,fontWeight:500,color:'var(--parchment)'}}>MT</div>
+                <div><div style={{fontFamily:'var(--serif-display)',fontSize:12,fontWeight:500,color:'var(--parchment)'}}>Maria Torres</div><div style={{fontSize:7,color:'rgba(245,240,232,0.5)'}}>14 Oak St · Year 6 · Cura signal</div></div>
+              </div>
+            ),feed:(
+              <div>
+                <div style={{background:'var(--gold-pale)',padding:'6px 10px',display:'flex',gap:6,alignItems:'flex-start'}}>
+                  <div style={{width:5,height:5,borderRadius:'50%',background:'var(--gold)',marginTop:3,flexShrink:0}}></div>
+                  <div style={{fontSize:8,color:'#633806',lineHeight:1.4}}>Maria hasn't responded to 2 check-in attempts. Last contact 23 days ago.</div>
+                </div>
+                <div style={{display:'flex',background:'white',borderBottom:'0.5px solid var(--border)'}}>
+                  {['Contact','Lease','Life','Note'].map((t,i)=><div key={i} style={{flex:1,padding:'6px',textAlign:'center',fontSize:8,color:i===0?'var(--forest)':'var(--ink-faint)',borderBottom:i===0?'2px solid var(--forest)':'none',fontWeight:i===0?500:400}}>{t}</div>)}
+                </div>
+                <div style={{padding:'6px 10px'}}>
+                  {[{t:'Email sent',d:'Mar 24'},{t:'Text message',d:'Mar 12'},{t:'Phone call',d:'Jan 15'}].map((c,i)=>
+                    <div key={i} style={{display:'flex',justifyContent:'space-between',padding:'4px 0',borderBottom:'0.5px solid var(--border-light)',fontSize:8,color:'var(--ink-light)'}}><span style={{color:'var(--ink)',fontWeight:500}}>{c.t}</span><span>{c.d}</span></div>
+                  )}
+                </div>
+              </div>
+            )},
+            {title:'Resale Engine',sub:'14 Oak St. — formula, buyer matching, closing',content:(
+              <div style={{background:'var(--forest)',padding:'10px 14px',display:'flex',gap:8,alignItems:'center'}}>
+                <div style={{width:28,height:28,borderRadius:'50%',background:'var(--parchment-dk)',display:'flex',alignItems:'center',justifyContent:'center'}}><svg viewBox="0 0 16 16" width="14" height="14"><path d="M2 14V7.5L8 2l6 5.5V14H2z" stroke="var(--forest)" fill="none" strokeWidth="1.2"/></svg></div>
+                <div><div style={{fontFamily:'var(--serif-display)',fontSize:12,fontWeight:500,color:'var(--parchment)'}}>14 Oak Street</div><div style={{fontSize:7,color:'rgba(245,240,232,0.5)'}}>Stage 5 · Buyer matching</div></div>
+              </div>
+            ),feed:(
+              <div style={{padding:'8px 10px'}}>
+                <div style={{display:'flex',justifyContent:'space-between',padding:'4px 0',borderBottom:'0.5px solid var(--border-light)',fontSize:8}}><span style={{color:'var(--ink-light)'}}>Purchase price</span><span style={{fontWeight:500}}>$187,000</span></div>
+                <div style={{display:'flex',justifyContent:'space-between',padding:'4px 0',borderBottom:'0.5px solid var(--border-light)',fontSize:8}}><span style={{color:'var(--ink-light)'}}>+ 30% appreciation</span><span style={{fontWeight:500}}>$12,000</span></div>
+                <div style={{display:'flex',justifyContent:'space-between',padding:'4px 0',borderBottom:'0.5px solid var(--border-light)',fontSize:8}}><span style={{color:'var(--ink-light)'}}>+ Improvement credit</span><span style={{fontWeight:500}}>$2,800</span></div>
+                <div style={{display:'flex',justifyContent:'space-between',fontSize:9,background:'var(--parchment)',margin:'4px -10px 0',padding:'6px 10px'}}><span style={{fontWeight:500,color:'var(--ink)'}}>Max resale price</span><span style={{fontFamily:'var(--serif-display)',fontSize:12,color:'var(--forest)'}}>$201,800</span></div>
+              </div>
+            )},
+            {title:'Site Builder',sub:'NRI-powered CLT website — edit, publish, analyze',content:(
+              <div style={{background:'#2A2A2A',padding:'6px 10px',display:'flex',alignItems:'center',gap:6}}>
+                <div style={{display:'flex',gap:3}}><div style={{width:7,height:7,borderRadius:'50%',background:'#FF5F57'}}></div><div style={{width:7,height:7,borderRadius:'50%',background:'#FEBC2E'}}></div><div style={{width:7,height:7,borderRadius:'50%',background:'#28C840'}}></div></div>
+                <div style={{flex:1,background:'#1A1A1A',borderRadius:3,padding:'2px 8px',fontSize:8,color:'#999'}}>rondoclt.org</div>
+              </div>
+            ),feed:(
+              <div>
+                <div style={{background:'var(--forest)',padding:'12px 10px'}}>
+                  <div style={{fontFamily:'var(--serif-display)',fontSize:11,fontWeight:500,color:'var(--parchment)',lineHeight:1.2,marginBottom:4}}>Affordable homeownership in the <em style={{color:'var(--terra-light)'}}>Rondo neighborhood.</em></div>
+                  <div style={{fontSize:7,color:'rgba(245,240,232,0.5)',marginBottom:6}}>Preserving homes for families in Saint Paul.</div>
+                  <span style={{fontSize:7,padding:'3px 8px',borderRadius:2,background:'var(--terra)',color:'var(--parchment)'}}>Apply</span>
+                </div>
+                <div style={{padding:'6px 10px',display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:4}}>
+                  {[{v:'47',l:'Families'},{v:'12',l:'Years'},{v:'$0',l:'Foreclosures'}].map((s,i)=><div key={i} style={{background:'white',border:'0.5px solid var(--border)',borderRadius:4,padding:'4px',textAlign:'center'}}><div style={{fontFamily:'var(--serif-display)',fontSize:10,color:'var(--forest)'}}>{s.v}</div><div style={{fontSize:6,color:'var(--ink-faint)'}}>{s.l}</div></div>)}
+                </div>
+              </div>
+            )},
+            {title:'Magic Import',sub:'AI-powered data migration — bring your mess',content:(
+              <div style={{padding:'12px 14px',textAlign:'center'}}>
+                <div style={{fontSize:24,marginBottom:6}}>📁</div>
+                <div style={{fontFamily:'var(--serif-display)',fontSize:12,fontWeight:500,color:'var(--forest)',marginBottom:4}}>Bring your mess</div>
+                <div style={{fontSize:8,color:'var(--ink-light)',lineHeight:1.5}}>Excel, CSV, PDF, photos</div>
+              </div>
+            ),feed:(
+              <div style={{padding:'8px 10px'}}>
+                <div style={{display:'flex',gap:6,marginBottom:6,alignItems:'center'}}><span style={{fontSize:10}}>✓</span><div style={{fontSize:8,fontWeight:500,color:'#085041'}}>47 homeowners · 14 applicants</div></div>
+                <div style={{fontSize:7,fontWeight:500,letterSpacing:'0.08em',textTransform:'uppercase' as const,color:'var(--ink-faint)',marginBottom:4}}>Field mapping</div>
+                {[{s:'Owner Name',t:'Homeowner',c:98},{s:'Addr',t:'Address',c:95},{s:'Monthly GL',t:'Lease Fee',c:89}].map((m,i)=>
+                  <div key={i} style={{display:'flex',alignItems:'center',gap:4,padding:'2px 0',fontSize:7}}>
+                    <span style={{fontFamily:'monospace',background:'var(--parchment)',padding:'1px 3px',borderRadius:2,color:'var(--ink)'}}>{m.s}</span>
+                    <span style={{color:'var(--ink-faint)'}}>→</span>
+                    <span style={{color:'var(--forest)',fontWeight:500}}>{m.t}</span>
+                    <span style={{marginLeft:'auto',fontWeight:600,color:m.c>=90?'var(--forest-light)':'var(--gold)'}}>{m.c}%</span>
+                  </div>
+                )}
+              </div>
+            )},
+            {title:'Homeowner Portal',sub:'Maria\'s view — equity, payments, community',content:(
+              <div style={{padding:'10px 14px'}}>
+                <div style={{fontFamily:'var(--serif-display)',fontSize:13,fontWeight:500,color:'var(--forest)',marginBottom:2}}>Good morning, <em style={{color:'var(--terra)'}}>Maria</em></div>
+                <div style={{fontSize:7,color:'var(--ink-faint)',marginBottom:8}}>14 Oak Street · Rondo CLT</div>
+                <div style={{background:'var(--forest)',borderRadius:8,padding:'10px',color:'var(--parchment)'}}>
+                  <div style={{fontFamily:'var(--serif-display)',fontSize:10,marginBottom:6}}>14 Oak Street</div>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:6}}>
+                    {[{l:'Years',v:'6.2'},{l:'Equity',v:'$14.2k'},{l:'Lease',v:'$48'}].map((s,i)=>
+                      <div key={i}><div style={{fontSize:6,color:'rgba(245,240,232,0.5)'}}>{s.l}</div><div style={{fontFamily:'var(--serif-display)',fontSize:12,lineHeight:1}}>{s.v}</div></div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ),feed:(
+              <div style={{padding:'6px 10px'}}>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'4px 0',borderBottom:'0.5px solid var(--border-light)'}}>
+                  <div><div style={{fontSize:8,color:'var(--ink)'}}>April ground lease</div><div style={{fontSize:6,color:'var(--ink-faint)'}}>Autopay · Visa ···4821</div></div>
+                  <span style={{fontSize:7,fontWeight:500,color:'var(--forest-light)'}}>Collected ✓</span>
+                </div>
+              </div>
+            )},
+          ].map((screen,i) => (
+            <div key={i} style={{minWidth:300,maxWidth:300,scrollSnapAlign:'start',flexShrink:0}}>
+              {/* Browser chrome */}
+              <div style={{background:'white',borderRadius:10,overflow:'hidden',boxShadow:'0 8px 40px rgba(0,0,0,0.25)',border:'1px solid rgba(245,240,232,0.1)'}}>
+                <div style={{background:'#2A2A2A',padding:'6px 10px',display:'flex',alignItems:'center',gap:6}}>
+                  <div style={{display:'flex',gap:4}}><div style={{width:8,height:8,borderRadius:'50%',background:'#FF5F57'}}></div><div style={{width:8,height:8,borderRadius:'50%',background:'#FEBC2E'}}></div><div style={{width:8,height:8,borderRadius:'50%',background:'#28C840'}}></div></div>
+                  <div style={{flex:1,background:'#1A1A1A',borderRadius:4,padding:'3px 8px',fontSize:9,color:'#777',fontFamily:'var(--sans)'}}>propria.app</div>
+                </div>
+                <div style={{background:'var(--cream)',minHeight:220}}>
+                  {screen.content}
+                  {screen.feed}
+                </div>
+              </div>
+              {/* Label */}
+              <div style={{marginTop:14}}>
+                <div style={{fontFamily:'var(--serif-display)',fontSize:17,fontWeight:500,color:'var(--parchment)',letterSpacing:'-0.01em'}}>{screen.title}</div>
+                <div style={{fontFamily:'var(--sans)',fontSize:12,color:'rgba(245,240,232,0.5)',fontWeight:300,marginTop:2}}>{screen.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* DEMO GATE */}
+      <div className="ground-line" />
+      <section id="demo" style={{background:'var(--cream)',padding:'100px 2.5rem'}}>
+        <div style={{maxWidth:680,margin:'0 auto',textAlign:'center'}}>
+          <p className="section-eyebrow" style={{textAlign:'center'}}>Try Propria</p>
+          <h2 className="section-title" style={{textAlign:'center',maxWidth:'none',margin:'0 auto 1rem'}}>See it for yourself.</h2>
+          <p className="section-body" style={{textAlign:'center',maxWidth:'none',margin:'0 auto 2.5rem'}}>Fill in your details and we'll give you instant access to a live demo — the same Rondo CLT environment you just saw, fully interactive, with no data saved.</p>
+
+          <div style={{background:'white',border:'0.5px solid var(--border)',borderRadius:12,padding:'2rem',textAlign:'left',maxWidth:480,margin:'0 auto'}}>
+            <div style={{marginBottom:16}}>
+              <label style={{fontSize:12,color:'var(--ink-light)',display:'block',marginBottom:4,fontFamily:'var(--sans)'}}>Your name</label>
+              <input type="text" placeholder="e.g. Sarah Chen" style={{width:'100%',padding:'10px 14px',borderRadius:8,border:'0.5px solid var(--border)',fontSize:14,fontFamily:'var(--sans)',color:'var(--ink)',background:'white'}} />
+            </div>
+            <div style={{marginBottom:16}}>
+              <label style={{fontSize:12,color:'var(--ink-light)',display:'block',marginBottom:4,fontFamily:'var(--sans)'}}>Email</label>
+              <input type="email" placeholder="sarah@rondoclt.org" style={{width:'100%',padding:'10px 14px',borderRadius:8,border:'0.5px solid var(--border)',fontSize:14,fontFamily:'var(--sans)',color:'var(--ink)',background:'white'}} />
+            </div>
+            <div style={{marginBottom:16}}>
+              <label style={{fontSize:12,color:'var(--ink-light)',display:'block',marginBottom:4,fontFamily:'var(--sans)'}}>CLT or organization name</label>
+              <input type="text" placeholder="e.g. Rondo Community Land Trust" style={{width:'100%',padding:'10px 14px',borderRadius:8,border:'0.5px solid var(--border)',fontSize:14,fontFamily:'var(--sans)',color:'var(--ink)',background:'white'}} />
+            </div>
+            <div style={{marginBottom:24}}>
+              <label style={{fontSize:12,color:'var(--ink-light)',display:'block',marginBottom:4,fontFamily:'var(--sans)'}}>Your role</label>
+              <select style={{width:'100%',padding:'10px 14px',borderRadius:8,border:'0.5px solid var(--border)',fontSize:14,fontFamily:'var(--sans)',color:'var(--ink)',background:'white',appearance:'auto' as never}}>
+                <option value="">Select your role…</option>
+                <option>Executive Director</option>
+                <option>Stewardship Coordinator</option>
+                <option>Program Manager</option>
+                <option>Board Member</option>
+                <option>Housing Counselor</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <a href="#/app" className="btn-primary" style={{display:'block',width:'100%',textAlign:'center',padding:'14px',borderRadius:3,fontFamily:'var(--sans)',fontSize:15,fontWeight:500,textDecoration:'none',border:'none',cursor:'pointer'}}>Launch demo →</a>
+            <div style={{fontSize:12,color:'var(--ink-faint)',textAlign:'center',marginTop:12,fontFamily:'var(--sans)',fontWeight:300}}>No credit card. No commitment. Instant access.</div>
+          </div>
+        </div>
+      </section>
+
       {/* GROUNDED SOLUTIONS BAND */}
       <div className="grounded-band">
         <div className="grounded-inner">

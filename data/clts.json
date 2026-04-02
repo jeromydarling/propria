@@ -1,0 +1,3 @@
+[
+  {"id":"clt-001","name":"Rondo Community Land Trust","city":"Saint Paul","state":"MN","mission":"Preserving permanently affordable homeownership in the Rondo neighborhood","formula_type":"fixed_rate","formula_rate":0.03,"ground_lease_fee_default":48,"est_year":2014,"home_count":47,"staff_count":3,"annual_budget":320000,"ground_lease_collection_rate":0.94,"active_applicants":12,"resales_in_progress":1}
+]

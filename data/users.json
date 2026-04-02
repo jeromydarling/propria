@@ -1,0 +1,6 @@
+[
+  {"id":"user-001","clt_id":"clt-001","name":"Sarah Chen","email":"sarah@rondoclt.org","role":"coordinator","avatar_initials":"SC","title":"Stewardship coordinator"},
+  {"id":"user-002","clt_id":"clt-001","name":"Maria Torres","email":"maria.torres@email.com","role":"homeowner","avatar_initials":"MT","homeowner_id":"hw-001"},
+  {"id":"user-003","name":"Keisha Johnson","email":"keisha.j@email.com","role":"applicant","avatar_initials":"KJ","applicant_id":"app-001"},
+  {"id":"user-004","name":"Sarah Wilkins","email":"swilkins@lssfinancial.org","role":"counselor","avatar_initials":"SW","counselor_id":"cns-001"}
+]
