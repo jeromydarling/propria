@@ -21,7 +21,7 @@
 .clt-app .compass-dot{position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--gold);border:1.5px solid var(--forest);animation:pulse 2.2s ease-in-out infinite}
 
 /* ── CONTENT AREA ── */
-.clt-app .content-area{display:flex;flex:1;overflow:hidden;min-height:0}
+.clt-app .content-area{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 
 /* ── SCREENS ── */
 .clt-app .screens{flex:1;overflow:hidden;position:relative;min-width:0}
