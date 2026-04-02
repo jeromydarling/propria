@@ -9,7 +9,7 @@
 .mkt .nav-brand{font-family:var(--serif-display);font-size:22px;font-weight:600;color:var(--forest);letter-spacing:-0.02em;text-decoration:none}
 .mkt .nav-brand span{color:var(--terra)}
 .mkt .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;font-family:var(--sans);font-size:14px;font-weight:400;color:var(--ink-light)}
-.mkt .nav-links a{text-decoration:none;color:inherit}
+.mkt .nav-links a{text-decoration:none;color:inherit;cursor:pointer}
 .mkt .nav-links a:hover{color:var(--forest)}
 .mkt .nav-cta{background:var(--forest);color:var(--parchment)!important;padding:8px 18px;border-radius:3px;font-weight:500!important;font-size:13px!important;transition:background 0.2s}
 .mkt .nav-cta:hover{background:var(--forest-mid)!important;color:var(--parchment)!important}
