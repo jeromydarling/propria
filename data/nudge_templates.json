@@ -1,0 +1,10 @@
+[
+  {"type":"contact_overdue","direction":"cura","message_default":"{name} hasn't responded to {count} check-in attempts. Last contact was {days} days ago.","action":"Open stewardship record"},
+  {"type":"payment_overdue","direction":"reconciliatio","message_default":"{count} homeowners have ground lease payments {days}+ days overdue, totaling ${amount}.","action":"Send payment reminders"},
+  {"type":"checkin_due","direction":"custodia","message_default":"{count} families are due for their annual check-in this quarter.","action":"View check-in queue"},
+  {"type":"docs_expired","direction":"itiner","message_default":"{name}'s {doc_type} expired on {date}. Application at risk.","action":"Send document request"},
+  {"type":"education_stalled","direction":"itiner","message_default":"{name}'s education stalled at Module {module} for {days} days.","action":"Send encouragement"},
+  {"type":"maintenance_open","direction":"reconciliatio","message_default":"Maintenance at {address} has been open {days} days. No contractor update.","action":"Follow up with contractor"},
+  {"type":"new_homeowner","direction":"cura","message_default":"Welcome {name} — Rondo CLT's newest family at {address}.","action":"Send welcome package"},
+  {"type":"resale_milestone","direction":"itiner","message_default":"{address} resale advanced to Stage {stage}: {stage_name}.","action":"View resale record"}
+]
