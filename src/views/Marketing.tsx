@@ -206,6 +206,33 @@ export default function Marketing() {
         </div>
       </section>
 
+      {/* FEATURES THAT SET PROPRIA APART */}
+      <section style={{background:'var(--parchment)',padding:'100px 2.5rem'}}>
+        <div className="section-inner">
+          <p className="section-eyebrow">What Sets Propria Apart</p>
+          <h2 className="section-title">Features CLTs actually <em>need.</em></h2>
+          <p className="section-body" style={{marginBottom:'3rem'}}>We didn't build a generic CRM and slap a CLT label on it. Every feature below was designed for the specific workflows that community land trust staff do every day — and nobody else has built.</p>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:'1.5px',background:'var(--parchment-dk)',border:'1.5px solid var(--parchment-dk)',borderRadius:6,overflow:'hidden'}}>
+            {[
+              {n:'Magic Import',l:'Migratio',d:'Upload your spreadsheets, CSVs, PDFs — even photos of paper records. NRI parses, maps fields, deduplicates, and validates before a single record touches your database. Bring the mess. We\'ll sort it.'},
+              {n:'HUD-9902 Generator',l:'Relatio',d:'Auto-generated quarterly HUD reports from your live data. Review, validate, and export — no more manually counting sessions or guessing at outcomes. Compliance in minutes, not days.'},
+              {n:'Resale Calculator',l:'Computatio',d:'Interactive formula calculator supporting fixed-rate, appraisal-based, and CPI-indexed formulas. Shareable with homeowners and embeddable on your website.'},
+              {n:'Ground Lease Generator',l:'Documentum',d:'Generate signing-ready ground lease documents from your templates and homeowner data. Auto-populated fields, multiple template support, PDF export.'},
+              {n:'Site Builder',l:'Praeco',d:'NRI-powered website builder for your CLT. Update pages, post events, and publish content in the Rondo CLT voice — without hiring a web developer.'},
+              {n:'Homebuyer Education',l:'Eruditio',d:'Built-in 6-module course covering CLT mechanics, ground leases, resale formulas, and financial planning. 70% passing threshold. Certificate generation included.'},
+              {n:'Counselor Network',l:'Consiliarius',d:'Connect applicants with HUD-certified housing counselors matched by state, language, and CLT experience. Read.ai session summaries imported automatically.'},
+              {n:'Homeowner Portal',l:'Domus',d:'Every homeowner gets their own portal — equity tracking, payment history, maintenance requests, community events, and direct contact with their CLT coordinator. Free for families.'},
+            ].map((f,i) => (
+              <div key={i} style={{background:'var(--parchment)',padding:'1.75rem'}}>
+                <div style={{fontFamily:'var(--serif-display)',fontSize:20,fontWeight:500,color:'var(--forest)',letterSpacing:'-0.01em',marginBottom:4}}>{f.n}</div>
+                <div style={{fontFamily:'var(--serif-body)',fontSize:13,fontStyle:'italic',color:'var(--terra)',marginBottom:8}}>{f.l}</div>
+                <div style={{fontFamily:'var(--sans)',fontSize:14,color:'var(--ink-light)',lineHeight:1.6,fontWeight:300}}>{f.d}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* GROUNDED SOLUTIONS BAND */}
       <div className="grounded-band">
         <div className="grounded-inner">
