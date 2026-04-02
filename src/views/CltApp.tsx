@@ -1,6 +1,16 @@
-import { useState, type ReactNode } from 'react'
+import { useState, useEffect, useCallback, type ReactNode } from 'react'
 import './CltApp.css'
 import MagicImport from './MagicImport'
+import {
+  useCompassPosture,
+  useCompassSessionEngine,
+  useCompassGlow,
+  useCompassAutoOpen,
+  seedDemoSignals,
+  getQuickPrompts,
+  DIRECTION_META,
+  matchGuideEntry,
+} from '../cros'
 
 function Sheet({ open, onClose, children }: { open: boolean; onClose: () => void; children: ReactNode }) {
   if (!open) return null
@@ -26,9 +36,28 @@ export default function CltApp() {
   const [leaseGenerating, setLeaseGenerating] = useState(false)
   const [leaseGenerated, setLeaseGenerated] = useState(false)
   const [checks, setChecks] = useState<Record<string, boolean>>({ task0: true })
+  const [dismissedNudges, setDismissedNudges] = useState<string[]>([])
+
+  // Seed demo signals on first render
+  useEffect(() => { seedDemoSignals() }, [])
+
+  // CROS hooks
+  const posture = useCompassPosture(screen)
+  const { nudges } = useCompassSessionEngine(dismissedNudges)
+  const glow = useCompassGlow(compassOpen, nudges.length > 0)
+  const openCompassDrawer = useCallback(() => setCompassOpen(true), [])
+  useCompassAutoOpen(nudges.length > 0, compassOpen, openCompassDrawer)
+
+  const currentGuide = matchGuideEntry(screen)
+  const quickPrompts = getQuickPrompts('coordinator')
+  const postureDir = DIRECTION_META[posture.direction]
 
   function toggleCheck(id: string) {
     setChecks(prev => ({ ...prev, [id]: !prev[id] }))
+  }
+
+  function dismissNudge(id: string) {
+    setDismissedNudges(prev => [...prev, id])
   }
 
   function go(name: string) {
@@ -53,9 +82,9 @@ export default function CltApp() {
             <div className="topbar-name">Propria<span>.</span></div>
             <div className="topbar-org">Rondo Community Land Trust</div>
           </div>
-          <button className="topbar-compass" onClick={() => setCompassOpen(true)}>
+          <button className={'topbar-compass' + (glow.glowing ? ' glowing' : '')} onClick={() => setCompassOpen(true)}>
             <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4v1M8 11v1M4 8h1M11 8h1"/><circle cx="8" cy="8" r="1.5"/></svg>
-            <div className="compass-dot"></div>
+            {(glow.glowing || glow.staticRing) && <div className={'compass-dot' + (glow.glowing ? ' glowing' : '')}></div>}
           </button>
         </div>
 
@@ -641,21 +670,51 @@ export default function CltApp() {
           </div>
         </div>
 
-        {/* NRI COMPASS DRAWER */}
+        {/* NRI COMPASS DRAWER — powered by CROS hooks */}
         <div className={'compass-overlay' + (compassOpen ? ' open' : '')} onClick={(e) => { if ((e.target as HTMLElement).classList.contains('compass-overlay')) setCompassOpen(false) }}>
           <div className="compass-drawer">
             <div className="compass-handle"></div>
-            <div className="compass-header"><div className="compass-header-dot"></div><div className="compass-header-title">NRI Companion</div><div className="compass-direction">Cura</div></div>
+            <div className="compass-header">
+              <div className="compass-header-dot"></div>
+              <div className="compass-header-title">NRI Companion</div>
+              <div className="compass-direction" style={{color:postureDir.color}}>{postureDir.label}</div>
+            </div>
             <div className="compass-body">
-              <div style={{fontSize:12,color:'rgba(245,240,232,0.5)',marginBottom:10,fontWeight:300,fontStyle:'italic'}}>Here's what needs your attention today.</div>
-              <div className="compass-nudge"><div className="compass-nudge-dir cura">Cura</div><div className="compass-nudge-msg">Maria Torres hasn't responded to 2 check-in attempts. Last contact was 23 days ago. Consider a door knock or reaching her emergency contact.</div><div className="compass-nudge-action" onClick={() => { go('stewardship'); setCompassOpen(false) }}>→ Open stewardship record</div></div>
-              <div className="compass-nudge"><div className="compass-nudge-dir reconciliatio">Reconciliatio</div><div className="compass-nudge-msg">3 homeowners have ground lease payments 7+ days overdue, totaling $156. Walker, Moore, and Okafor.</div><div className="compass-nudge-action" onClick={() => { go('finances'); setCompassOpen(false) }}>→ Send payment reminders</div></div>
-              <div className="compass-nudge"><div className="compass-nudge-dir custodia">Custodia</div><div className="compass-nudge-msg">7 families are due for their annual check-in this quarter. Schedule before April ends.</div><div className="compass-nudge-action">→ View check-in queue</div></div>
+              {/* Guide card for new users */}
+              {currentGuide && <div style={{background:'rgba(245,240,232,0.07)',border:'1px solid rgba(245,240,232,0.12)',borderRadius:8,padding:12,marginBottom:14}}>
+                <div style={{fontFamily:'var(--serif-display)',fontSize:14,fontWeight:500,color:'var(--parchment)',marginBottom:6}}>{currentGuide.title}</div>
+                <div style={{fontSize:12,color:'rgba(245,240,232,0.7)',lineHeight:1.5,marginBottom:4}}><strong style={{color:'rgba(245,240,232,0.85)'}}>What:</strong> {currentGuide.what}</div>
+                <div style={{fontSize:12,color:'rgba(245,240,232,0.7)',lineHeight:1.5}}><strong style={{color:'rgba(245,240,232,0.85)'}}>Why:</strong> {currentGuide.why}</div>
+                {currentGuide.terms && <div style={{marginTop:8,display:'flex',flexWrap:'wrap',gap:4}}>
+                  {currentGuide.terms.map((t,i) => <span key={i} style={{fontSize:10,padding:'2px 8px',borderRadius:3,background:'rgba(245,240,232,0.08)',color:'rgba(245,240,232,0.5)'}} title={t.definition}>{t.term}</span>)}
+                </div>}
+              </div>}
+
+              {/* Orientation line */}
+              <div style={{fontSize:12,color:'rgba(245,240,232,0.5)',marginBottom:14,fontWeight:300,fontStyle:'italic'}}>
+                {posture.source === 'signal'
+                  ? "Here's what needs your attention today."
+                  : `You're on the ${screen} screen. Here's what NRI sees.`}
+              </div>
+
+              {/* Today's Movement — CROS nudge cards */}
+              {nudges.map(nudge => {
+                const dir = DIRECTION_META[nudge.direction]
+                return (
+                  <div key={nudge.id} className="compass-nudge" style={{position:'relative'}}>
+                    <button onClick={() => dismissNudge(nudge.id)} style={{position:'absolute',top:8,right:8,background:'none',border:'none',color:'rgba(245,240,232,0.3)',cursor:'pointer',fontSize:14,lineHeight:1}}>×</button>
+                    <div className={'compass-nudge-dir ' + nudge.direction} style={{color:dir.color}}>{dir.label}</div>
+                    <div className="compass-nudge-msg">{nudge.message}</div>
+                    {nudge.action && <div className="compass-nudge-action" onClick={() => { go(nudge.action!.screen); setCompassOpen(false) }}>→ {nudge.action.label}</div>}
+                  </div>
+                )
+              })}
+
+              {nudges.length === 0 && <div style={{textAlign:'center',padding:'24px 0',color:'rgba(245,240,232,0.4)',fontSize:13,fontStyle:'italic'}}>All clear. No signals need attention right now.</div>}
+
+              {/* Quick prompts */}
               <div className="compass-quick-prompts">
-                <div className="compass-prompt">Log a contact attempt for Maria</div>
-                <div className="compass-prompt">Send payment reminder to Walker family</div>
-                <div className="compass-prompt">Schedule Diaz annual check-in</div>
-                <div className="compass-prompt">What's Keisha's pipeline status?</div>
+                {quickPrompts.slice(0, 4).map((p, i) => <div key={i} className="compass-prompt">{p}</div>)}
               </div>
             </div>
             <div className="compass-input-row">

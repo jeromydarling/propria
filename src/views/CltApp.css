@@ -19,6 +19,8 @@
 .clt-app .topbar-compass{width:36px;height:36px;border-radius:8px;background:rgba(245,240,232,0.08);border:1px solid rgba(245,240,232,0.14);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;position:relative}
 .clt-app .topbar-compass svg{stroke:var(--gold);fill:none;width:17px;height:17px;stroke-width:1.5}
 .clt-app .compass-dot{position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--gold);border:1.5px solid var(--forest);animation:pulse 2.2s ease-in-out infinite}
+.clt-app .compass-dot.glowing{width:9px;height:9px;top:6px;right:6px;box-shadow:0 0 8px var(--gold),0 0 16px rgba(196,150,58,0.4)}
+.clt-app .topbar-compass.glowing{box-shadow:0 0 12px rgba(196,150,58,0.3);border-color:var(--gold)}
 
 /* ── CONTENT AREA ── */
 .clt-app .content-area{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0}
