@@ -83,6 +83,24 @@ export default function Homeowner() {
                 </div>
               )}
             </div>
+            <div style={{fontSize:11,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)',marginBottom:8}}>Equity projector</div>
+            <div style={{background:'white',border:'0.5px solid var(--border)',borderRadius:12,padding:16,marginBottom:16}}>
+              <div style={{fontSize:13,color:'var(--ink-light)',marginBottom:8}}>If you stay 5 more years, your equity grows to:</div>
+              <div style={{fontFamily:'var(--serif-display)',fontSize:28,fontWeight:400,color:'var(--forest)',letterSpacing:'-0.02em',marginBottom:4}}>≈ $22,800</div>
+              <div style={{fontSize:12,color:'var(--ink-faint)',marginBottom:12}}>Based on current 1.5% annual appreciation + $2,800 improvement credits</div>
+              <div style={{display:'flex',gap:4,alignItems:'flex-end',height:80,marginBottom:8}}>
+                {[{y:'2020',v:0},{y:'2022',v:18},{y:'2024',v:38},{y:'2026',v:55},{y:'2028',v:72},{y:'2031',v:90}].map((p,i)=>
+                  <div key={i} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:2}}>
+                    <div style={{width:'100%',background:i<=3?'var(--forest)':'var(--gold)',borderRadius:'2px 2px 0 0',height:Math.max(4,p.v*0.75)}}></div>
+                    <div style={{fontSize:8,color:'var(--ink-faint)'}}>{p.y}</div>
+                  </div>
+                )}
+              </div>
+              <div style={{display:'flex',gap:12,justifyContent:'center',fontSize:10,color:'var(--ink-faint)'}}>
+                <span><span style={{display:'inline-block',width:8,height:8,borderRadius:2,background:'var(--forest)',marginRight:3,verticalAlign:'middle'}}></span>Earned</span>
+                <span><span style={{display:'inline-block',width:8,height:8,borderRadius:2,background:'var(--gold)',marginRight:3,verticalAlign:'middle'}}></span>Projected</span>
+              </div>
+            </div>
             <div style={{fontSize:11,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)',marginBottom:8}}>Maintenance history</div>
             <div style={{background:'white',border:'0.5px solid var(--border)',borderRadius:12,overflow:'hidden'}}>
               {[{t:'Bathroom pipe — under-sink leak',d:'Dec 2025 · Ace Contracting · Resolved',s:'Resolved'},{t:'Furnace filter + inspection',d:'Oct 2025 · Annual preventive · $85',s:'Done'},{t:'Front porch railing — loose post',d:'Jul 2025 · Volunteer crew · No cost',s:'Done'}].map((m,i)=>

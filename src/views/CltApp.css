@@ -318,3 +318,42 @@
   .clt-app .modal-overlay{align-items:center}
   .clt-app .modal-sheet{border-radius:16px;max-height:80vh}
 }
+
+/* ── POLISH: Transitions & Animations ── */
+.clt-app .screen{scroll-behavior:smooth}
+.clt-app .feed-item{transition:background 0.12s}
+.clt-app .btn{transition:all 0.15s}
+.clt-app .tab{transition:color 0.15s,border-color 0.15s}
+.clt-app .dsc-item{transition:background 0.15s,color 0.15s}
+.clt-app .hm-item{transition:background 0.15s}
+.clt-app .cl-row{transition:background 0.12s}
+.clt-app .cl-row:active{background:var(--parchment)}
+.clt-app .asset-row{transition:background 0.12s}
+.clt-app .asset-row:active{background:var(--parchment)}
+.clt-app .settings-row{transition:background 0.12s}
+.clt-app .settings-row:active{background:var(--parchment)}
+.clt-app .gov-member-row{transition:background 0.12s}
+
+/* ── POLISH: Ground line accent ── */
+.clt-app .dash-ground{height:3px;background:linear-gradient(90deg,var(--terra) 0%,var(--gold) 50%,var(--terra) 100%)}
+
+/* ── POLISH: Modal animation ── */
+.clt-app .modal-sheet{animation:slideUp 0.28s cubic-bezier(0.22,1,0.36,1)}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* ── POLISH: Compass drawer smooth ── */
+.clt-app .compass-nudge{transition:background 0.15s}
+.clt-app .compass-nudge:active{background:rgba(245,240,232,0.12)}
+.clt-app .compass-prompt{transition:all 0.15s}
+
+/* ── FIX: Mobile stat grid overflow ── */
+@media(max-width:380px){
+  .clt-app .dash-stats{grid-template-columns:1fr 1fr}
+  .clt-app .stat-row{grid-template-columns:1fr 1fr}
+  .clt-app .dash-stat-val{font-size:22px}
+}
+
+/* ── FIX: Ensure hamburger/compass overlays cover full screen on mobile ── */
+.clt-app .hamburger-overlay,.clt-app .compass-overlay,.clt-app .modal-overlay{
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)
+}

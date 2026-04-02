@@ -25,6 +25,11 @@ export default function CltApp() {
   const [finTab, setFinTab] = useState('overview')
   const [leaseGenerating, setLeaseGenerating] = useState(false)
   const [leaseGenerated, setLeaseGenerated] = useState(false)
+  const [checks, setChecks] = useState<Record<string, boolean>>({ task0: true })
+
+  function toggleCheck(id: string) {
+    setChecks(prev => ({ ...prev, [id]: !prev[id] }))
+  }
 
   function go(name: string) {
     setScreen(name)
@@ -138,6 +143,7 @@ export default function CltApp() {
                   <div className="dash-stat"><div className="dash-stat-label">Check-ins due</div><div className="dash-stat-val">7</div><div className="dash-stat-sub warn">By Apr 30</div></div>
                 </div>
               </div>
+              <div className="dash-ground"></div>
               <div className="sec-header" style={{paddingTop:16}}><span className="sec-title">Needs attention</span><span className="sec-action">View all</span></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="feed-item" onClick={() => go('stewardship')}><div className="feed-avatar av-coral">MT</div><div className="feed-body"><div className="feed-name">Maria Torres — 14 Oak St.</div><div className="feed-detail">No response to 2 check-in attempts. 23 days since last contact.</div></div><div className="feed-meta"><span className="dir-pill dir-cura">Cura</span><span className="feed-time">23d</span></div></div>
@@ -148,10 +154,13 @@ export default function CltApp() {
               </div>
               <div className="sec-header"><span className="sec-title">Today's tasks</span><span className="sec-action">+ Add</span></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
-                <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text done">Call Walker family re: overdue payment</span></div>
-                <div className="cl-row"><div className="cl-box"></div><span className="cl-text">Schedule Diaz annual check-in</span><span className="cl-meta">Custodia</span></div>
-                <div className="cl-row"><div className="cl-box"></div><span className="cl-text">Email Keisha Johnson — expired docs</span><span className="cl-meta">Itiner</span></div>
-                <div className="cl-row"><div className="cl-box"></div><span className="cl-text">Follow up Ace Contracting · 56 Thomas</span><span className="cl-meta">Maintenance</span></div>
+                {[{id:'task0',t:'Call Walker family re: overdue payment',m:''},{id:'task1',t:'Schedule Diaz annual check-in',m:'Custodia'},{id:'task2',t:'Email Keisha Johnson — expired docs',m:'Itiner'},{id:'task3',t:'Follow up Ace Contracting · 56 Thomas',m:'Maintenance'}].map(task=>
+                  <div key={task.id} className="cl-row" onClick={()=>toggleCheck(task.id)}>
+                    <div className={'cl-box'+(checks[task.id]?' checked':'')}></div>
+                    <span className={'cl-text'+(checks[task.id]?' done':'')}>{task.t}</span>
+                    {task.m && <span className="cl-meta">{task.m}</span>}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -288,7 +297,20 @@ export default function CltApp() {
             {/* RESALE */}
             <div className={sc('resale')}>
               <div className="profile-hero"><div className="profile-av" style={{background:'var(--parchment-dk)',color:'var(--forest)'}}><svg viewBox="0 0 16 16" width="20" height="20"><path d="M2 14V7.5L8 2l6 5.5V14H2z" stroke="currentColor" fill="none" strokeWidth="1.4"/><path d="M6 14v-4h4v4" stroke="currentColor" fill="none" strokeWidth="1.4"/></svg></div><div style={{flex:1}}><div className="profile-name">14 Oak Street</div><div className="profile-addr">Seller: Maria Torres · Saint Paul, MN 55104</div><div className="profile-tags"><span className="profile-tag year">Stage 5 of 8</span><span className="profile-tag cura">Buyer matching</span></div></div></div>
-              <div className="card" style={{margin:14}}><div className="card-header"><span className="card-title">Resale formula</span><span className="tag tag-green">Active</span></div>
+              {/* Resale pipeline stages */}
+              <div style={{padding:'12px 14px',background:'white',borderBottom:'0.5px solid var(--border)'}}>
+                <div style={{display:'flex',alignItems:'center',gap:3,overflowX:'auto',paddingBottom:4}}>
+                  {[{n:1,l:'Intent filed',s:'done'},{n:2,l:'Formula set',s:'done'},{n:3,l:'Inspection',s:'done'},{n:4,l:'Price set',s:'done'},{n:5,l:'Buyer match',s:'active'},{n:6,l:'Contract',s:''},{n:7,l:'Closing',s:''},{n:8,l:'Transferred',s:''}].map((st,i,arr)=><>
+                    <div key={st.n} className="pipe-stage"><div className={'pipe-circle '+(st.s||'')}>{st.s==='done'?'✓':st.n}</div><div className="pipe-stage-label">{st.l}</div></div>
+                    {i<arr.length-1 && <div className={'pipe-line'+(st.s==='done'?' done':'')}></div>}
+                  </>)}
+                </div>
+              </div>
+              <div style={{padding:'8px 14px',display:'flex',gap:8}}>
+                <button className="btn" style={{flex:1}} onClick={()=>setSheet('resaleCalc')}>Resale calculator</button>
+                <button className="btn primary" style={{flex:1}} onClick={()=>setSheet('advanceResale')}>Advance stage</button>
+              </div>
+              <div className="card" style={{margin:'0 14px 14px'}}><div className="card-header"><span className="card-title">Resale formula</span><span className="tag tag-green">Active</span></div>
                 <div className="finance-stat"><span className="finance-label">Purchase price (2020)</span><span className="finance-val">$187,000</span></div>
                 <div className="finance-stat"><span className="finance-label">+ 30% appreciation</span><span className="finance-val">$12,000</span></div>
                 <div className="finance-stat"><span className="finance-label">+ Improvement credit</span><span className="finance-val">$2,800</span></div>
@@ -741,6 +763,23 @@ export default function CltApp() {
           <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Asset management records</span></div>
         </div>
         <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Export data</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='resaleCalc'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Resale Price Calculator</div>
+        <div className="modal-label">Purchase price</div><input className="modal-input" type="text" defaultValue="$187,000"/>
+        <div className="modal-label">Years owned</div><input className="modal-input" type="text" defaultValue="6.2"/>
+        <div className="modal-label">Formula type</div>
+        <select className="modal-select"><option>Fixed-rate (3%/yr)</option><option>Appraisal-based (4%/yr)</option><option>CPI-indexed (2.5%/yr)</option></select>
+        <div className="modal-label">Appreciation share</div><input className="modal-input" type="text" defaultValue="30%"/>
+        <div className="modal-label">Improvement credits</div><input className="modal-input" type="text" defaultValue="$2,800"/>
+        <div style={{background:'var(--forest)',borderRadius:10,padding:16,marginTop:16}}>
+          <div style={{display:'flex',justifyContent:'space-between',padding:'6px 0',borderBottom:'1px solid rgba(245,240,232,0.1)'}}><span style={{fontSize:13,color:'rgba(245,240,232,0.6)'}}>Purchase price</span><span style={{fontSize:13,color:'var(--parchment)'}}>$187,000</span></div>
+          <div style={{display:'flex',justifyContent:'space-between',padding:'6px 0',borderBottom:'1px solid rgba(245,240,232,0.1)'}}><span style={{fontSize:13,color:'rgba(245,240,232,0.6)'}}>Owner share (30% of $34,680)</span><span style={{fontSize:13,color:'var(--gold)'}}>$10,404</span></div>
+          <div style={{display:'flex',justifyContent:'space-between',padding:'6px 0',borderBottom:'1px solid rgba(245,240,232,0.1)'}}><span style={{fontSize:13,color:'rgba(245,240,232,0.6)'}}>Improvement credits</span><span style={{fontSize:13,color:'var(--parchment)'}}>$2,800</span></div>
+          <div style={{display:'flex',justifyContent:'space-between',padding:'10px 0 4px'}}><span style={{fontFamily:'var(--serif-display)',fontSize:16,color:'var(--parchment)'}}>Max resale price</span><span style={{fontFamily:'var(--serif-display)',fontSize:22,color:'var(--gold)'}}>$200,204</span></div>
+        </div>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Close</button><button className="btn primary" onClick={()=>setSheet(null)}>Generate PDF</button></div>
       </Sheet>
 
     </div>
