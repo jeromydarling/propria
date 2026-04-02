@@ -1,24 +1,398 @@
+import { useState } from 'react'
+import './CltApp.css'
+
 export default function CltApp() {
+  const [screen, setScreen] = useState('dashboard')
+  const [hamburgerOpen, setHamburgerOpen] = useState(false)
+  const [compassOpen, setCompassOpen] = useState(false)
+
+  function go(name: string) {
+    setScreen(name)
+    setHamburgerOpen(false)
+  }
+
+  const sc = (name: string) => screen === name ? 'screen active' : 'screen'
+  const di = (name: string) => screen === name ? 'dsc-item active' : 'dsc-item'
+  const ni = (name: string) => screen === name ? 'nav-item active' : 'nav-item'
+
   return (
-    <div style={{
-      height:'100%',
-      background:'var(--cream)',
-      display:'flex',
-      alignItems:'center',
-      justifyContent:'center',
-      flexDirection:'column',
-      gap:'12px',
-      fontFamily:'var(--sans)',
-      color:'var(--ink-light)'
-    }}>
-      <div style={{
-        fontFamily:'var(--serif-display)',
-        fontSize:'28px',
-        fontWeight:500,
-        color:'var(--forest)',
-        letterSpacing:'-0.02em'
-      }}>CLT Staff App</div>
-      <div style={{fontSize:'14px'}}>Coming next</div>
+    <div className="clt-app">
+      <div className="app">
+
+        {/* TOPBAR */}
+        <div className="topbar">
+          <button className="topbar-hamburger" onClick={() => setHamburgerOpen(true)}>
+            <svg viewBox="0 0 18 14"><path d="M0 1h18M0 7h18M0 13h18" strokeLinecap="round"/></svg>
+          </button>
+          <div className="topbar-brand">
+            <div className="topbar-name">Propria<span>.</span></div>
+            <div className="topbar-org">Rondo Community Land Trust</div>
+          </div>
+          <button className="topbar-compass" onClick={() => setCompassOpen(true)}>
+            <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4v1M8 11v1M4 8h1M11 8h1"/><circle cx="8" cy="8" r="1.5"/></svg>
+            <div className="compass-dot"></div>
+          </button>
+        </div>
+
+        {/* DESKTOP SIDEBAR */}
+        <div className="desktop-sidebar">
+          <div className="dsc-brand">
+            <div className="dsc-name">Propria<span>.</span></div>
+            <div className="dsc-org">Rondo Community Land Trust</div>
+          </div>
+          <div className="dsc-section">Core</div>
+          <div className={di('dashboard')} onClick={() => go('dashboard')}>
+            <svg viewBox="0 0 16 16"><rect x="2" y="2" width="5.5" height="5.5" rx="1"/><rect x="8.5" y="2" width="5.5" height="5.5" rx="1"/><rect x="2" y="8.5" width="5.5" height="5.5" rx="1"/><rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1"/></svg>
+            Dashboard
+          </div>
+          <div className={di('stewardship')} onClick={() => go('stewardship')}>
+            <svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="3"/><path d="M2 14c0-2.5 2.7-4.5 6-4.5s6 2 6 4.5"/></svg>
+            Stewardship <span className="dsc-badge">3</span>
+          </div>
+          <div className={di('pipeline')} onClick={() => go('pipeline')}>
+            <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h5"/></svg>
+            Pipeline <span className="dsc-badge gold">7</span>
+          </div>
+          <div className={di('praeco')} onClick={() => go('praeco')}>
+            <svg viewBox="0 0 16 16"><path d="M2 4h12v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4z"/><path d="M2 4l6 5 6-5"/></svg>
+            Praeco
+          </div>
+          <div className={di('resale')} onClick={() => go('resale')}>
+            <svg viewBox="0 0 16 16"><path d="M5 2h6a1 1 0 0 1 1 1v12l-4-2.2L4 15V3a1 1 0 0 1 1-1z"/></svg>
+            Resale <span className="dsc-badge">1</span>
+          </div>
+          <div className="dsc-section">Property</div>
+          <div className={di('assets')} onClick={() => go('assets')}>
+            <svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/><path d="M6 14v-4h4v4"/></svg>
+            Asset management
+          </div>
+          <div className={di('maintenance')} onClick={() => go('maintenance')}>
+            <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2 1.5"/></svg>
+            Maintenance <span className="dsc-badge">1</span>
+          </div>
+          <div className="dsc-section">Community</div>
+          <div className={di('governance')} onClick={() => go('governance')}>
+            <svg viewBox="0 0 16 16"><rect x="2" y="5" width="12" height="9" rx="1"/><path d="M5 5V3.5a3 3 0 0 1 6 0V5"/></svg>
+            Governance
+          </div>
+          <div className={di('finances')} onClick={() => go('finances')}>
+            <svg viewBox="0 0 16 16"><path d="M2 13h12M4 13V7m3-5v11M10 13V9m3-3v7"/></svg>
+            Finances
+          </div>
+          <div className="dsc-section">Account</div>
+          <div className={di('settings')} onClick={() => go('settings')}>
+            <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.5"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M4.2 4.2l1 1M10.8 10.8l1 1M4.2 11.8l1-1M10.8 5.2l1-1"/></svg>
+            Settings
+          </div>
+          <div className={di('account')} onClick={() => go('account')}>
+            <svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="3"/><path d="M2 14c0-2.5 2.7-4.5 6-4.5s6 2 6 4.5"/></svg>
+            My account
+          </div>
+          <div className="dsc-spacer"></div>
+          <div className="dsc-user">
+            <div className="dsc-avatar">SC</div>
+            <div>
+              <div className="dsc-user-name">Sarah Chen</div>
+              <div className="dsc-user-role">Stewardship coordinator</div>
+            </div>
+          </div>
+        </div>
+
+        {/* CONTENT AREA */}
+        <div className="content-area">
+          <div className="screens">
+
+            {/* DASHBOARD */}
+            <div className={sc('dashboard')}>
+              <div className="dash-hero">
+                <div className="dash-greeting">Good morning, <em>Sarah</em></div>
+                <div className="dash-date">Tuesday, April 1, 2026 · Rondo CLT</div>
+                <div className="dash-stats">
+                  <div className="dash-stat"><div className="dash-stat-label">Families</div><div className="dash-stat-val">47</div><div className="dash-stat-sub up">+2 this quarter</div></div>
+                  <div className="dash-stat"><div className="dash-stat-label">Lease collected</div><div className="dash-stat-val">94%</div><div className="dash-stat-sub warn">3 overdue</div></div>
+                  <div className="dash-stat"><div className="dash-stat-label">Active applicants</div><div className="dash-stat-val">12</div><div className="dash-stat-sub muted">7 in education</div></div>
+                  <div className="dash-stat"><div className="dash-stat-label">Check-ins due</div><div className="dash-stat-val">7</div><div className="dash-stat-sub warn">By Apr 30</div></div>
+                </div>
+              </div>
+              <div className="sec-header" style={{paddingTop:16}}><span className="sec-title">Needs attention</span><span className="sec-action">View all</span></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="feed-item" onClick={() => go('stewardship')}><div className="feed-avatar av-coral">MT</div><div className="feed-body"><div className="feed-name">Maria Torres — 14 Oak St.</div><div className="feed-detail">No response to 2 check-in attempts. 23 days since last contact.</div></div><div className="feed-meta"><span className="dir-pill dir-cura">Cura</span><span className="feed-time">23d</span></div></div>
+                <div className="feed-item"><div className="feed-avatar av-coral">JW</div><div className="feed-body"><div className="feed-name">James &amp; Denise Walker</div><div className="feed-detail">Ground lease 9 days overdue. $52. No prior late history.</div></div><div className="feed-meta"><span className="dir-pill dir-reconciliatio">Reconciliatio</span><span className="feed-time">9d</span></div></div>
+                <div className="feed-item"><div className="feed-avatar av-amber">RD</div><div className="feed-body"><div className="feed-name">Roberto &amp; Ana Diaz</div><div className="feed-detail">Annual check-in due this month. No appointment scheduled.</div></div><div className="feed-meta"><span className="dir-pill dir-custodia">Custodia</span><span className="feed-time">Due Apr 30</span></div></div>
+                <div className="feed-item" onClick={() => go('pipeline')}><div className="feed-avatar av-blue">KJ</div><div className="feed-body"><div className="feed-name">Keisha Johnson — Applicant</div><div className="feed-detail">Income docs expired Mar 14. Education 60% stalled. Application at risk.</div></div><div className="feed-meta"><span className="dir-pill dir-itiner">Itiner</span><span className="feed-time">17d ago</span></div></div>
+                <div className="feed-item" onClick={() => go('maintenance')}><div className="feed-avatar av-teal">PM</div><div className="feed-body"><div className="feed-name">Patricia &amp; Leon Moore</div><div className="feed-detail">Maintenance at 56 Thomas Ave open 31 days. No contractor update.</div></div><div className="feed-meta"><span className="dir-pill dir-reconciliatio">Reconciliatio</span><span className="feed-time">31d</span></div></div>
+              </div>
+              <div className="sec-header"><span className="sec-title">Today's tasks</span><span className="sec-action">+ Add</span></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text done">Call Walker family re: overdue payment</span></div>
+                <div className="cl-row"><div className="cl-box"></div><span className="cl-text">Schedule Diaz annual check-in</span><span className="cl-meta">Custodia</span></div>
+                <div className="cl-row"><div className="cl-box"></div><span className="cl-text">Email Keisha Johnson — expired docs</span><span className="cl-meta">Itiner</span></div>
+                <div className="cl-row"><div className="cl-box"></div><span className="cl-text">Follow up Ace Contracting · 56 Thomas</span><span className="cl-meta">Maintenance</span></div>
+              </div>
+            </div>
+
+            {/* STEWARDSHIP */}
+            <div className={sc('stewardship')}>
+              <div className="profile-hero"><div className="profile-av">MT</div><div style={{flex:1}}><div className="profile-name">Maria Torres</div><div className="profile-addr">14 Oak Street · Saint Paul, MN 55104</div><div className="profile-tags"><span className="profile-tag cura">Cura signal</span><span className="profile-tag year">Year 6</span><span className="profile-tag year">Since 2020</span></div></div></div>
+              <div className="nri-banner"><div className="nri-banner-dot"></div><div className="nri-banner-text">Maria hasn't responded to 2 check-in attempts. Last contact 23 days ago. NRI suggests a door knock or emergency contact outreach.</div></div>
+              <div className="tab-bar"><div className="tab active">Contact history</div><div className="tab">Lease &amp; finances</div><div className="tab">Life events</div><div className="tab">Pastoral note</div></div>
+              <div style={{padding:'12px 14px',display:'flex',gap:8}}><button className="btn primary" style={{flex:1}}>+ Log contact</button><button className="btn" style={{flex:1}}>Schedule check-in</button></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="contact-log-row"><div className="contact-log-icon"><svg viewBox="0 0 16 16"><path d="M2 4h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4z"/><path d="M2 4l6 5 6-5"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Email sent</div><div className="contact-log-note">Sent spring assembly invitation and check-in scheduling link. No reply.</div></div><div className="contact-log-time">Mar 24</div></div>
+                <div className="contact-log-row"><div className="contact-log-icon"><svg viewBox="0 0 16 16"><path d="M4 2h8a1 1 0 0 1 1 1v9l-3-1.5H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Text message sent</div><div className="contact-log-note">Reminder about annual check-in. No response received.</div></div><div className="contact-log-time">Mar 12</div></div>
+                <div className="contact-log-row"><div className="contact-log-icon"><svg viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 0-2 2 10 10 0 0 0 10 10 2 2 0 0 0 2-2v-2a1 1 0 0 0-1-1l-2.5-.5a1 1 0 0 0-1 .5L8.8 10C7.3 9.3 6.7 8.7 6 7.2l.5-.7a1 1 0 0 0 .5-1L6.5 3A1 1 0 0 0 5.5 2H4z"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Phone call — answered</div><div className="contact-log-note">Annual check-in completed by phone. Mentioned possible interest in resale in 2–3 years.</div></div><div className="contact-log-time">Jan 15</div></div>
+                <div className="contact-log-row"><div className="contact-log-icon"><svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Home visit</div><div className="contact-log-note">Year 5 annual check-in. Unit in good condition. Mentioned bathroom faucet dripping.</div></div><div className="contact-log-time">Nov 2024</div></div>
+              </div>
+            </div>
+
+            {/* PIPELINE */}
+            <div className={sc('pipeline')}>
+              <div className="profile-hero"><div className="profile-av" style={{background:'#E6F1FB',color:'#0C447C'}}>KJ</div><div style={{flex:1}}><div className="profile-name">Keisha Johnson</div><div className="profile-addr">Applicant · Waitlist #4 · Score: 74 → 89</div><div className="profile-tags"><span className="profile-tag" style={{background:'rgba(184,92,56,0.25)',color:'#E8956D'}}>Docs expired</span><span className="profile-tag" style={{background:'rgba(245,240,232,0.12)',color:'rgba(245,240,232,0.7)'}}>Education 60%</span></div></div></div>
+              <div className="nri-banner"><div className="nri-banner-dot"></div><div className="nri-banner-text">Income verification docs expired Mar 14. Education stalled at Module 7 for 14 days. Application at risk — reach out before Apr 7.</div></div>
+              <div style={{padding:'12px 14px',background:'white',borderBottom:'0.5px solid var(--border)'}}>
+                <div style={{display:'flex',alignItems:'center',gap:3,overflowX:'auto',paddingBottom:4}}>
+                  <div className="pipe-stage"><div className="pipe-circle done">1</div><div className="pipe-stage-label">Intake</div></div><div className="pipe-line done"></div>
+                  <div className="pipe-stage"><div className="pipe-circle done">2</div><div className="pipe-stage-label">Income</div></div><div className="pipe-line done" style={{background:'var(--terra)'}}></div>
+                  <div className="pipe-stage"><div className="pipe-circle blocked">3</div><div className="pipe-stage-label">Docs</div></div><div className="pipe-line"></div>
+                  <div className="pipe-stage"><div className="pipe-circle active">4</div><div className="pipe-stage-label">Education</div></div><div className="pipe-line"></div>
+                  <div className="pipe-stage"><div className="pipe-circle">5</div><div className="pipe-stage-label">Counselor</div></div><div className="pipe-line"></div>
+                  <div className="pipe-stage"><div className="pipe-circle">6</div><div className="pipe-stage-label">Waitlist</div></div><div className="pipe-line"></div>
+                  <div className="pipe-stage"><div className="pipe-circle">7</div><div className="pipe-stage-label">Matched</div></div><div className="pipe-line"></div>
+                  <div className="pipe-stage"><div className="pipe-circle">8</div><div className="pipe-stage-label">Closed</div></div>
+                </div>
+              </div>
+              <div style={{padding:'10px 14px',display:'flex',gap:8}}><button className="btn warn" style={{flex:1}}>Request docs</button><button className="btn primary" style={{flex:1}}>Advance stage</button></div>
+              <div className="sec-header"><span className="sec-title">Document checklist</span></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Application form</span><span className="cl-meta">Jan 8</span></div>
+                <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Photo ID</span><span className="cl-meta">Jan 8</span></div>
+                <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Pay stubs (2 months)</span><span className="cl-meta">Jan 15</span></div>
+                <div className="cl-row"><div className="cl-box" style={{borderColor:'var(--terra)'}}></div><span className="cl-text" style={{color:'var(--terra)'}}>Income verification letter — EXPIRED Mar 14</span></div>
+                <div className="cl-row"><div className="cl-box"></div><span className="cl-text">Bank statements (3 months)</span></div>
+                <div className="cl-row"><div className="cl-box"></div><span className="cl-text">Counseling certificate</span></div>
+              </div>
+              <div className="sec-header"><span className="sec-title">Homebuyer education</span><span className="sec-action">60% complete</span></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div style={{padding:'10px 14px'}}><div style={{height:6,background:'var(--parchment-dk)',borderRadius:3,overflow:'hidden',marginBottom:8}}><div style={{width:'60%',height:'100%',background:'var(--forest-light)',borderRadius:3}}></div></div><div style={{fontSize:11,color:'var(--ink-faint)'}}>6 of 10 modules complete · Stalled at Module 7</div></div>
+              </div>
+            </div>
+
+            {/* PRAECO */}
+            <div className={sc('praeco')}>
+              <div className="screen-header"><div className="screen-header-title">Praeco</div><div className="screen-header-sub">Herald · Communications, events &amp; community</div></div>
+              <div className="tab-bar"><div className="tab active">Email</div><div className="tab">Events</div><div className="tab">Website</div></div>
+              <div style={{padding:'10px 14px 6px',display:'flex',alignItems:'center',gap:8}}><div style={{flex:1,fontSize:12,color:'var(--ink-light)'}}>Gmail connected</div><button className="btn primary">+ Compose</button></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="contact-log-row"><div style={{flex:1}}><div style={{fontSize:13,fontWeight:500,color:'var(--ink)',marginBottom:2}}>Spring Assembly — all 47 homeowners</div><div style={{fontSize:12,color:'var(--ink-faint)'}}>Sent Mar 28 · 68% open · 23% clicked</div></div><span className="tag tag-green">Sent</span></div>
+                <div className="contact-log-row"><div style={{flex:1}}><div style={{fontSize:13,fontWeight:500,color:'var(--ink)',marginBottom:2}}>Ground lease reminder — 3 overdue</div><div style={{fontSize:12,color:'var(--ink-faint)'}}>Sent Mar 25 · 100% open rate</div></div><span className="tag tag-green">Sent</span></div>
+                <div className="contact-log-row"><div style={{flex:1}}><div style={{fontSize:13,fontWeight:500,color:'var(--ink)',marginBottom:2}}>Welcome to Rondo CLT — new homeowners</div><div style={{fontSize:12,color:'var(--ink-faint)'}}>Draft · NRI-generated · not sent</div></div><span className="tag tag-amber">Draft</span></div>
+              </div>
+            </div>
+
+            {/* RESALE */}
+            <div className={sc('resale')}>
+              <div className="profile-hero"><div className="profile-av" style={{background:'var(--parchment-dk)',color:'var(--forest)'}}><svg viewBox="0 0 16 16" width="20" height="20"><path d="M2 14V7.5L8 2l6 5.5V14H2z" stroke="currentColor" fill="none" strokeWidth="1.4"/><path d="M6 14v-4h4v4" stroke="currentColor" fill="none" strokeWidth="1.4"/></svg></div><div style={{flex:1}}><div className="profile-name">14 Oak Street</div><div className="profile-addr">Seller: Maria Torres · Saint Paul, MN 55104</div><div className="profile-tags"><span className="profile-tag year">Stage 5 of 8</span><span className="profile-tag cura">Buyer matching</span></div></div></div>
+              <div className="card" style={{margin:14}}><div className="card-header"><span className="card-title">Resale formula</span><span className="tag tag-green">Active</span></div>
+                <div className="finance-stat"><span className="finance-label">Purchase price (2020)</span><span className="finance-val">$187,000</span></div>
+                <div className="finance-stat"><span className="finance-label">+ 30% appreciation</span><span className="finance-val">$12,000</span></div>
+                <div className="finance-stat"><span className="finance-label">+ Improvement credit</span><span className="finance-val">$2,800</span></div>
+                <div className="finance-stat" style={{background:'var(--parchment)'}}><span className="finance-label" style={{fontWeight:500,color:'var(--ink)'}}>Max resale price</span><span className="finance-val green" style={{fontFamily:'var(--serif-display)',fontSize:18}}>$201,800</span></div>
+              </div>
+              <div className="sec-header"><span className="sec-title">Buyer matches</span><span className="sec-action">View all</span></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="feed-item"><div className="feed-avatar av-blue">DH</div><div className="feed-body"><div className="feed-name">David &amp; Rosa Hernandez</div><div className="feed-detail">Match score 91 · Pre-approval pending Apr 7 · Education complete</div></div><div className="feed-meta"><span className="tag tag-green">Top match</span></div></div>
+                <div className="feed-item"><div className="feed-avatar av-amber">AO</div><div className="feed-body"><div className="feed-name">Amara Osei</div><div className="feed-detail">Match score 88 · Education complete · Counselor session done</div></div><div className="feed-meta"><span className="tag tag-blue">Ready</span></div></div>
+                <div className="feed-item"><div className="feed-avatar av-teal">MW</div><div className="feed-body"><div className="feed-name">Marcus &amp; Tanya Webb</div><div className="feed-detail">Match score 74 · Counselor session pending</div></div><div className="feed-meta"><span className="tag tag-amber">In progress</span></div></div>
+                <div style={{padding:'10px 14px'}}><button className="btn primary full">Advance to contract →</button></div>
+              </div>
+            </div>
+
+            {/* ASSETS */}
+            <div className={sc('assets')}>
+              <div className="screen-header"><div className="screen-header-title">Asset Management</div><div className="screen-header-sub">47 properties · inspections · capital</div></div>
+              <div className="stat-row" style={{padding:14}}>
+                <div className="stat-card"><div className="stat-label">Properties</div><div className="stat-val">47</div><div className="stat-sub muted">Active portfolio</div></div>
+                <div className="stat-card"><div className="stat-label">Inspections due</div><div className="stat-val">3</div><div className="stat-sub warn">This quarter</div></div>
+                <div className="stat-card"><div className="stat-label">Open repairs</div><div className="stat-val">1</div><div className="stat-sub warn">31 days open</div></div>
+                <div className="stat-card"><div className="stat-label">Capital forecast</div><div className="stat-val">$34k</div><div className="stat-sub muted">Next 12 months</div></div>
+              </div>
+              <div className="sec-header"><span className="sec-title">Portfolio</span><span className="sec-action">+ Add property</span></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="asset-row"><div className="asset-icon"><svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/><path d="M6 14v-4h4v4"/></svg></div><div className="asset-body"><div className="asset-addr">14 Oak Street</div><div className="asset-meta">Maria Torres · Resale in progress · Built 1948</div></div><span className="tag tag-amber">Resale</span></div>
+                <div className="asset-row"><div className="asset-icon"><svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/><path d="M6 14v-4h4v4"/></svg></div><div className="asset-body"><div className="asset-addr">56 Thomas Avenue</div><div className="asset-meta">Patricia &amp; Leon Moore · Open repair 31d</div></div><span className="tag tag-coral">Repair due</span></div>
+                <div className="asset-row"><div className="asset-icon"><svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/><path d="M6 14v-4h4v4"/></svg></div><div className="asset-body"><div className="asset-addr">88 Iglehart Avenue</div><div className="asset-meta">James &amp; Denise Walker · Built 1952</div></div><span className="tag tag-amber">Inspect Q2</span></div>
+                <div className="asset-row"><div className="asset-icon"><svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/><path d="M6 14v-4h4v4"/></svg></div><div className="asset-body"><div className="asset-addr">221 Minnehaha Avenue</div><div className="asset-meta">Roberto &amp; Ana Diaz · Built 1961</div></div><span className="tag tag-green">Good</span></div>
+                <div style={{padding:'10px 14px',fontSize:12,color:'var(--ink-faint)',textAlign:'center'}}>43 more properties</div>
+              </div>
+            </div>
+
+            {/* MAINTENANCE */}
+            <div className={sc('maintenance')}>
+              <div className="screen-header"><div className="screen-header-title">Maintenance</div><div className="screen-header-sub">1 open · Ace Contracting · 31 days</div></div>
+              <div style={{padding:'10px 14px',display:'flex',gap:8}}><button className="btn primary" style={{flex:1}}>+ New request</button><button className="btn" style={{flex:1}}>Contractors</button></div>
+              <div className="sec-header"><span className="sec-title">Open (1)</span></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="maint-row"><div style={{flexShrink:0,marginTop:4}}><div style={{width:8,height:8,borderRadius:'50%',background:'var(--terra)'}}></div></div><div className="maint-body"><div className="maint-addr">56 Thomas Avenue — Bathroom faucet</div><div className="maint-desc">Dripping faucet in main bathroom. Homeowner reports consistent drip since November 2024.</div><div className="maint-meta"><span className="maint-days">31 days open</span><span className="tag tag-amber">Ace Contracting</span></div></div></div>
+              </div>
+              <div className="sec-header"><span className="sec-title">Closed (12)</span></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="maint-row"><div style={{flexShrink:0,marginTop:4}}><div style={{width:8,height:8,borderRadius:'50%',background:'var(--forest-light)'}}></div></div><div className="maint-body"><div className="maint-addr">14 Oak Street — Furnace inspection</div><div className="maint-desc">Annual furnace check. Passed. Filter replaced.</div><div className="maint-meta"><span className="tag tag-green">Closed</span><span className="cl-meta">Feb 2025</span></div></div></div>
+                <div className="maint-row"><div style={{flexShrink:0,marginTop:4}}><div style={{width:8,height:8,borderRadius:'50%',background:'var(--forest-light)'}}></div></div><div className="maint-body"><div className="maint-addr">88 Iglehart Ave — Roof repair</div><div className="maint-desc">Three shingles replaced after winter storm damage.</div><div className="maint-meta"><span className="tag tag-green">Closed</span><span className="cl-meta">Jan 2025</span></div></div></div>
+              </div>
+            </div>
+
+            {/* GOVERNANCE */}
+            <div className={sc('governance')}>
+              <div className="screen-header"><div className="screen-header-title">Governance</div><div className="screen-header-sub">Board · Assembly · Documents · Volunteers</div></div>
+              <div className="tab-bar"><div className="tab active">Board</div><div className="tab">Assembly</div><div className="tab">Documents</div><div className="tab">Volunteers</div></div>
+              <div style={{padding:'10px 14px 4px',display:'flex',justifyContent:'space-between',alignItems:'center'}}><span style={{fontSize:12,color:'var(--ink-light)'}}>7 board members · Next meeting Apr 18</span><button className="btn">Meeting agenda</button></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="gov-member-row"><div className="gov-av">CR</div><div style={{flex:1}}><div className="gov-name">Constance Rivera</div><div className="gov-role">Chair · Term ends 2026</div></div><span className="tag tag-forest">Chair</span></div>
+                <div className="gov-member-row"><div className="gov-av">TW</div><div style={{flex:1}}><div className="gov-name">Thomas Wheeler</div><div className="gov-role">Treasurer · Term ends 2027</div></div><span className="tag tag-blue">Treasurer</span></div>
+                <div className="gov-member-row"><div className="gov-av">AG</div><div style={{flex:1}}><div className="gov-name">Amara Gomez</div><div className="gov-role">Secretary · Term ends 2026</div></div><span className="tag tag-blue">Secretary</span></div>
+                <div className="gov-member-row"><div className="gov-av">SL</div><div style={{flex:1}}><div className="gov-name">Samuel Lee</div><div className="gov-role">Homeowner rep · Term ends 2025</div></div><span className="tag tag-amber">Up for election</span></div>
+                <div className="gov-member-row"><div className="gov-av">+3</div><div style={{flex:1}}><div className="gov-name">3 more members</div></div></div>
+              </div>
+            </div>
+
+            {/* FINANCES */}
+            <div className={sc('finances')}>
+              <div className="screen-header"><div className="screen-header-title">Finances</div><div className="screen-header-sub">Stripe Connect · ground lease · grants</div></div>
+              <div className="stat-row" style={{padding:14}}>
+                <div className="stat-card"><div className="stat-label">Monthly lease income</div><div className="stat-val">$2,256</div><div className="stat-sub up">94% collected</div></div>
+                <div className="stat-card"><div className="stat-label">Overdue</div><div className="stat-val">$156</div><div className="stat-sub warn">3 homeowners</div></div>
+                <div className="stat-card"><div className="stat-label">Grants (YTD)</div><div className="stat-val">$48k</div><div className="stat-sub muted">$0 platform fee</div></div>
+                <div className="stat-card"><div className="stat-label">Open invoices</div><div className="stat-val">4</div><div className="stat-sub warn">2 overdue</div></div>
+              </div>
+              <div className="sec-header"><span className="sec-title">Overdue payments</span></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="finance-stat"><div><div className="finance-label" style={{fontSize:13,color:'var(--ink)',fontWeight:500}}>James &amp; Denise Walker</div><div style={{fontSize:11,color:'var(--ink-faint)'}}>88 Iglehart Ave · 9 days overdue</div></div><div style={{textAlign:'right'}}><div className="finance-val warn">$52</div></div></div>
+                <div className="finance-stat"><div><div className="finance-label" style={{fontSize:13,color:'var(--ink)',fontWeight:500}}>Patricia &amp; Leon Moore</div><div style={{fontSize:11,color:'var(--ink-faint)'}}>56 Thomas Ave · 14 days overdue</div></div><div style={{textAlign:'right'}}><div className="finance-val warn">$48</div></div></div>
+                <div className="finance-stat"><div><div className="finance-label" style={{fontSize:13,color:'var(--ink)',fontWeight:500}}>Samuel Okafor</div><div style={{fontSize:11,color:'var(--ink-faint)'}}>33 Charles Ave · 3 days overdue</div></div><div style={{textAlign:'right'}}><div className="finance-val warn">$56</div></div></div>
+              </div>
+              <div className="sec-header"><span className="sec-title">April ledger</span></div>
+              <div className="card" style={{margin:'0 14px 14px'}}>
+                <div className="finance-stat"><span className="finance-label">Ground lease collected</span><span className="finance-val green">$2,100</span></div>
+                <div className="finance-stat"><span className="finance-label">Overdue balance</span><span className="finance-val warn">$156</span></div>
+                <div className="finance-stat"><span className="finance-label">Grant disbursement (CCHD)</span><span className="finance-val green">$15,000</span></div>
+                <div className="finance-stat"><span className="finance-label">Platform fee (grants)</span><span className="finance-val">$0</span></div>
+                <div className="finance-stat"><span className="finance-label">Contractor payment (Ace)</span><span className="finance-val">$340</span></div>
+              </div>
+            </div>
+
+            {/* SETTINGS */}
+            <div className={sc('settings')}>
+              <div style={{padding:'14px 14px 8px'}}><div style={{fontFamily:'var(--serif-display)',fontSize:20,fontWeight:500,color:'var(--forest)',letterSpacing:'-0.02em',marginBottom:2}}>Settings</div><div style={{fontSize:12,color:'var(--ink-faint)'}}>Rondo Community Land Trust</div></div>
+              <div style={{padding:'8px 14px 4px',fontSize:10,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)'}}>Organization</div>
+              <div className="card" style={{margin:'0 14px 12px'}}>
+                <div className="settings-row"><div className="settings-icon-row"><div className="settings-icon"><svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/></svg></div><div><div className="settings-label">Organization details</div><div style={{fontSize:11,color:'var(--ink-faint)'}}>Name, address, contact</div></div></div><svg className="settings-chevron" viewBox="0 0 14 14"><path d="M5 2l4 5-4 5"/></svg></div>
+                <div className="settings-row"><div className="settings-icon-row"><div className="settings-icon"><svg viewBox="0 0 16 16"><path d="M2 13h12M4 13V7m3-5v11M10 13V9m3-3v7"/></svg></div><div><div className="settings-label">Resale formula</div><div style={{fontSize:11,color:'var(--ink-faint)'}}>Appreciation rate · credits</div></div></div><svg className="settings-chevron" viewBox="0 0 14 14"><path d="M5 2l4 5-4 5"/></svg></div>
+              </div>
+              <div style={{padding:'8px 14px 4px',fontSize:10,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)'}}>Integrations</div>
+              <div className="card" style={{margin:'0 14px 12px'}}>
+                <div className="settings-row"><div className="settings-icon-row"><div className="settings-icon"><svg viewBox="0 0 16 16"><path d="M2 4h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4z"/><path d="M2 4l6 5 6-5"/></svg></div><div><div className="settings-label">Gmail</div><div style={{fontSize:11,color:'var(--forest-light)'}}>sarah@rondoclt.org · Connected</div></div></div><span className="tag tag-green">Active</span></div>
+                <div className="settings-row"><div className="settings-icon-row"><div className="settings-icon"><svg viewBox="0 0 16 16"><path d="M3 8h10M8 3v10"/></svg></div><div><div className="settings-label">Stripe Connect</div><div style={{fontSize:11,color:'var(--forest-light)'}}>Payments enabled · Connected</div></div></div><span className="tag tag-green">Active</span></div>
+              </div>
+              <div style={{padding:'8px 14px 4px',fontSize:10,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)'}}>Billing</div>
+              <div className="card" style={{margin:'0 14px 12px'}}>
+                <div className="finance-stat"><span className="finance-label">Plan</span><span className="finance-val">47 homes</span></div>
+                <div className="finance-stat"><span className="finance-label">Monthly</span><span className="finance-val">$274/mo</span></div>
+                <div className="finance-stat"><span className="finance-label">Next billing</span><span className="finance-val">May 1, 2026</span></div>
+              </div>
+            </div>
+
+            {/* ACCOUNT */}
+            <div className={sc('account')}>
+              <div style={{padding:'20px 14px 16px',display:'flex',alignItems:'center',gap:14}}>
+                <div style={{width:56,height:56,borderRadius:'50%',background:'rgba(27,58,45,0.1)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--serif-display)',fontSize:20,fontWeight:400,color:'var(--forest)',flexShrink:0}}>SC</div>
+                <div><div style={{fontFamily:'var(--serif-display)',fontSize:19,fontWeight:500,color:'var(--forest)'}}>Sarah Chen</div><div style={{fontSize:12,color:'var(--ink-faint)',fontWeight:300}}>Stewardship coordinator · Rondo CLT</div></div>
+              </div>
+              <div className="card" style={{margin:'0 14px 12px'}}>
+                <div className="settings-row"><span className="settings-label">Edit profile</span><svg className="settings-chevron" viewBox="0 0 14 14"><path d="M5 2l4 5-4 5"/></svg></div>
+                <div className="settings-row"><span className="settings-label">Change password</span><svg className="settings-chevron" viewBox="0 0 14 14"><path d="M5 2l4 5-4 5"/></svg></div>
+              </div>
+              <div style={{padding:'0 14px 4px',fontSize:10,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)'}}>Notifications</div>
+              <div className="card" style={{margin:'0 14px 12px'}}>
+                <div className="settings-row"><span className="settings-label">Disengagement signals</span><div className="toggle-pill on"><div className="toggle-thumb"></div></div></div>
+                <div className="settings-row"><span className="settings-label">Payment overdue alerts</span><div className="toggle-pill on"><div className="toggle-thumb"></div></div></div>
+                <div className="settings-row"><span className="settings-label">Annual check-in reminders</span><div className="toggle-pill on"><div className="toggle-thumb"></div></div></div>
+                <div className="settings-row"><span className="settings-label">NRI compass auto-open</span><div className="toggle-pill on"><div className="toggle-thumb"></div></div></div>
+              </div>
+              <div style={{padding:'0 14px 16px'}}><button className="btn full terra">Sign out</button></div>
+            </div>
+
+          </div>{/* /screens */}
+
+          {/* BOTTOM NAV */}
+          <div className="bottom-nav">
+            <button className={ni('dashboard')} onClick={() => go('dashboard')}>
+              <svg className="nav-icon" viewBox="0 0 22 22"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="12" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="12" width="7" height="7" rx="1.5"/><rect x="12" y="12" width="7" height="7" rx="1.5"/></svg>
+              <span className="nav-label">Dashboard</span>
+            </button>
+            <button className={ni('stewardship')} onClick={() => go('stewardship')}>
+              <svg className="nav-icon" viewBox="0 0 22 22"><circle cx="11" cy="8" r="4"/><path d="M3 19c0-3.5 3.5-6 8-6s8 2.5 8 6"/></svg>
+              <span className="nav-label">Stewardship</span>
+              <span className="nav-badge">3</span>
+            </button>
+            <button className={ni('pipeline')} onClick={() => go('pipeline')}>
+              <svg className="nav-icon" viewBox="0 0 22 22"><path d="M3 6h16M3 11h11M3 16h7"/></svg>
+              <span className="nav-label">Pipeline</span>
+              <span className="nav-badge gold">7</span>
+            </button>
+            <button className={ni('praeco')} onClick={() => go('praeco')}>
+              <svg className="nav-icon" viewBox="0 0 22 22"><path d="M3 6h16v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6z"/><path d="M3 6l8 7 8-7"/></svg>
+              <span className="nav-label">Praeco</span>
+            </button>
+            <button className={ni('finances')} onClick={() => go('finances')}>
+              <svg className="nav-icon" viewBox="0 0 22 22"><path d="M3 18h16M5 18V8m4 10V5m4 13V10m4 8V7"/></svg>
+              <span className="nav-label">Finances</span>
+            </button>
+          </div>
+        </div>{/* /content-area */}
+
+        {/* HAMBURGER OVERLAY */}
+        <div className={'hamburger-overlay' + (hamburgerOpen ? ' open' : '')} onClick={(e) => { if ((e.target as HTMLElement).classList.contains('hamburger-overlay')) setHamburgerOpen(false) }}>
+          <div className="hamburger-menu">
+            <div className="hm-header"><div className="hm-brand">Propria<span>.</span></div><div className="hm-org">Rondo Community Land Trust</div></div>
+            <div className="hm-section">Property</div>
+            <div className="hm-item" onClick={() => go('assets')}><svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/><path d="M6 14v-4h4v4"/></svg>Asset management</div>
+            <div className="hm-item" onClick={() => go('maintenance')}><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2 1.5"/></svg>Maintenance <span className="hm-badge">1</span></div>
+            <div className="hm-item" onClick={() => go('resale')}><svg viewBox="0 0 16 16"><path d="M5 2h6a1 1 0 0 1 1 1v12l-4-2.2L4 15V3a1 1 0 0 1 1-1z"/></svg>Resale engine <span className="hm-badge">1</span></div>
+            <div className="hm-section">Community</div>
+            <div className="hm-item" onClick={() => go('governance')}><svg viewBox="0 0 16 16"><rect x="2" y="5" width="12" height="9" rx="1"/><path d="M5 5V3.5a3 3 0 0 1 6 0V5"/></svg>Governance</div>
+            <div className="hm-section">Account</div>
+            <div className="hm-item" onClick={() => go('settings')}><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.5"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M4.2 4.2l1 1M10.8 10.8l1 1M4.2 11.8l1-1M10.8 5.2l1-1"/></svg>Settings</div>
+            <div className="hm-item" onClick={() => go('account')}><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="3"/><path d="M2 14c0-2.5 2.7-4.5 6-4.5s6 2 6 4.5"/></svg>My account</div>
+            <div className="hm-spacer"></div>
+            <div className="hm-user"><div className="hm-avatar">SC</div><div><div className="hm-user-name">Sarah Chen</div><div className="hm-user-role">Stewardship coordinator</div></div></div>
+          </div>
+        </div>
+
+        {/* NRI COMPASS DRAWER */}
+        <div className={'compass-overlay' + (compassOpen ? ' open' : '')} onClick={(e) => { if ((e.target as HTMLElement).classList.contains('compass-overlay')) setCompassOpen(false) }}>
+          <div className="compass-drawer">
+            <div className="compass-handle"></div>
+            <div className="compass-header"><div className="compass-header-dot"></div><div className="compass-header-title">NRI Companion</div><div className="compass-direction">Cura</div></div>
+            <div className="compass-body">
+              <div style={{fontSize:12,color:'rgba(245,240,232,0.5)',marginBottom:10,fontWeight:300,fontStyle:'italic'}}>Here's what needs your attention today.</div>
+              <div className="compass-nudge"><div className="compass-nudge-dir cura">Cura</div><div className="compass-nudge-msg">Maria Torres hasn't responded to 2 check-in attempts. Last contact was 23 days ago. Consider a door knock or reaching her emergency contact.</div><div className="compass-nudge-action" onClick={() => { go('stewardship'); setCompassOpen(false) }}>→ Open stewardship record</div></div>
+              <div className="compass-nudge"><div className="compass-nudge-dir reconciliatio">Reconciliatio</div><div className="compass-nudge-msg">3 homeowners have ground lease payments 7+ days overdue, totaling $156. Walker, Moore, and Okafor.</div><div className="compass-nudge-action" onClick={() => { go('finances'); setCompassOpen(false) }}>→ Send payment reminders</div></div>
+              <div className="compass-nudge"><div className="compass-nudge-dir custodia">Custodia</div><div className="compass-nudge-msg">7 families are due for their annual check-in this quarter. Schedule before April ends.</div><div className="compass-nudge-action">→ View check-in queue</div></div>
+              <div className="compass-quick-prompts">
+                <div className="compass-prompt">Log a contact attempt for Maria</div>
+                <div className="compass-prompt">Send payment reminder to Walker family</div>
+                <div className="compass-prompt">Schedule Diaz annual check-in</div>
+                <div className="compass-prompt">What's Keisha's pipeline status?</div>
+              </div>
+            </div>
+            <div className="compass-input-row">
+              <input className="compass-input" type="text" placeholder="Ask NRI anything…" />
+              <button className="compass-send"><svg viewBox="0 0 16 16"><path d="M14 8H2M8 2l6 6-6 6"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+      </div>{/* /app */}
     </div>
   )
 }
