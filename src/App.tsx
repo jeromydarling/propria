@@ -13,6 +13,10 @@ import ResaleCalculator from './views/ResaleCalculator'
 import EquityProjector from './views/EquityProjector'
 import MagicImport from './views/MagicImport'
 import HudReport from './views/HudReport'
+import ApplicantPortal from './views/ApplicantPortal'
+import MaintenanceRequest from './views/MaintenanceRequest'
+import CommunityBoard from './views/CommunityBoard'
+import GroundLease from './views/GroundLease'
 
 const NAV_ITEMS = [
   { path: '/', label: 'Marketing' },
@@ -27,6 +31,10 @@ const NAV_ITEMS = [
   { path: '/equity', label: 'Equity Projector' },
   { path: '/import', label: 'Magic Import' },
   { path: '/hud-report', label: 'HUD-9902' },
+  { path: '/applicant', label: 'Applicant Portal' },
+  { path: '/maintenance-request', label: 'Maint. Request' },
+  { path: '/community', label: 'Community Board' },
+  { path: '/ground-lease', label: 'Ground Lease' },
 ]
 
 function DevNav() {
@@ -72,6 +80,10 @@ function App() {
         <Route path="/equity" element={<EquityProjector />} />
         <Route path="/import" element={<MagicImport />} />
         <Route path="/hud-report" element={<HudReport />} />
+        <Route path="/applicant" element={<ApplicantPortal />} />
+        <Route path="/maintenance-request" element={<MaintenanceRequest />} />
+        <Route path="/community" element={<CommunityBoard />} />
+        <Route path="/ground-lease" element={<GroundLease />} />
       </Routes>
       <DevNav />
     </HashRouter>
