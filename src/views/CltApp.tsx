@@ -352,7 +352,7 @@ export default function CltApp() {
                 {/* NRI site assistant + actions */}
                 <div style={{display:'flex',gap:8,marginBottom:14}}>
                   <button className="btn primary" style={{flex:1}} onClick={()=>setSheet('nriSite')}>✦ NRI site assistant</button>
-                  <button className="btn" style={{flex:1}}>Edit pages</button>
+                  <button className="btn" style={{flex:1}} onClick={()=>setSheet('editPages')}>Edit pages</button>
                 </div>
 
                 {/* Pages list */}
@@ -848,6 +848,67 @@ export default function CltApp() {
           <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Asset management records</span></div>
         </div>
         <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Export data</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='editPages'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Edit Page — Home</div>
+        <div style={{display:'flex',gap:6,marginBottom:16,overflowX:'auto'}}>
+          {['Home','About our CLT','Apply for a home','News & events'].map((p,i)=>
+            <span key={i} style={{fontSize:12,padding:'6px 12px',borderRadius:6,border:i===0?'2px solid var(--forest)':'1px solid var(--border)',background:i===0?'var(--forest)':'white',color:i===0?'var(--parchment)':'var(--ink-light)',cursor:'pointer',whiteSpace:'nowrap',fontFamily:'var(--sans)',fontWeight:i===0?500:400}}>{p}</span>
+          )}
+        </div>
+
+        {/* Page settings */}
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}>
+          <div><div style={{fontSize:13,fontWeight:500,color:'var(--ink)'}}>Page status</div><div style={{fontSize:11,color:'var(--ink-faint)'}}>Last edited 2 days ago by Sarah</div></div>
+          <div style={{width:40,height:24,borderRadius:12,background:'var(--forest)',position:'relative',cursor:'pointer'}}><div style={{width:20,height:20,borderRadius:'50%',background:'white',position:'absolute',top:2,left:18,boxShadow:'0 1px 3px rgba(0,0,0,0.15)'}}></div></div>
+        </div>
+
+        {/* Content blocks */}
+        <div className="modal-label">Content blocks</div>
+        <div style={{display:'flex',flexDirection:'column',gap:8,marginBottom:14}}>
+          {[
+            {type:'Hero',content:'Affordable homeownership in the Rondo neighborhood.',icon:'🏠'},
+            {type:'Stats Bar',content:'47 families · 12 years · $0 foreclosures',icon:'📊'},
+            {type:'Text Block',content:'A CLT keeps homes affordable — forever. When you buy a Rondo CLT home...',icon:'📝'},
+            {type:'Events',content:'2 upcoming events (auto-synced from Praeco)',icon:'📅'},
+            {type:'Apply CTA',content:'Button: "Apply for a home" → application form',icon:'🔗'},
+          ].map((block,i)=>
+            <div key={i} style={{background:'var(--parchment)',border:'0.5px solid var(--border)',borderRadius:8,padding:'10px 12px',display:'flex',gap:10,alignItems:'flex-start',cursor:'grab'}}>
+              <span style={{fontSize:16,flexShrink:0}}>{block.icon}</span>
+              <div style={{flex:1,minWidth:0}}>
+                <div style={{fontSize:12,fontWeight:500,color:'var(--ink)',marginBottom:2}}>{block.type}</div>
+                <div style={{fontSize:11,color:'var(--ink-light)',lineHeight:1.4,fontWeight:300}}>{block.content}</div>
+              </div>
+              <div style={{display:'flex',flexDirection:'column',gap:2,flexShrink:0}}>
+                <div style={{width:16,height:6,display:'flex',flexDirection:'column',justifyContent:'space-between',cursor:'pointer',opacity:0.3}}>
+                  <div style={{width:16,height:1,background:'var(--ink-faint)'}}></div>
+                  <div style={{width:16,height:1,background:'var(--ink-faint)'}}></div>
+                  <div style={{width:16,height:1,background:'var(--ink-faint)'}}></div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <button className="btn full" style={{marginBottom:10,border:'2px dashed var(--border)',background:'var(--cream)',color:'var(--ink-light)'}}>+ Add content block</button>
+
+        {/* Edit hero text */}
+        <div className="modal-label">Hero headline</div>
+        <textarea className="modal-textarea" rows={2} defaultValue="Affordable homeownership in the Rondo neighborhood."></textarea>
+
+        <div className="modal-label">Hero subtext</div>
+        <textarea className="modal-textarea" rows={2} defaultValue="A community land trust preserving permanently affordable homes for families in Saint Paul, Minnesota."></textarea>
+
+        <div style={{background:'var(--gold-pale)',border:'1px solid #E8D9A8',borderRadius:8,padding:'10px 14px',display:'flex',gap:8,alignItems:'flex-start',margin:'12px 0'}}>
+          <div style={{width:8,height:8,borderRadius:'50%',background:'var(--gold)',animation:'pulse 2s ease-in-out infinite',flexShrink:0,marginTop:3}}></div>
+          <div style={{fontSize:12,color:'#633806',lineHeight:1.5,fontWeight:300}}>NRI can rewrite this content in the Rondo CLT voice, optimize for SEO, or generate new sections based on your CLT data.</div>
+        </div>
+
+        <div className="modal-btns">
+          <button className="btn" onClick={()=>setSheet(null)}>Cancel</button>
+          <button className="btn primary" onClick={()=>setSheet(null)}>Save &amp; publish</button>
+        </div>
       </Sheet>
 
       <Sheet open={sheet==='resaleCalc'} onClose={()=>setSheet(null)}>
