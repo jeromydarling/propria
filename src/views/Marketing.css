@@ -2,7 +2,7 @@
    MARKETING SITE — Verbatim from propria-combined-v4.html
    ══════════════════════════════════════════════════════════════ */
 
-.mkt{scroll-behavior:smooth;background:var(--cream);color:var(--ink);font-family:var(--serif-body);font-size:17px;line-height:1.7;overflow-x:hidden;overflow-y:auto;height:100%}
+.mkt{scroll-behavior:smooth;background:var(--cream);color:var(--ink);font-family:var(--serif-body);font-size:17px;line-height:1.7;overflow-x:hidden;min-height:100vh}
 
 /* NAV */
 .mkt nav{position:sticky;top:0;left:0;right:0;z-index:100;background:var(--cream);border-bottom:1px solid var(--parchment-dk);padding:0 2.5rem;height:60px;display:flex;align-items:center;justify-content:space-between}
