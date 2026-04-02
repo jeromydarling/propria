@@ -1,13 +1,18 @@
+import { useState } from 'react'
 import './Marketing.css'
 
 export default function Marketing() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
     <div className="mkt">
       {/* NAV */}
       <nav>
         <a href="#" className="nav-brand">Propria<span>.</span></a>
-        <button className="nav-hamburger">
-          <svg viewBox="0 0 22 16"><path d="M1 1h20M1 8h20M1 15h20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/></svg>
+        <button className="nav-hamburger" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen
+            ? <svg viewBox="0 0 22 22" width="22" height="22"><path d="M5 5l12 12M17 5L5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/></svg>
+            : <svg viewBox="0 0 22 16"><path d="M1 1h20M1 8h20M1 15h20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/></svg>
+          }
         </button>
         <ul className="nav-links">
           <li><a href="#platform">Platform</a></li>
@@ -17,6 +22,16 @@ export default function Marketing() {
           <li><a href="#demo" className="nav-cta">Request a demo</a></li>
         </ul>
       </nav>
+      {/* MOBILE MENU */}
+      {mobileMenuOpen && (
+        <div className="mobile-menu">
+          <a href="#platform" onClick={() => setMobileMenuOpen(false)}>Platform</a>
+          <a href="#stewardship" onClick={() => setMobileMenuOpen(false)}>Stewardship</a>
+          <a href="#network" onClick={() => setMobileMenuOpen(false)}>Counselors</a>
+          <a href="#pricing" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
+          <a href="#demo" className="mobile-menu-cta" onClick={() => setMobileMenuOpen(false)}>Request a demo</a>
+        </div>
+      )}
 
       {/* HERO */}
       <section className="hero" id="hero">
@@ -304,19 +319,25 @@ export default function Marketing() {
               </div>
             )},
             {title:'Site Builder',sub:'NRI-powered CLT website — edit, publish, analyze',content:(
-              <div style={{background:'#2A2A2A',padding:'6px 10px',display:'flex',alignItems:'center',gap:6}}>
-                <div style={{display:'flex',gap:3}}><div style={{width:7,height:7,borderRadius:'50%',background:'#FF5F57'}}></div><div style={{width:7,height:7,borderRadius:'50%',background:'#FEBC2E'}}></div><div style={{width:7,height:7,borderRadius:'50%',background:'#28C840'}}></div></div>
-                <div style={{flex:1,background:'#1A1A1A',borderRadius:3,padding:'2px 8px',fontSize:8,color:'#999'}}>rondoclt.org</div>
+              <div style={{background:'var(--forest)',padding:'10px 14px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                <div><div style={{fontFamily:'var(--serif-display)',fontSize:12,fontWeight:500,color:'var(--parchment)'}}>Praeco · Website</div><div style={{fontSize:7,color:'rgba(245,240,232,0.4)'}}>rondoclt.org · Live</div></div>
+                <span style={{fontSize:7,padding:'2px 6px',borderRadius:2,background:'rgba(245,240,232,0.12)',color:'rgba(245,240,232,0.6)'}}>Edit</span>
               </div>
             ),feed:(
               <div>
-                <div style={{background:'var(--forest)',padding:'12px 10px'}}>
+                <div style={{background:'var(--forest)',padding:'10px 10px 8px',borderTop:'1px solid rgba(245,240,232,0.08)'}}>
                   <div style={{fontFamily:'var(--serif-display)',fontSize:11,fontWeight:500,color:'var(--parchment)',lineHeight:1.2,marginBottom:4}}>Affordable homeownership in the <em style={{color:'var(--terra-light)'}}>Rondo neighborhood.</em></div>
                   <div style={{fontSize:7,color:'rgba(245,240,232,0.5)',marginBottom:6}}>Preserving homes for families in Saint Paul.</div>
                   <span style={{fontSize:7,padding:'3px 8px',borderRadius:2,background:'var(--terra)',color:'var(--parchment)'}}>Apply</span>
                 </div>
                 <div style={{padding:'6px 10px',display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:4}}>
                   {[{v:'47',l:'Families'},{v:'12',l:'Years'},{v:'$0',l:'Foreclosures'}].map((s,i)=><div key={i} style={{background:'white',border:'0.5px solid var(--border)',borderRadius:4,padding:'4px',textAlign:'center'}}><div style={{fontFamily:'var(--serif-display)',fontSize:10,color:'var(--forest)'}}>{s.v}</div><div style={{fontSize:6,color:'var(--ink-faint)'}}>{s.l}</div></div>)}
+                </div>
+                <div style={{padding:'6px 10px'}}>
+                  <div style={{background:'var(--gold-pale)',borderRadius:4,padding:'5px 8px',display:'flex',gap:4,alignItems:'center'}}>
+                    <div style={{width:4,height:4,borderRadius:'50%',background:'var(--gold)',flexShrink:0}}></div>
+                    <div style={{fontSize:7,color:'#633806'}}>NRI can rewrite in the Rondo CLT voice</div>
+                  </div>
                 </div>
               </div>
             )},
