@@ -1,0 +1,259 @@
+/* ══════════════════════════════════════════════════════════════
+   CLT STAFF APP — MOBILE-FIRST, REBUILT FROM SCRATCH
+   Based on working propria-mobile.html patterns
+   ══════════════════════════════════════════════════════════════ */
+
+.clt{height:100%;width:100%;position:relative}
+
+/* ── SHELL (mobile-first: column layout) ── */
+.clt-app{
+  display:flex;
+  flex-direction:column;
+  height:100%;width:100%;
+  position:relative;overflow:hidden;
+}
+
+/* ── TOPBAR (mobile only) ── */
+.clt-topbar{
+  background:var(--forest);
+  height:var(--top-h);
+  display:flex;align-items:center;
+  padding:0 14px;gap:10px;
+  flex-shrink:0;
+  position:relative;z-index:50;
+}
+.clt-topbar-hamburger{
+  width:38px;height:38px;border-radius:8px;
+  background:rgba(245,240,232,0.1);border:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;
+}
+.clt-topbar-hamburger svg{stroke:var(--parchment);fill:none;width:18px;height:18px;stroke-width:1.5}
+.clt-topbar-brand{flex:1;min-width:0}
+.clt-topbar-name{font-family:var(--serif-display);font-size:19px;font-weight:700;color:var(--parchment);letter-spacing:-0.02em}
+.clt-topbar-name span{color:var(--terra-light)}
+.clt-topbar-org{font-size:11px;color:rgba(245,240,232,0.45);font-weight:300;margin-top:-2px}
+.clt-topbar-compass{
+  width:38px;height:38px;border-radius:8px;
+  background:rgba(245,240,232,0.08);border:1px solid rgba(245,240,232,0.14);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;position:relative;
+}
+.clt-topbar-compass svg{stroke:var(--gold);fill:none;width:17px;height:17px;stroke-width:1.5}
+.clt-compass-dot{
+  position:absolute;top:7px;right:7px;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--gold);border:1.5px solid var(--forest);
+  animation:pulse 2.2s ease-in-out infinite;
+}
+
+/* ── DESKTOP SIDEBAR (hidden on mobile) ── */
+.clt-desktop-sidebar{display:none}
+
+/* ── SCREENS ── */
+.clt-screens{flex:1;overflow:hidden;position:relative}
+.clt-screen{
+  position:absolute;inset:0;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  background:var(--cream);
+  display:none;
+  padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + 16px);
+}
+.clt-screen.active{display:block}
+.clt-screen::-webkit-scrollbar{width:0}
+
+/* ── BOTTOM NAV (mobile) ── */
+.clt-bottom-nav{
+  background:white;
+  border-top:0.5px solid var(--border);
+  height:calc(var(--nav-h) + var(--safe-bottom));
+  padding-bottom:var(--safe-bottom);
+  display:flex;align-items:stretch;
+  flex-shrink:0;
+  position:relative;z-index:50;
+}
+.clt-nav-item{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:3px;cursor:pointer;
+  padding:8px 4px 6px;
+  border:none;background:none;
+  position:relative;
+  transition:opacity 0.15s;
+}
+.clt-nav-item:active{opacity:0.7}
+.clt-nav-icon{display:flex;align-items:center;justify-content:center}
+.clt-nav-icon svg{width:22px;height:22px;stroke:var(--ink-faint);fill:none;stroke-width:1.4;flex-shrink:0}
+.clt-nav-item.active .clt-nav-icon svg{stroke:var(--forest)}
+.clt-nav-label{font-size:10px;color:var(--ink-faint);font-weight:400;line-height:1;font-family:var(--sans)}
+.clt-nav-item.active .clt-nav-label{color:var(--forest);font-weight:500}
+.clt-nav-badge{
+  position:absolute;top:6px;right:calc(50% - 14px);
+  background:var(--terra);color:white;
+  font-size:9px;font-weight:500;
+  padding:1px 4px;border-radius:8px;
+  min-width:15px;text-align:center;line-height:1.4;
+}
+.clt-nav-badge.gold{background:var(--gold)}
+
+/* ── HAMBURGER MENU ── */
+.clt-hamburger-overlay{
+  position:fixed;inset:0;
+  background:rgba(26,26,20,0.5);
+  z-index:200;
+  display:none;
+}
+.clt-hamburger-overlay.open{display:block}
+.clt-hamburger-menu{
+  position:absolute;top:0;left:0;bottom:0;width:280px;
+  background:var(--forest);
+  display:flex;flex-direction:column;
+  transform:translateX(-100%);
+  transition:transform 0.26s cubic-bezier(0.22,1,0.36,1);
+  overflow-y:auto;
+}
+.clt-hamburger-overlay.open .clt-hamburger-menu{transform:translateX(0)}
+.hm-header{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.07);flex-shrink:0}
+.hm-brand{font-family:var(--serif-display);font-size:20px;font-weight:500;color:var(--parchment);letter-spacing:-0.02em}
+.hm-brand span{color:var(--terra-light)}
+.hm-org{font-size:11px;color:rgba(245,240,232,0.4);margin-top:3px;font-weight:300}
+.hm-section{padding:16px 18px 5px;font-size:10px;font-weight:500;letter-spacing:0.13em;text-transform:uppercase;color:rgba(245,240,232,0.28)}
+.hm-item{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;border-radius:7px;margin:1px 8px;
+  cursor:pointer;font-size:14px;
+  color:rgba(245,240,232,0.6);font-weight:400;
+  transition:background 0.15s;font-family:var(--sans);
+}
+.hm-item:active{background:rgba(255,255,255,0.1)}
+.hm-item svg{width:16px;height:16px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.4;opacity:0.7}
+.hm-badge{margin-left:auto;background:var(--terra);color:#fff;font-size:10px;font-weight:500;padding:1px 6px;border-radius:9px}
+.hm-badge.gold{background:var(--gold)}
+.hm-spacer{flex:1;min-height:20px}
+.hm-user{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;border-top:1px solid rgba(255,255,255,0.07);
+  flex-shrink:0;
+}
+.hm-avatar{width:32px;height:32px;border-radius:50%;background:rgba(245,240,232,0.14);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--parchment);flex-shrink:0}
+.hm-user-name{font-size:13px;color:rgba(245,240,232,0.85)}
+.hm-user-role{font-size:11px;color:rgba(245,240,232,0.35);font-weight:300}
+
+/* ── NRI COMPASS DRAWER ── */
+.clt-compass-overlay{
+  position:fixed;inset:0;
+  background:rgba(26,26,20,0.4);
+  z-index:300;display:none;
+}
+.clt-compass-overlay.open{display:block}
+.clt-compass-drawer{
+  position:absolute;bottom:0;left:0;right:0;
+  height:88%;
+  background:var(--forest);
+  border-radius:16px 16px 0 0;
+  display:flex;flex-direction:column;
+  transform:translateY(100%);
+  transition:transform 0.28s cubic-bezier(0.22,1,0.36,1);
+}
+.clt-compass-overlay.open .clt-compass-drawer{transform:translateY(0)}
+.compass-handle{width:36px;height:4px;border-radius:2px;background:rgba(245,240,232,0.2);margin:10px auto 0;flex-shrink:0}
+.compass-header{padding:14px 18px 12px;border-bottom:0.5px solid rgba(245,240,232,0.1);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.compass-header-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 2.2s ease-in-out infinite;flex-shrink:0}
+.compass-header-title{font-family:var(--serif-display);font-size:15px;font-weight:500;color:var(--parchment);flex:1}
+.compass-body{flex:1;overflow-y:auto;padding:14px 16px}
+.compass-body::-webkit-scrollbar{width:0}
+.compass-input-row{padding:12px 14px calc(12px + var(--safe-bottom));border-top:0.5px solid rgba(245,240,232,0.1);display:flex;gap:8px;align-items:center;flex-shrink:0}
+.compass-input{flex:1;background:rgba(245,240,232,0.08);border:0.5px solid rgba(245,240,232,0.14);border-radius:22px;padding:10px 16px;font-size:14px;color:var(--parchment);font-family:var(--sans);outline:none}
+.compass-input::placeholder{color:rgba(245,240,232,0.35)}
+.compass-send{width:38px;height:38px;background:var(--terra);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.compass-send svg{stroke:white;fill:none;width:15px;height:15px;stroke-width:1.5}
+
+/* ── DASHBOARD ── */
+.dash-hero{background:var(--forest);padding:16px 16px 20px}
+.dash-greeting{font-family:var(--serif-display);font-size:22px;font-weight:500;color:var(--parchment);letter-spacing:-0.02em;line-height:1.2;margin-bottom:2px}
+.dash-greeting em{font-style:italic;color:var(--terra-light)}
+.dash-date{font-size:12px;color:rgba(245,240,232,0.5);margin-bottom:16px}
+.dash-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dash-stat{background:rgba(245,240,232,0.1);border-radius:10px;padding:12px 14px}
+.dash-stat-val{font-family:var(--serif-display);font-size:26px;font-weight:400;color:var(--parchment);line-height:1;letter-spacing:-0.02em}
+.dash-stat-label{font-size:10px;color:rgba(245,240,232,0.5);margin-top:2px}
+.dash-stat-sub{font-size:10px;margin-top:3px}
+.dash-stat-sub.up{color:#8DCFAD}
+.dash-stat-sub.warn{color:#E8956D}
+.dash-stat-sub.muted{color:rgba(245,240,232,0.4)}
+.dash-ground{height:3px;background:linear-gradient(90deg,var(--terra) 0%,var(--gold) 50%,var(--terra) 100%)}
+
+.sec-header{padding:14px 16px 8px;display:flex;justify-content:space-between;align-items:center}
+.sec-title{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint)}
+.sec-action{font-size:12px;color:var(--forest);font-weight:500;cursor:pointer}
+
+.clt-card{background:white;border:0.5px solid var(--border);border-radius:12px;overflow:hidden}
+.feed-item{display:flex;gap:12px;padding:13px 16px;border-bottom:0.5px solid var(--border-light);cursor:pointer;align-items:flex-start}
+.feed-item:last-child{border-bottom:none}
+.feed-item:active{background:var(--cream)}
+.feed-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0;font-family:var(--sans)}
+.av-coral{background:#FAECE7;color:#712B13}
+.av-blue{background:#E6F1FB;color:#0C447C}
+.av-amber{background:#FAEEDA;color:#633806}
+.av-teal{background:#E1F5EE;color:#085041}
+.feed-body{flex:1;min-width:0}
+.feed-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.feed-detail{font-size:12px;color:var(--ink-light);line-height:1.4;font-weight:300}
+.feed-meta{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.feed-time{font-size:11px;color:var(--ink-faint)}
+.dir-pill{font-size:10px;font-weight:500;padding:2px 7px;border-radius:3px}
+.dir-cura{background:#FDF6E3;color:#854F0B}
+.dir-reconciliatio{background:#FAECE7;color:#712B13}
+.dir-custodia{background:#E1F5EE;color:#085041}
+.dir-itiner{background:#E6F1FB;color:#0C447C}
+
+/* ── DESKTOP SIDEBAR (hidden by default) ── */
+.dsc-brand{padding:18px;border-bottom:1px solid rgba(245,240,232,0.1)}
+.dsc-name{font-family:var(--serif-display);font-size:19px;font-weight:500;color:var(--parchment)}
+.dsc-name span{color:var(--terra-light)}
+.dsc-org{font-size:11px;color:rgba(245,240,232,0.4);margin-top:2px}
+.dsc-section{padding:14px 18px 4px;font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.28)}
+.dsc-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 14px;margin:1px 8px;border-radius:7px;
+  cursor:pointer;font-size:13px;
+  color:rgba(245,240,232,0.55);font-weight:400;
+  transition:background 0.15s;font-family:var(--sans);
+}
+.dsc-item:hover{background:rgba(245,240,232,0.06)}
+.dsc-item.active{background:rgba(245,240,232,0.12);color:var(--parchment);font-weight:500}
+.dsc-item svg{width:16px;height:16px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.4}
+.dsc-badge{margin-left:auto;background:var(--terra);color:#fff;font-size:10px;font-weight:500;padding:1px 6px;border-radius:9px}
+.dsc-badge.gold{background:var(--gold)}
+.dsc-spacer{flex:1;min-height:20px}
+.dsc-user{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;border-top:1px solid rgba(245,240,232,0.07);flex-shrink:0;
+}
+.dsc-avatar{width:32px;height:32px;border-radius:50%;background:rgba(245,240,232,0.14);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--parchment);flex-shrink:0}
+.dsc-user-name{font-size:13px;color:rgba(245,240,232,0.85)}
+.dsc-user-role{font-size:11px;color:rgba(245,240,232,0.35);font-weight:300}
+
+/* ══════════════════════════════════════════════════════════════
+   DESKTOP: 1024px+
+   Switch to row layout: sidebar + content
+   Hide mobile topbar and bottom nav
+   ══════════════════════════════════════════════════════════════ */
+@media(min-width:1024px){
+  .clt-app{flex-direction:row}
+  .clt-topbar{display:none}
+  .clt-bottom-nav{display:none}
+  .clt-desktop-sidebar{
+    display:flex;flex-direction:column;
+    width:252px;min-width:252px;
+    height:100%;
+    background:var(--forest);
+    overflow-y:auto;flex-shrink:0;
+  }
+  .clt-desktop-sidebar::-webkit-scrollbar{width:0}
+  .clt-screens{flex:1;min-width:0}
+  .clt-screen{padding-bottom:0}
+  /* Overlays offset by sidebar width */
+  .clt-hamburger-overlay,.clt-compass-overlay{display:none!important}
+}
