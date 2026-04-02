@@ -6,8 +6,8 @@ export default function Marketing() {
       {/* NAV */}
       <nav>
         <a href="#" className="nav-brand">Propria<span>.</span></a>
-        <button className="nav-hamburger" aria-label="Menu">
-          <svg viewBox="0 0 22 16"><path d="M1 1h20M1 8h20M1 15h20" strokeLinecap="round" /></svg>
+        <button className="nav-hamburger">
+          <svg viewBox="0 0 22 16"><path d="M1 1h20M1 8h20M1 15h20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/></svg>
         </button>
         <ul className="nav-links">
           <li><a href="#platform">Platform</a></li>
@@ -24,18 +24,13 @@ export default function Marketing() {
         <div className="hero-inner">
           <div>
             <div className="hero-eyebrow">CROS™ Platform for Community Land Trusts</div>
-            <h1>Property for the <em>many,</em><br />not the few.</h1>
-            <p className="hero-sub">
-              Propria is the operating system for community land trusts — built around the insight
-              that your core product is a multi-decade stewardship relationship with each family you serve.
-            </p>
+            <h1>Property for the <em>many,</em><br/>not the few.</h1>
+            <p className="hero-sub">Propria is the operating system for community land trusts — built around the insight that your core product is a multi-decade stewardship relationship with each family you serve.</p>
             <div className="hero-actions">
               <a href="#demo" className="btn-primary">Request a demo</a>
               <a href="#platform" className="btn-ghost">
                 See the platform
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M3 8h10M9 4l4 4-4 4" />
-                </svg>
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
               </a>
             </div>
           </div>
@@ -61,7 +56,7 @@ export default function Marketing() {
               <span className="hero-card-stat-label">Families in stewardship</span>
               <span className="hero-card-stat-val">47 <small>homes</small></span>
             </div>
-            <div className="hero-card-stat" style={{ marginTop: '0.6rem' }}>
+            <div className="hero-card-stat" style={{marginTop:'0.6rem'}}>
               <span className="hero-card-stat-label">Avg. stewardship relationship</span>
               <span className="hero-card-stat-val">8.3 <small>years</small></span>
             </div>
@@ -98,9 +93,9 @@ export default function Marketing() {
       {/* QUOTE */}
       <div className="quote-band">
         <div className="quote-inner">
-          <span className="quote-mark">"</span>
+          <span className="quote-mark">&ldquo;</span>
           <blockquote>The problem with capitalism is not too much property — it is too few proprietors.</blockquote>
-          <p className="quote-attribution">G.K. Chesterton &nbsp;·&nbsp; The Outline of Sanity, 1926</p>
+          <p className="quote-attribution">G.K. Chesterton &nbsp;&middot;&nbsp; The Outline of Sanity, 1926</p>
         </div>
       </div>
 
@@ -109,96 +104,68 @@ export default function Marketing() {
         <div className="cchd-inner">
           <div>
             <div className="cchd-eyebrow">Institutional Roots</div>
-            <h2 className="cchd-headline">Built in the tradition of<br /><em>Catholic Social Teaching.</em></h2>
-            <p className="cchd-body">
-              The Catholic Campaign for Human Development — the USCCB's primary domestic poverty-fighting
-              apparatus — has identified community land trusts as a strategic priority and invested accordingly.
-              Propria is built in that tradition: the conviction that widely distributed property ownership is
-              the foundation of a free and dignified society.
-              <br /><br />
-              This is not a niche. The CLT model has the backing of the oldest and largest institutional
-              network in American civil society — and it is growing.
-            </p>
+            <h2 className="cchd-headline">Built in the tradition of<br/><em>Catholic Social Teaching.</em></h2>
+            <p className="cchd-body">The Catholic Campaign for Human Development — the USCCB's primary domestic poverty-fighting apparatus — has identified community land trusts as a strategic priority and invested accordingly. Propria is built in that tradition: the conviction that widely distributed property ownership is the foundation of a free and dignified society.<br/><br/>This is not a niche. The CLT model has the backing of the oldest and largest institutional network in American civil society — and it is growing.</p>
           </div>
           <div className="cchd-quotes">
             <div className="cchd-pullquote">
-              <p>"Shared-equity housing is a uniquely self-sustaining approach. One home can help multiple successive families gain an economic foothold."</p>
-              <cite>TONY PICKETT · CEO, Grounded Solutions Network</cite>
+              <p>&ldquo;Shared-equity housing is a uniquely self-sustaining approach. One home can help multiple successive families gain an economic foothold.&rdquo;</p>
+              <cite>TONY PICKETT &middot; CEO, Grounded Solutions Network</cite>
             </div>
             <div className="cchd-pullquote">
-              <p>"Housing is not just a building on a street — it is a building block for a neighborhood and a community."</p>
-              <cite>RALPH McCLOUD · Director, Catholic Campaign for Human Development</cite>
+              <p>&ldquo;Housing is not just a building on a street — it is a building block for a neighborhood and a community.&rdquo;</p>
+              <cite>RALPH McCLOUD &middot; Director, Catholic Campaign for Human Development</cite>
             </div>
             <div className="cchd-pullquote">
-              <p>"We want to be a person's first call, not their last, if they have a financial setback and need help."</p>
-              <cite>GARRICK GOOD · Executive Director, Northeast Housing Initiative</cite>
+              <p>&ldquo;We want to be a person's first call, not their last, if they have a financial setback and need help.&rdquo;</p>
+              <cite>GARRICK GOOD &middot; Executive Director, Northeast Housing Initiative</cite>
             </div>
           </div>
         </div>
       </div>
 
       {/* PLATFORM INTRO */}
-      <section id="platform" style={{ background: 'var(--cream)' }}>
+      <section id="platform" style={{background:'var(--cream)'}}>
         <div className="section-inner">
           <p className="section-eyebrow">The Platform</p>
           <h2 className="section-title">Everything a CLT needs. Nothing it doesn't.</h2>
-          <p className="section-body">
-            CLTs have been held together by Salesforce configurations nobody understands, spreadsheets
-            that break on turnover, and property management software designed for landlords. Propria is
-            built for what you actually do — stewarding families through decades of ownership.
-          </p>
+          <p className="section-body">CLTs have been held together by Salesforce configurations nobody understands, spreadsheets that break on turnover, and property management software designed for landlords. Propria is built for what you actually do — stewarding families through decades of ownership.</p>
         </div>
       </section>
 
       {/* MODULES */}
-      <section className="modules-section" id="stewardship" style={{ paddingTop: 0 }}>
+      <section className="modules-section" id="stewardship" style={{paddingTop:0}}>
         <div className="section-inner">
           <div className="modules-grid">
             <div className="module-card heart">
               <div className="module-number">II</div>
               <div className="module-name">Stewardship</div>
               <div className="module-latin">The heart of Propria</div>
-              <div className="module-desc">
-                A relational dashboard for every homeowner: contact history, life events, maintenance,
-                financial health signals, lease compliance, and NRI-generated prompts. The software
-                equivalent of a great stewardship coordinator who forgets nothing.
-              </div>
+              <div className="module-desc">A relational dashboard for every homeowner: contact history, life events, maintenance, financial health signals, lease compliance, and NRI-generated prompts. The software equivalent of a great stewardship coordinator who forgets nothing.</div>
             </div>
             <div className="module-card">
               <div className="module-number">I</div>
               <div className="module-name">Applicant Pipeline</div>
               <div className="module-latin">Iter — the journey</div>
-              <div className="module-desc">
-                Intake forms, income verification, education enrollment, waitlist scoring, and automated
-                signals when documentation expires.
-              </div>
+              <div className="module-desc">Intake forms, income verification, education enrollment, waitlist scoring, and automated signals when documentation expires.</div>
             </div>
             <div className="module-card">
               <div className="module-number">III</div>
               <div className="module-name">Resale Engine</div>
               <div className="module-latin">Translatio — transfer</div>
-              <div className="module-desc">
-                Formula configuration per CLT, equity tracking, intent-to-sell workflow, buyer matching,
-                closing management, and fee collection via Stripe.
-              </div>
+              <div className="module-desc">Formula configuration per CLT, equity tracking, intent-to-sell workflow, buyer matching, closing management, and fee collection via Stripe.</div>
             </div>
             <div className="module-card">
               <div className="module-number">IV</div>
               <div className="module-name">Asset Management</div>
               <div className="module-latin">Domus — the house</div>
-              <div className="module-desc">
-                Property records, inspection schedules, repair history, capital forecasting, contractor
-                directory, and split invoicing.
-              </div>
+              <div className="module-desc">Property records, inspection schedules, repair history, capital forecasting, contractor directory, and split invoicing.</div>
             </div>
             <div className="module-card">
               <div className="module-number">V</div>
-              <div className="module-name">Governance & Community</div>
+              <div className="module-name">Governance &amp; Community</div>
               <div className="module-latin">Communitas — together</div>
-              <div className="module-desc">
-                Board documents, meeting minutes, homeowner assembly, committee management, community
-                events, and volunteer tracking.
-              </div>
+              <div className="module-desc">Board documents, meeting minutes, homeowner assembly, committee management, community events, and volunteer tracking.</div>
             </div>
           </div>
         </div>
@@ -211,16 +178,8 @@ export default function Marketing() {
             <div>
               <p className="section-eyebrow">NRI Intelligence</p>
               <h2 className="section-title">The stewardship coordinator who <em>sees everything.</em></h2>
-              <p className="section-body" style={{ marginBottom: '1.5rem' }}>
-                Narrative Relational Intelligence runs beneath every screen in Propria, detecting signals
-                at genuine value moments — disengagement risk, financial stress, maintenance urgency,
-                stewardship success. It surfaces what needs your attention, when it matters, without burying
-                you in notifications.
-              </p>
-              <p className="section-body">
-                Content is never stored. Only category signals flow to your dashboard. NRI is included in
-                every subscription — no tiers, no add-ons.
-              </p>
+              <p className="section-body" style={{marginBottom:'1.5rem'}}>Narrative Relational Intelligence runs beneath every screen in Propria, detecting signals at genuine value moments — disengagement risk, financial stress, maintenance urgency, stewardship success. It surfaces what needs your attention, when it matters, without burying you in notifications.</p>
+              <p className="section-body">Content is never stored. Only category signals flow to your dashboard. NRI is included in every subscription — no tiers, no add-ons.</p>
             </div>
             <div className="nri-signals">
               <div className="nri-signal-header">
@@ -253,15 +212,7 @@ export default function Marketing() {
           <div>
             <div className="grounded-label">The Network</div>
             <h2 className="grounded-headline">Built for the <em>Grounded Solutions</em> ecosystem.</h2>
-            <p className="grounded-body">
-              Grounded Solutions Network is the national backbone of the CLT movement — 200+ member
-              organizations, a training institute reaching 1,000+ practitioners annually, and the deepest
-              policy expertise in shared-equity housing. Propria is built to serve every one of their
-              members, from a 20-home startup CLT to a 500-home anchor institution.
-              <br /><br />
-              The long tail of the CLT market — small organizations with 1–3 staff and $200–400K budgets —
-              is where growth is happening. That's exactly who Propria is priced and built for.
-            </p>
+            <p className="grounded-body">Grounded Solutions Network is the national backbone of the CLT movement — 200+ member organizations, a training institute reaching 1,000+ practitioners annually, and the deepest policy expertise in shared-equity housing. Propria is built to serve every one of their members, from a 20-home startup CLT to a 500-home anchor institution.<br/><br/>The long tail of the CLT market — small organizations with 1–3 staff and $200–400K budgets — is where growth is happening. That's exactly who Propria is priced and built for.</p>
           </div>
           <div className="grounded-stats">
             <div className="grounded-stat">
@@ -289,12 +240,8 @@ export default function Marketing() {
       <section className="network-section" id="network">
         <div className="section-inner">
           <p className="section-eyebrow">Propria Counselor Network</p>
-          <h2 className="section-title">HUD-certified counselors.<br /><em>Built in,</em> not bolted on.</h2>
-          <p className="section-body" style={{ marginBottom: 0 }}>
-            Every buyer needs homebuyer education and a counseling session. Propria connects them with
-            HUD-certified housing counselors from any approved agency nationwide — matched by state,
-            language, availability, and CLT experience.
-          </p>
+          <h2 className="section-title">HUD-certified counselors.<br/><em>Built in,</em> not bolted on.</h2>
+          <p className="section-body" style={{marginBottom:0}}>Every buyer needs homebuyer education and a counseling session. Propria connects them with HUD-certified housing counselors from any approved agency nationwide — matched by state, language, availability, and CLT experience.</p>
           <div className="network-grid">
             <div className="network-cell">
               <div className="network-cell-num">300+</div>
@@ -328,11 +275,8 @@ export default function Marketing() {
       <section className="pricing-section" id="pricing">
         <div className="section-inner">
           <p className="section-eyebrow">Pricing</p>
-          <h2 className="section-title">One plan. Every feature.<br />No tiers.</h2>
-          <p className="section-body">
-            A 30-home CLT and a 500-home CLT get the exact same product. We don't gate NRI, don't charge
-            extra for counselors, and don't have an enterprise tier that requires a call.
-          </p>
+          <h2 className="section-title">One plan. Every feature.<br/>No tiers.</h2>
+          <p className="section-body">A 30-home CLT and a 500-home CLT get the exact same product. We don't gate NRI, don't charge extra for counselors, and don't have an enterprise tier that requires a call.</p>
           <div className="pricing-grid">
             <div className="pricing-card">
               <div className="pricing-plan">Base</div>
@@ -363,7 +307,7 @@ export default function Marketing() {
               <a href="#demo" className="btn-pricing">Request a demo</a>
             </div>
           </div>
-          <p className="pricing-note">+ 1.5% on ground lease collection and contractor payments &nbsp;·&nbsp; $250 flat per resale &nbsp;·&nbsp; $0 on grant disbursements</p>
+          <p className="pricing-note">+ 1.5% on ground lease collection and contractor payments · $250 flat per resale · $0 on grant disbursements</p>
         </div>
       </section>
 

@@ -1,11 +1,24 @@
 export default function Education() {
   return (
-    <div style={{ height: '100%', overflow: 'auto', background: 'var(--cream)', fontFamily: 'var(--sans)' }}>
-      <div style={{ padding: 24 }}>
-        <h2 style={{ fontFamily: 'var(--serif-display)', fontSize: 24, color: 'var(--forest)', marginBottom: 8 }}>Homebuyer Education</h2>
-        <p style={{ color: 'var(--ink-light)', fontSize: 15 }}>6-module CLT education course</p>
-        <p style={{ color: 'var(--ink-faint)', fontSize: 13, marginTop: 16 }}>Full build coming next.</p>
-      </div>
+    <div style={{
+      height:'100%',
+      background:'var(--cream)',
+      display:'flex',
+      alignItems:'center',
+      justifyContent:'center',
+      flexDirection:'column',
+      gap:'12px',
+      fontFamily:'var(--sans)',
+      color:'var(--ink-light)'
+    }}>
+      <div style={{
+        fontFamily:'var(--serif-display)',
+        fontSize:'28px',
+        fontWeight:500,
+        color:'var(--forest)',
+        letterSpacing:'-0.02em'
+      }}>Homebuyer Education</div>
+      <div style={{fontSize:'14px'}}>Coming next</div>
     </div>
   )
 }
