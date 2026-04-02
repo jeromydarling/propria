@@ -1,10 +1,23 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import './CltApp.css'
+
+function Sheet({ open, onClose, children }: { open: boolean; onClose: () => void; children: ReactNode }) {
+  if (!open) return null
+  return (
+    <div className="modal-overlay open" onClick={(e) => { if ((e.target as HTMLElement).classList.contains('modal-overlay')) onClose() }}>
+      <div className="modal-sheet">
+        <div className="modal-handle"></div>
+        {children}
+      </div>
+    </div>
+  )
+}
 
 export default function CltApp() {
   const [screen, setScreen] = useState('dashboard')
   const [hamburgerOpen, setHamburgerOpen] = useState(false)
   const [compassOpen, setCompassOpen] = useState(false)
+  const [sheet, setSheet] = useState<string|null>(null)
   const [stewTab, setStewTab] = useState('contact')
   const [praecoTab, setPraecoTab] = useState('email')
   const [govTab, setGovTab] = useState('board')
@@ -128,8 +141,8 @@ export default function CltApp() {
               <div className="sec-header" style={{paddingTop:16}}><span className="sec-title">Needs attention</span><span className="sec-action">View all</span></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="feed-item" onClick={() => go('stewardship')}><div className="feed-avatar av-coral">MT</div><div className="feed-body"><div className="feed-name">Maria Torres — 14 Oak St.</div><div className="feed-detail">No response to 2 check-in attempts. 23 days since last contact.</div></div><div className="feed-meta"><span className="dir-pill dir-cura">Cura</span><span className="feed-time">23d</span></div></div>
-                <div className="feed-item"><div className="feed-avatar av-coral">JW</div><div className="feed-body"><div className="feed-name">James &amp; Denise Walker</div><div className="feed-detail">Ground lease 9 days overdue. $52. No prior late history.</div></div><div className="feed-meta"><span className="dir-pill dir-reconciliatio">Reconciliatio</span><span className="feed-time">9d</span></div></div>
-                <div className="feed-item"><div className="feed-avatar av-amber">RD</div><div className="feed-body"><div className="feed-name">Roberto &amp; Ana Diaz</div><div className="feed-detail">Annual check-in due this month. No appointment scheduled.</div></div><div className="feed-meta"><span className="dir-pill dir-custodia">Custodia</span><span className="feed-time">Due Apr 30</span></div></div>
+                <div className="feed-item" onClick={()=>setSheet('walker')}><div className="feed-avatar av-coral">JW</div><div className="feed-body"><div className="feed-name">James &amp; Denise Walker</div><div className="feed-detail">Ground lease 9 days overdue. $52. No prior late history.</div></div><div className="feed-meta"><span className="dir-pill dir-reconciliatio">Reconciliatio</span><span className="feed-time">9d</span></div></div>
+                <div className="feed-item" onClick={()=>setSheet('diaz')}><div className="feed-avatar av-amber">RD</div><div className="feed-body"><div className="feed-name">Roberto &amp; Ana Diaz</div><div className="feed-detail">Annual check-in due this month. No appointment scheduled.</div></div><div className="feed-meta"><span className="dir-pill dir-custodia">Custodia</span><span className="feed-time">Due Apr 30</span></div></div>
                 <div className="feed-item" onClick={() => go('pipeline')}><div className="feed-avatar av-blue">KJ</div><div className="feed-body"><div className="feed-name">Keisha Johnson — Applicant</div><div className="feed-detail">Income docs expired Mar 14. Education 60% stalled. Application at risk.</div></div><div className="feed-meta"><span className="dir-pill dir-itiner">Itiner</span><span className="feed-time">17d ago</span></div></div>
                 <div className="feed-item" onClick={() => go('maintenance')}><div className="feed-avatar av-teal">PM</div><div className="feed-body"><div className="feed-name">Patricia &amp; Leon Moore</div><div className="feed-detail">Maintenance at 56 Thomas Ave open 31 days. No contractor update.</div></div><div className="feed-meta"><span className="dir-pill dir-reconciliatio">Reconciliatio</span><span className="feed-time">31d</span></div></div>
               </div>
@@ -149,7 +162,7 @@ export default function CltApp() {
               <div className="tab-bar"><div className={stewTab==='contact'?'tab active':'tab'} onClick={()=>setStewTab('contact')}>Contact history</div><div className={stewTab==='lease'?'tab active':'tab'} onClick={()=>setStewTab('lease')}>Lease &amp; finances</div><div className={stewTab==='life'?'tab active':'tab'} onClick={()=>setStewTab('life')}>Life events</div><div className={stewTab==='note'?'tab active':'tab'} onClick={()=>setStewTab('note')}>Pastoral note</div></div>
               {/* Contact history tab */}
               {stewTab==='contact' && <>
-              <div style={{padding:'12px 14px',display:'flex',gap:8}}><button className="btn primary" style={{flex:1}}>+ Log contact</button><button className="btn" style={{flex:1}}>Schedule check-in</button></div>
+              <div style={{padding:'12px 14px',display:'flex',gap:8}}><button className="btn primary" style={{flex:1}} onClick={()=>setSheet('logContact')}>+ Log contact</button><button className="btn" style={{flex:1}} onClick={()=>setSheet('scheduleCheckin')}>Schedule check-in</button></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="contact-log-row"><div className="contact-log-icon"><svg viewBox="0 0 16 16"><path d="M2 4h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4z"/><path d="M2 4l6 5 6-5"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Email sent</div><div className="contact-log-note">Sent spring assembly invitation and check-in scheduling link. No reply.</div></div><div className="contact-log-time">Mar 24</div></div>
                 <div className="contact-log-row"><div className="contact-log-icon"><svg viewBox="0 0 16 16"><path d="M4 2h8a1 1 0 0 1 1 1v9l-3-1.5H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Text message sent</div><div className="contact-log-note">Reminder about annual check-in. No response received.</div></div><div className="contact-log-time">Mar 12</div></div>
@@ -184,7 +197,7 @@ export default function CltApp() {
 
               {/* Life events tab */}
               {stewTab==='life' && <>
-              <div style={{padding:'12px 14px',display:'flex',gap:8}}><button className="btn primary" style={{flex:1}}>+ Log life event</button></div>
+              <div style={{padding:'12px 14px',display:'flex',gap:8}}><button className="btn primary" style={{flex:1}} onClick={()=>setSheet('logLife')}>+ Log life event</button></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="contact-log-row"><div className="contact-log-icon" style={{background:'#FDF6E3'}}><svg viewBox="0 0 16 16"><path d="M8 2l1.5 4.5H14l-3.7 2.7 1.4 4.3L8 11 4.3 13.5l1.4-4.3L2 6.5h4.5z"/></svg></div><div className="contact-log-body"><div className="contact-log-type">5-year homeownership milestone</div><div className="contact-log-note">Maria celebrated 5 years in the home. Sent recognition letter.</div></div><div className="contact-log-time">Mar 2025</div></div>
                 <div className="contact-log-row"><div className="contact-log-icon" style={{background:'#E1F5EE'}}><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg></div><div className="contact-log-body"><div className="contact-log-type">Employment change</div><div className="contact-log-note">Maria started new job at Hennepin County. Income verified for lease compliance.</div></div><div className="contact-log-time">Aug 2023</div></div>
@@ -198,7 +211,7 @@ export default function CltApp() {
                   <div style={{fontSize:11,color:'var(--ink-faint)',marginBottom:8}}>Last updated Nov 2024 · Sarah Chen · Confidential</div>
                   <div style={{fontFamily:'var(--serif-body)',fontSize:14,color:'var(--ink)',lineHeight:1.7,fontWeight:300}}>Maria is a strong, independent homeowner who takes great pride in her home. She mentioned in passing that she may want to sell in the next 2–3 years to be closer to her daughter's school district. No urgency — but worth flagging in the resale pipeline when the time comes. She appreciated the 5-year recognition letter.</div>
                 </div>
-                <button className="btn primary full">Edit pastoral note</button>
+                <button className="btn primary full" onClick={()=>setSheet('editNote')}>Edit pastoral note</button>
               </div>}
             </div>
 
@@ -218,7 +231,7 @@ export default function CltApp() {
                   <div className="pipe-stage"><div className="pipe-circle">8</div><div className="pipe-stage-label">Closed</div></div>
                 </div>
               </div>
-              <div style={{padding:'10px 14px',display:'flex',gap:8}}><button className="btn warn" style={{flex:1}}>Request docs</button><button className="btn primary" style={{flex:1}}>Advance stage</button></div>
+              <div style={{padding:'10px 14px',display:'flex',gap:8}}><button className="btn warn" style={{flex:1}} onClick={()=>setSheet('requestDocs')}>Request docs</button><button className="btn primary" style={{flex:1}} onClick={()=>setSheet('advancePipeline')}>Advance stage</button></div>
               <div className="sec-header"><span className="sec-title">Document checklist</span></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Application form</span><span className="cl-meta">Jan 8</span></div>
@@ -239,7 +252,7 @@ export default function CltApp() {
               <div className="screen-header"><div className="screen-header-title">Praeco</div><div className="screen-header-sub">Herald · Communications, events &amp; community</div></div>
               <div className="tab-bar"><div className={praecoTab==='email'?'tab active':'tab'} onClick={()=>setPraecoTab('email')}>Email</div><div className={praecoTab==='events'?'tab active':'tab'} onClick={()=>setPraecoTab('events')}>Events</div><div className={praecoTab==='website'?'tab active':'tab'} onClick={()=>setPraecoTab('website')}>Website</div></div>
               {praecoTab==='email' && <>
-              <div style={{padding:'10px 14px 6px',display:'flex',alignItems:'center',gap:8}}><div style={{flex:1,fontSize:12,color:'var(--ink-light)'}}>Gmail connected · sarah@rondoclt.org</div><button className="btn primary">+ Compose</button></div>
+              <div style={{padding:'10px 14px 6px',display:'flex',alignItems:'center',gap:8}}><div style={{flex:1,fontSize:12,color:'var(--ink-light)'}}>Gmail connected · sarah@rondoclt.org</div><button className="btn primary" onClick={()=>setSheet('composeEmail')}>+ Compose</button></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="contact-log-row"><div style={{flex:1}}><div style={{fontSize:13,fontWeight:500,color:'var(--ink)',marginBottom:2}}>Spring Assembly — all 47 homeowners</div><div style={{fontSize:12,color:'var(--ink-faint)'}}>Sent Mar 28 · 68% open · 23% clicked</div></div><span className="tag tag-green">Sent</span></div>
                 <div className="contact-log-row"><div style={{flex:1}}><div style={{fontSize:13,fontWeight:500,color:'var(--ink)',marginBottom:2}}>Ground lease reminder — 3 overdue</div><div style={{fontSize:12,color:'var(--ink-faint)'}}>Sent Mar 25 · 100% open rate</div></div><span className="tag tag-green">Sent</span></div>
@@ -247,20 +260,20 @@ export default function CltApp() {
               </div>
               </>}
               {praecoTab==='events' && <>
-              <div style={{padding:'10px 14px 6px',display:'flex',justifyContent:'space-between',alignItems:'center'}}><span style={{fontSize:12,color:'var(--ink-light)'}}>2 upcoming events</span><button className="btn primary">+ Create event</button></div>
+              <div style={{padding:'10px 14px 6px',display:'flex',justifyContent:'space-between',alignItems:'center'}}><span style={{fontSize:12,color:'var(--ink-light)'}}>2 upcoming events</span><button className="btn primary" onClick={()=>setSheet('createEvent')}>+ Create event</button></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="card-header"><span className="card-title">Spring Community Gathering</span><span className="tag tag-green">Apr 12</span></div>
                 <div style={{padding:'12px 14px'}}><div style={{fontSize:12,color:'var(--ink-light)',marginBottom:8}}>Rondo Rec Center · 3–6 PM · 47 invited</div><div style={{height:6,background:'var(--parchment-dk)',borderRadius:3,overflow:'hidden',marginBottom:5}}><div style={{width:'62%',height:'100%',background:'var(--forest-light)',borderRadius:3}}></div></div><div style={{fontSize:11,color:'var(--ink-faint)'}}>29 of 47 RSVP'd (62%)</div></div>
               </div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="card-header"><span className="card-title">Annual Homeowner Assembly</span><span className="tag tag-amber">Apr 22</span></div>
-                <div style={{padding:'12px 14px'}}><div style={{fontSize:12,color:'var(--ink-light)',marginBottom:8}}>Rondo CLT Office · 6–8 PM · 47 invited</div><div style={{height:6,background:'var(--parchment-dk)',borderRadius:3,overflow:'hidden',marginBottom:5}}><div style={{width:'30%',height:'100%',background:'var(--gold)',borderRadius:3}}></div></div><div style={{fontSize:11,color:'var(--terra)'}}>14 of 47 RSVP'd (30%) — low attendance alert</div><button className="btn full warn" style={{marginTop:10}}>Send RSVP reminder</button></div>
+                <div style={{padding:'12px 14px'}}><div style={{fontSize:12,color:'var(--ink-light)',marginBottom:8}}>Rondo CLT Office · 6–8 PM · 47 invited</div><div style={{height:6,background:'var(--parchment-dk)',borderRadius:3,overflow:'hidden',marginBottom:5}}><div style={{width:'30%',height:'100%',background:'var(--gold)',borderRadius:3}}></div></div><div style={{fontSize:11,color:'var(--terra)'}}>14 of 47 RSVP'd (30%) — low attendance alert</div><button className="btn full warn" style={{marginTop:10}} onClick={()=>setSheet('rsvpReminder')}>Send RSVP reminder</button></div>
               </div>
               </>}
               {praecoTab==='website' && <div style={{padding:14}}>
                 <div style={{background:'white',border:'0.5px solid var(--border)',borderRadius:10,overflow:'hidden',marginBottom:12}}>
                   <div style={{background:'var(--forest)',padding:'10px 12px',display:'flex',alignItems:'center',justifyContent:'space-between'}}><span style={{fontSize:12,color:'var(--gold)',fontWeight:500}}>rondoclt.org</span><span className="tag tag-green">Live</span></div>
-                  <div style={{padding:12}}><button className="btn full">✦ NRI site assistant</button></div>
+                  <div style={{padding:12}}><button className="btn full" onClick={()=>setSheet('nriSite')}>✦ NRI site assistant</button></div>
                 </div>
                 <div className="card">
                   <div className="card-header"><span className="card-title">Pages</span></div>
@@ -283,10 +296,10 @@ export default function CltApp() {
               </div>
               <div className="sec-header"><span className="sec-title">Buyer matches</span><span className="sec-action">View all</span></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
-                <div className="feed-item"><div className="feed-avatar av-blue">DH</div><div className="feed-body"><div className="feed-name">David &amp; Rosa Hernandez</div><div className="feed-detail">Match score 91 · Pre-approval pending Apr 7 · Education complete</div></div><div className="feed-meta"><span className="tag tag-green">Top match</span></div></div>
+                <div className="feed-item" onClick={()=>setSheet('buyerDetail')}><div className="feed-avatar av-blue">DH</div><div className="feed-body"><div className="feed-name">David &amp; Rosa Hernandez</div><div className="feed-detail">Match score 91 · Pre-approval pending Apr 7 · Education complete</div></div><div className="feed-meta"><span className="tag tag-green">Top match</span></div></div>
                 <div className="feed-item"><div className="feed-avatar av-amber">AO</div><div className="feed-body"><div className="feed-name">Amara Osei</div><div className="feed-detail">Match score 88 · Education complete · Counselor session done</div></div><div className="feed-meta"><span className="tag tag-blue">Ready</span></div></div>
                 <div className="feed-item"><div className="feed-avatar av-teal">MW</div><div className="feed-body"><div className="feed-name">Marcus &amp; Tanya Webb</div><div className="feed-detail">Match score 74 · Counselor session pending</div></div><div className="feed-meta"><span className="tag tag-amber">In progress</span></div></div>
-                <div style={{padding:'10px 14px'}}><button className="btn primary full">Advance to contract →</button></div>
+                <div style={{padding:'10px 14px'}}><button className="btn primary full" onClick={()=>setSheet('advanceResale')}>Advance to contract →</button></div>
               </div>
             </div>
 
@@ -312,10 +325,10 @@ export default function CltApp() {
             {/* MAINTENANCE */}
             <div className={sc('maintenance')}>
               <div className="screen-header"><div className="screen-header-title">Maintenance</div><div className="screen-header-sub">1 open · Ace Contracting · 31 days</div></div>
-              <div style={{padding:'10px 14px',display:'flex',gap:8}}><button className="btn primary" style={{flex:1}}>+ New request</button><button className="btn" style={{flex:1}}>Contractors</button></div>
+              <div style={{padding:'10px 14px',display:'flex',gap:8}}><button className="btn primary" style={{flex:1}} onClick={()=>setSheet('newRequest')}>+ New request</button><button className="btn" style={{flex:1}} onClick={()=>setSheet('contractors')}>Contractors</button></div>
               <div className="sec-header"><span className="sec-title">Open (1)</span></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
-                <div className="maint-row"><div style={{flexShrink:0,marginTop:4}}><div style={{width:8,height:8,borderRadius:'50%',background:'var(--terra)'}}></div></div><div className="maint-body"><div className="maint-addr">56 Thomas Avenue — Bathroom faucet</div><div className="maint-desc">Dripping faucet in main bathroom. Homeowner reports consistent drip since November 2024.</div><div className="maint-meta"><span className="maint-days">31 days open</span><span className="tag tag-amber">Ace Contracting</span></div></div></div>
+                <div className="maint-row" onClick={()=>setSheet('maintDetail')} style={{cursor:'pointer'}}><div style={{flexShrink:0,marginTop:4}}><div style={{width:8,height:8,borderRadius:'50%',background:'var(--terra)'}}></div></div><div className="maint-body"><div className="maint-addr">56 Thomas Avenue — Bathroom faucet</div><div className="maint-desc">Dripping faucet in main bathroom. Homeowner reports consistent drip since November 2024.</div><div className="maint-meta"><span className="maint-days">31 days open</span><span className="tag tag-amber">Ace Contracting</span></div></div></div>
               </div>
               <div className="sec-header"><span className="sec-title">Closed (12)</span></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
@@ -329,7 +342,7 @@ export default function CltApp() {
               <div className="screen-header"><div className="screen-header-title">Governance</div><div className="screen-header-sub">Board · Assembly · Documents · Volunteers</div></div>
               <div className="tab-bar"><div className={govTab==='board'?'tab active':'tab'} onClick={()=>setGovTab('board')}>Board</div><div className={govTab==='assembly'?'tab active':'tab'} onClick={()=>setGovTab('assembly')}>Assembly</div><div className={govTab==='documents'?'tab active':'tab'} onClick={()=>setGovTab('documents')}>Documents</div><div className={govTab==='volunteers'?'tab active':'tab'} onClick={()=>setGovTab('volunteers')}>Volunteers</div></div>
               {govTab==='board' && <>
-              <div style={{padding:'10px 14px 4px',display:'flex',justifyContent:'space-between',alignItems:'center'}}><span style={{fontSize:12,color:'var(--ink-light)'}}>7 board members · Next meeting Apr 18</span><button className="btn">Meeting agenda</button></div>
+              <div style={{padding:'10px 14px 4px',display:'flex',justifyContent:'space-between',alignItems:'center'}}><span style={{fontSize:12,color:'var(--ink-light)'}}>7 board members · Next meeting Apr 18</span><button className="btn" onClick={()=>setSheet('boardMeeting')}>Meeting agenda</button></div>
               <div className="card" style={{margin:'0 14px 14px'}}>
                 <div className="gov-member-row"><div className="gov-av">CR</div><div style={{flex:1}}><div className="gov-name">Constance Rivera</div><div className="gov-role">Chair · Term ends 2026</div></div><span className="tag tag-forest">Chair</span></div>
                 <div className="gov-member-row"><div className="gov-av">TW</div><div style={{flex:1}}><div className="gov-name">Thomas Wheeler</div><div className="gov-role">Treasurer · Term ends 2027</div></div><span className="tag tag-blue">Treasurer</span></div>
@@ -340,10 +353,10 @@ export default function CltApp() {
               </>}
               {govTab==='assembly' && <div style={{padding:'10px 14px'}}>
                 <div className="card"><div className="card-header"><span className="card-title">Annual Homeowner Assembly</span><span className="tag tag-amber">Apr 22</span></div>
-                <div style={{padding:'12px 14px'}}><div style={{fontSize:12,color:'var(--terra)',fontWeight:500,marginBottom:8}}>Only 30% RSVP'd — send reminder</div><div style={{fontSize:13,color:'var(--ink)',fontWeight:500,marginBottom:6}}>Agenda</div><div style={{display:'flex',flexDirection:'column',gap:6,marginBottom:12}}>{['1. Year in review — staff report','2. Financial report — Thomas Wheeler','3. Board election — Samuel Lee seat','4. Homeowner open forum','5. Community updates'].map((a,i)=><div key={i} style={{fontSize:13,color:'var(--ink-mid)',fontWeight:300}}>{a}</div>)}</div><button className="btn full warn">Send RSVP reminder</button></div></div>
+                <div style={{padding:'12px 14px'}}><div style={{fontSize:12,color:'var(--terra)',fontWeight:500,marginBottom:8}}>Only 30% RSVP'd — send reminder</div><div style={{fontSize:13,color:'var(--ink)',fontWeight:500,marginBottom:6}}>Agenda</div><div style={{display:'flex',flexDirection:'column',gap:6,marginBottom:12}}>{['1. Year in review — staff report','2. Financial report — Thomas Wheeler','3. Board election — Samuel Lee seat','4. Homeowner open forum','5. Community updates'].map((a,i)=><div key={i} style={{fontSize:13,color:'var(--ink-mid)',fontWeight:300}}>{a}</div>)}</div><button className="btn full warn" onClick={()=>setSheet('rsvpReminder')}>Send RSVP reminder</button></div></div>
               </div>}
               {govTab==='documents' && <>
-                <div style={{padding:'10px 14px',display:'flex',justifyContent:'flex-end'}}><button className="btn primary">+ Upload document</button></div>
+                <div style={{padding:'10px 14px',display:'flex',justifyContent:'flex-end'}}><button className="btn primary" onClick={()=>setSheet('uploadDoc')}>+ Upload document</button></div>
                 <div className="card" style={{margin:'0 14px 14px'}}>
                   {['Ground lease template 2024','Board meeting minutes — Mar 2025','Financial statements — 2024','Homeowner handbook v3.2','Resale formula policy'].map((d,i)=><div key={i} className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>{d}</div><span className="tag tag-blue">PDF</span></div>)}
                 </div>
@@ -576,6 +589,190 @@ export default function CltApp() {
         </div>
 
       </div>{/* /app */}
+
+      {/* ══ ALL MODAL SHEETS ══ */}
+      <Sheet open={sheet==='walker'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">James &amp; Denise Walker</div>
+        <div className="modal-nri"><div className="modal-nri-dot"></div><div className="modal-nri-text">Walker family has no prior late payment history in 3 years. NRI suggests a courtesy call before a formal notice.</div></div>
+        <div className="modal-label">Action</div>
+        <div style={{display:'flex',flexWrap:'wrap',gap:8,marginBottom:12}}><button className="btn primary" onClick={()=>setSheet(null)}>Call family</button><button className="btn" onClick={()=>setSheet(null)}>Send reminder</button><button className="btn" onClick={()=>setSheet(null)}>Log contact</button></div>
+        <button className="btn full" onClick={()=>{go('finances');setSheet(null)}}>View in Finances →</button>
+      </Sheet>
+
+      <Sheet open={sheet==='diaz'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Schedule Check-in — Diaz Family</div>
+        <div className="modal-label">Date</div><input className="modal-input" type="date" defaultValue="2026-04-15"/>
+        <div className="modal-label">Method</div><select className="modal-select"><option>In-person home visit</option><option>Phone call</option><option>Video call</option></select>
+        <div className="modal-label">Notes</div><textarea className="modal-textarea" rows={3} placeholder="Any prep notes…"></textarea>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Schedule</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='logContact'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Log Contact — Maria Torres</div>
+        <div className="modal-label">Method</div><select className="modal-select"><option>Phone call</option><option>Text message</option><option>Email</option><option>In-person</option><option>Door knock</option></select>
+        <div className="modal-label">Outcome</div><select className="modal-select"><option>Answered — spoke with homeowner</option><option>Left voicemail</option><option>No answer</option><option>Text sent</option></select>
+        <div className="modal-label">Notes</div><textarea className="modal-textarea" rows={4} placeholder="What was discussed…"></textarea>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Save log</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='scheduleCheckin'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Schedule Annual Check-in</div>
+        <div className="modal-label">Date</div><input className="modal-input" type="date"/>
+        <div className="modal-label">Method</div><select className="modal-select"><option>Home visit</option><option>Phone</option><option>Video</option></select>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Schedule</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='editNote'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Edit Pastoral Note — Maria Torres</div>
+        <div style={{fontSize:11,color:'var(--terra)',marginBottom:10}}>⚠ Confidential — visible to CLT staff only</div>
+        <textarea className="modal-textarea" rows={7} defaultValue="Maria is a strong, independent homeowner who takes great pride in her home. She mentioned in passing that she may want to sell in the next 2–3 years to be closer to her daughter's school district."></textarea>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Save note</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='logLife'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Log Life Event</div>
+        <div className="modal-label">Event type</div><select className="modal-select"><option>Employment change</option><option>Household change</option><option>Milestone anniversary</option><option>Financial hardship</option><option>Health event</option><option>Other</option></select>
+        <div className="modal-label">Notes</div><textarea className="modal-textarea" rows={4} placeholder="What happened and what was the CLT response…"></textarea>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Save event</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='requestDocs'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Request Documents — Keisha Johnson</div>
+        <div className="modal-label">Documents to request</div>
+        <div className="card" style={{marginBottom:12}}>
+          <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Income verification letter (expired)</span></div>
+          <div className="cl-row"><div className="cl-box"></div><span className="cl-text">Bank statements (3 months)</span></div>
+        </div>
+        <div className="modal-label">Message to applicant</div>
+        <textarea className="modal-textarea" rows={4} defaultValue="Hi Keisha — your income verification letter expired on March 14. Please resubmit an updated letter from your employer to keep your application active."></textarea>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Send request</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='advancePipeline'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Advance Pipeline Stage</div>
+        <div className="modal-nri"><div className="modal-nri-dot"></div><div className="modal-nri-text">Keisha cannot advance until income verification is resolved. NRI recommends sending a document request first.</div></div>
+        <div className="modal-label">Move to stage</div><select className="modal-select"><option>Stage 4 — Education (current)</option><option>Stage 5 — Counselor session</option><option>Stage 6 — Waitlist</option></select>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Advance stage</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='composeEmail'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Compose Email</div>
+        <div className="modal-label">To</div><select className="modal-select"><option>All 47 homeowners</option><option>Overdue homeowners (3)</option><option>Specific homeowner…</option><option>All applicants</option></select>
+        <div className="modal-label">Subject</div><input className="modal-input" type="text" placeholder="Email subject…"/>
+        <div className="modal-label">Message</div><textarea className="modal-textarea" rows={5} placeholder="Write your message…"></textarea>
+        <div className="modal-nri"><div className="modal-nri-dot"></div><div className="modal-nri-text">NRI can draft this email in the Rondo CLT voice. Tap to generate a draft.</div></div>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Save draft</button><button className="btn primary" onClick={()=>setSheet(null)}>Send via Gmail</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='createEvent'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Create Event</div>
+        <div className="modal-label">Event name</div><input className="modal-input" type="text" placeholder="e.g. Summer Block Party"/>
+        <div className="modal-label">Date &amp; time</div><input className="modal-input" type="datetime-local"/>
+        <div className="modal-label">Location</div><input className="modal-input" type="text" placeholder="e.g. Rondo Rec Center"/>
+        <div className="modal-label">Description</div><textarea className="modal-textarea" rows={3} placeholder="What should attendees know…"></textarea>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Create event</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='rsvpReminder'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Send RSVP Reminder</div>
+        <div className="modal-nri"><div className="modal-nri-dot"></div><div className="modal-nri-text">Only 30% of homeowners have RSVP'd. NRI has drafted a reminder in the Rondo CLT voice.</div></div>
+        <div className="modal-label">Message</div><textarea className="modal-textarea" rows={4} defaultValue="Hi — the Annual Homeowner Assembly is April 22. We need your voice — board elections and budget review. Please RSVP at rondoclt.org/assembly. Hope to see you there!"></textarea>
+        <div className="modal-label">Send via</div><select className="modal-select"><option>Email</option><option>Text message</option><option>Both</option></select>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Send reminder</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='nriSite'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">NRI Site Assistant</div>
+        <div className="modal-nri"><div className="modal-nri-dot"></div><div className="modal-nri-text">NRI can help you write and update pages for rondoclt.org. Describe what you want to change.</div></div>
+        <div className="modal-label">What would you like to update?</div>
+        <div style={{display:'flex',flexWrap:'wrap',gap:6,marginBottom:12}}>
+          {['Update homepage hero text','Add a new event','Write an "About" page','Create an application page','Draft a news post'].map((p,i)=><span key={i} style={{fontSize:12,padding:'6px 12px',borderRadius:16,border:'1px solid var(--border)',background:'white',color:'var(--ink-light)',cursor:'pointer'}}>{p}</span>)}
+        </div>
+        <textarea className="modal-textarea" rows={3} placeholder="Or describe what you need…"></textarea>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Generate with NRI</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='advanceResale'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Advance to Contract — 14 Oak St.</div>
+        <div className="modal-nri"><div className="modal-nri-dot"></div><div className="modal-nri-text">Hernandez pre-approval is the only open item. Advancing triggers notifications to both seller and buyer with next steps.</div></div>
+        <div className="modal-label">Selected buyer</div><select className="modal-select"><option>David &amp; Rosa Hernandez — Score 91</option><option>Amara Osei — Score 88</option></select>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Advance to contract →</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='buyerDetail'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">David &amp; Rosa Hernandez</div>
+        <div className="finance-stat"><span className="finance-label">Match score</span><span className="finance-val green">91</span></div>
+        <div className="finance-stat"><span className="finance-label">Education</span><span className="finance-val green">Complete</span></div>
+        <div className="finance-stat"><span className="finance-label">Counselor session</span><span className="finance-val green">Complete</span></div>
+        <div className="finance-stat"><span className="finance-label">Pre-approval</span><span className="finance-val warn">Pending — due Apr 7</span></div>
+        <div className="finance-stat"><span className="finance-label">Waitlist position</span><span className="finance-val">#1 for 14 Oak St.</span></div>
+        <div style={{marginTop:14}}><button className="btn primary full" onClick={()=>setSheet(null)}>Select as buyer</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='newRequest'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">New Maintenance Request</div>
+        <div className="modal-label">Property</div><select className="modal-select"><option>Select property…</option><option>14 Oak Street</option><option>56 Thomas Avenue</option><option>88 Iglehart Avenue</option></select>
+        <div className="modal-label">Issue description</div><textarea className="modal-textarea" rows={4} placeholder="Describe the problem…"></textarea>
+        <div className="modal-label">Priority</div><select className="modal-select"><option>Standard</option><option>Urgent</option><option>Emergency</option></select>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Submit request</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='maintDetail'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">56 Thomas Ave — Faucet Repair</div>
+        <div className="modal-nri"><div className="modal-nri-dot"></div><div className="modal-nri-text">This request has been open 31 days. Ace Contracting was assigned but no update has been logged. Recommend following up today.</div></div>
+        <div className="finance-stat"><span className="finance-label">Opened</span><span className="finance-val">Feb 28, 2026</span></div>
+        <div className="finance-stat"><span className="finance-label">Contractor</span><span className="finance-val">Ace Contracting</span></div>
+        <div className="finance-stat"><span className="finance-label">Status</span><span className="finance-val warn">Assigned — no update</span></div>
+        <div style={{marginTop:14,display:'flex',gap:8}}><button className="btn" style={{flex:1}} onClick={()=>setSheet(null)}>Log update</button><button className="btn primary" style={{flex:1}} onClick={()=>setSheet(null)}>Call contractor</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='contractors'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Contractor Directory</div>
+        {[{n:'Ace Contracting',s:'Plumbing, HVAC',p:'(651) 555-0180',a:true},{n:'Summit Roofing',s:'Roofing, gutters',p:'(651) 555-0192',a:true},{n:'Rondo Handyman Co.',s:'General repairs',p:'(651) 555-0164',a:false}].map((c,i)=>
+          <div key={i} style={{display:'flex',gap:10,padding:'10px 0',borderBottom:'0.5px solid var(--border-light)',alignItems:'center'}}>
+            <div style={{flex:1}}><div style={{fontSize:14,fontWeight:500,color:'var(--ink)'}}>{c.n}</div><div style={{fontSize:12,color:'var(--ink-light)'}}>{c.s} · {c.p}</div></div>
+            <span className={c.a?'tag tag-green':'tag tag-gray'}>{c.a?'Available':'Busy'}</span>
+          </div>
+        )}
+      </Sheet>
+
+      <Sheet open={sheet==='boardMeeting'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Board Meeting Agenda — April 18</div>
+        <div style={{display:'flex',flexDirection:'column',gap:8,marginBottom:14}}>
+          {['1. Call to order','2. Approval of March minutes','3. Financial report — Thomas Wheeler','4. Maintenance update — 56 Thomas Ave','5. Resale status — 14 Oak Street','6. New business','7. Adjournment'].map((a,i)=><div key={i} style={{fontSize:13,color:'var(--ink-mid)',fontWeight:300}}>{a}</div>)}
+        </div>
+        <button className="btn primary full" onClick={()=>setSheet(null)}>Share with board</button>
+      </Sheet>
+
+      <Sheet open={sheet==='uploadDoc'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Upload Document</div>
+        <div className="modal-label">Document type</div><select className="modal-select"><option>Board minutes</option><option>Financial statement</option><option>Ground lease template</option><option>Policy document</option><option>Other</option></select>
+        <div style={{border:'2px dashed var(--border)',borderRadius:12,padding:'24px',textAlign:'center',cursor:'pointer',background:'var(--cream)',marginTop:12,marginBottom:12}}><div style={{fontSize:24,marginBottom:6}}>📄</div><div style={{fontSize:13,color:'var(--ink-light)'}}>Drop file or tap to browse</div></div>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Upload</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='sendReminder'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Send Payment Reminder</div>
+        <div className="modal-nri"><div className="modal-nri-dot"></div><div className="modal-nri-text">NRI has drafted a gentle reminder message. Review and send via email or text.</div></div>
+        <div className="modal-label">Message</div>
+        <textarea className="modal-textarea" rows={5} defaultValue="Hi — just a quick reminder that your Rondo CLT ground lease payment is now past due. You can pay online at rondoclt.org/pay or call us at (651) 555-0142. Please reach out if you have any questions."></textarea>
+        <div className="modal-label">Send via</div><select className="modal-select"><option>Email</option><option>Text message</option><option>Both</option></select>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Send reminder</button></div>
+      </Sheet>
+
+      <Sheet open={sheet==='export'} onClose={()=>setSheet(null)}>
+        <div className="modal-title">Export All Data</div>
+        <div style={{fontSize:13,color:'var(--ink-light)',fontWeight:300,lineHeight:1.6,marginBottom:14}}>Export a complete copy of all Rondo CLT data. Your data belongs to you.</div>
+        <div className="modal-label">Format</div><select className="modal-select"><option>CSV (spreadsheet)</option><option>JSON (developer)</option><option>PDF (human-readable)</option></select>
+        <div className="modal-label">Include</div>
+        <div className="card" style={{marginBottom:12}}>
+          <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Homeowner records + contact history</span></div>
+          <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Financial records + invoices</span></div>
+          <div className="cl-row"><div className="cl-box checked"></div><span className="cl-text">Asset management records</span></div>
+        </div>
+        <div className="modal-btns"><button className="btn" onClick={()=>setSheet(null)}>Cancel</button><button className="btn primary" onClick={()=>setSheet(null)}>Export data</button></div>
+      </Sheet>
+
     </div>
   )
 }

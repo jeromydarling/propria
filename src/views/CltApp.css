@@ -298,3 +298,23 @@
 .clt-app .dsc-avatar{width:32px;height:32px;border-radius:50%;background:rgba(245,240,232,0.14);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--parchment);flex-shrink:0}
 .clt-app .dsc-user-name{font-size:13px;color:rgba(245,240,232,0.85)}
 .clt-app .dsc-user-role{font-size:11px;color:rgba(245,240,232,0.35);font-weight:300}
+
+/* ── MODAL SHEETS ── */
+.clt-app .modal-overlay{position:fixed;inset:0;background:rgba(26,26,20,0.5);z-index:400;display:flex;align-items:flex-end;justify-content:center}
+.clt-app .modal-sheet{background:white;border-radius:16px 16px 0 0;width:100%;max-width:480px;padding:20px 18px calc(20px + var(--safe-bottom));max-height:85vh;overflow-y:auto}
+.clt-app .modal-sheet::-webkit-scrollbar{width:0}
+.clt-app .modal-handle{width:36px;height:4px;border-radius:2px;background:var(--parchment-dk);margin:0 auto 16px}
+.clt-app .modal-title{font-family:var(--serif-display);font-size:18px;font-weight:500;color:var(--forest);letter-spacing:-0.02em;margin-bottom:14px}
+.clt-app .modal-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px;margin-top:12px}
+.clt-app .modal-input{width:100%;padding:10px 14px;border-radius:8px;border:0.5px solid var(--border);font-size:14px;font-family:var(--sans);color:var(--ink);background:white;margin-bottom:4px}
+.clt-app .modal-select{width:100%;padding:10px 14px;border-radius:8px;border:0.5px solid var(--border);font-size:14px;font-family:var(--sans);color:var(--ink);background:white;margin-bottom:4px;appearance:auto}
+.clt-app .modal-textarea{width:100%;padding:10px 14px;border-radius:8px;border:0.5px solid var(--border);font-size:14px;font-family:var(--sans);color:var(--ink);resize:vertical;margin-bottom:4px}
+.clt-app .modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.clt-app .modal-nri{background:var(--gold-pale);border:1px solid #E8D9A8;border-radius:8px;padding:10px 14px;display:flex;gap:8px;align-items:flex-start;margin-bottom:12px}
+.clt-app .modal-nri-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite;flex-shrink:0;margin-top:3px}
+.clt-app .modal-nri-text{font-size:13px;color:#633806;line-height:1.5;font-weight:300}
+
+@media(min-width:1024px){
+  .clt-app .modal-overlay{align-items:center}
+  .clt-app .modal-sheet{border-radius:16px;max-height:80vh}
+}
