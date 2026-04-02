@@ -30,7 +30,6 @@ export default function CounselorDash() {
   const [sessionFormat, setSessionFormat] = useState('video')
 
   const go = (s: string) => setScreen(s)
-  const sn = (s: string) => screen === s ? 'font-weight:500;color:var(--parchment);background:rgba(245,240,232,0.12)' : 'color:rgba(245,240,232,0.55)'
 
   return (
     <div style={{height:'100%',display:'flex',background:'var(--cream)',fontFamily:'var(--sans)',overflow:'hidden'}}>
@@ -47,7 +46,7 @@ export default function CounselorDash() {
           <div style={{width:8,height:8,borderRadius:'50%',background:'var(--gold)',marginLeft:'auto'}}></div>
         </div>
         {[{k:'dashboard',l:'Dashboard',b:'3'},{k:'clients',l:'Clients',b:'7'},{k:'schedule',l:'Schedule',b:'2'},{k:'messages',l:'Messages',b:''}].map(nav=>
-          <div key={nav.k} onClick={()=>go(nav.k)} style={{padding:'10px 18px',cursor:'pointer',fontSize:13,display:'flex',justifyContent:'space-between',alignItems:'center',borderRadius:7,margin:'1px 8px',cssText:sn(nav.k)} as any}>
+          <div key={nav.k} onClick={()=>go(nav.k)} style={{padding:'10px 18px',cursor:'pointer',fontSize:13,display:'flex',justifyContent:'space-between',alignItems:'center',borderRadius:7,margin:'1px 8px',fontWeight:screen===nav.k?500:400,color:screen===nav.k?'var(--parchment)':'rgba(245,240,232,0.55)',background:screen===nav.k?'rgba(245,240,232,0.12)':'transparent',transition:'all 0.15s'}}>
             {nav.l}
             {nav.b && <span style={{fontSize:9,fontWeight:500,padding:'1px 6px',borderRadius:8,background:'var(--terra)',color:'white'}}>{nav.b}</span>}
           </div>
