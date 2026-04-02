@@ -37,7 +37,7 @@ export default function CltApp() {
   const [leaseGenerated, setLeaseGenerated] = useState(false)
   const [checks, setChecks] = useState<Record<string, boolean>>({ task0: true })
   const [dismissedNudges, setDismissedNudges] = useState<string[]>([])
-
+  const [toggles, setToggles] = useState<Record<string,boolean>>({disengage:true,payment:true,checkin:true,nri:true,maint:false,digest:true})
   // Seed demo signals on first render
   useEffect(() => { seedDemoSignals() }, [])
 
@@ -580,10 +580,9 @@ export default function CltApp() {
               </div>
               <div style={{padding:'0 14px 4px',fontSize:10,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)'}}>Notifications</div>
               <div className="card" style={{margin:'0 14px 12px'}}>
-                <div className="settings-row"><span className="settings-label">Disengagement signals</span><div className="toggle-pill on"><div className="toggle-thumb"></div></div></div>
-                <div className="settings-row"><span className="settings-label">Payment overdue alerts</span><div className="toggle-pill on"><div className="toggle-thumb"></div></div></div>
-                <div className="settings-row"><span className="settings-label">Annual check-in reminders</span><div className="toggle-pill on"><div className="toggle-thumb"></div></div></div>
-                <div className="settings-row"><span className="settings-label">NRI compass auto-open</span><div className="toggle-pill on"><div className="toggle-thumb"></div></div></div>
+                {[{k:'disengage',l:'Disengagement signals'},{k:'payment',l:'Payment overdue alerts'},{k:'checkin',l:'Annual check-in reminders'},{k:'nri',l:'NRI compass auto-open'}].map(t=>
+                  <div key={t.k} className="settings-row"><span className="settings-label">{t.l}</span><div className={'toggle-pill'+(toggles[t.k]?' on':'')} onClick={()=>setToggles(p=>({...p,[t.k]:!p[t.k]}))}><div className="toggle-thumb"></div></div></div>
+                )}
               </div>
               <div style={{padding:'0 14px 16px'}}><button className="btn full terra">Sign out</button></div>
             </div>
