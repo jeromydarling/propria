@@ -9,6 +9,10 @@ import Education from './views/Education'
 import CounselorCert from './views/CounselorCert'
 import CounselorDash from './views/CounselorDash'
 import Directory from './views/Directory'
+import ResaleCalculator from './views/ResaleCalculator'
+import EquityProjector from './views/EquityProjector'
+import MagicImport from './views/MagicImport'
+import HudReport from './views/HudReport'
 
 const NAV_ITEMS = [
   { path: '/', label: 'Marketing' },
@@ -19,6 +23,10 @@ const NAV_ITEMS = [
   { path: '/certification', label: 'Counselor Cert' },
   { path: '/counselor', label: 'Counselor Dash' },
   { path: '/directory', label: 'Directory' },
+  { path: '/resale-calculator', label: 'Resale Calc' },
+  { path: '/equity', label: 'Equity Projector' },
+  { path: '/import', label: 'Magic Import' },
+  { path: '/hud-report', label: 'HUD-9902' },
 ]
 
 function DevNav() {
@@ -60,6 +68,10 @@ function App() {
         <Route path="/certification" element={<CounselorCert />} />
         <Route path="/counselor" element={<CounselorDash />} />
         <Route path="/directory" element={<Directory />} />
+        <Route path="/resale-calculator" element={<ResaleCalculator />} />
+        <Route path="/equity" element={<EquityProjector />} />
+        <Route path="/import" element={<MagicImport />} />
+        <Route path="/hud-report" element={<HudReport />} />
       </Routes>
       <DevNav />
     </HashRouter>
