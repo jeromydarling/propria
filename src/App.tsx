@@ -9,32 +9,18 @@ import Education from './views/Education'
 import CounselorCert from './views/CounselorCert'
 import CounselorDash from './views/CounselorDash'
 import Directory from './views/Directory'
-import ResaleCalculator from './views/ResaleCalculator'
-import EquityProjector from './views/EquityProjector'
-import MagicImport from './views/MagicImport'
-import HudReport from './views/HudReport'
 import ApplicantPortal from './views/ApplicantPortal'
-import MaintenanceRequest from './views/MaintenanceRequest'
-import CommunityBoard from './views/CommunityBoard'
-import GroundLease from './views/GroundLease'
 
 const NAV_ITEMS = [
   { path: '/', label: 'Marketing' },
   { path: '/app', label: 'CLT App' },
   { path: '/homeowner', label: 'Homeowner' },
+  { path: '/applicant', label: 'Applicant' },
   { path: '/gardener', label: 'Gardener' },
   { path: '/education', label: 'Education' },
   { path: '/certification', label: 'Counselor Cert' },
   { path: '/counselor', label: 'Counselor Dash' },
   { path: '/directory', label: 'Directory' },
-  { path: '/resale-calculator', label: 'Resale Calc' },
-  { path: '/equity', label: 'Equity Projector' },
-  { path: '/import', label: 'Magic Import' },
-  { path: '/hud-report', label: 'HUD-9902' },
-  { path: '/applicant', label: 'Applicant Portal' },
-  { path: '/maintenance-request', label: 'Maint. Request' },
-  { path: '/community', label: 'Community Board' },
-  { path: '/ground-lease', label: 'Ground Lease' },
 ]
 
 function DevNav() {
@@ -71,19 +57,12 @@ function App() {
         <Route path="/" element={<Marketing />} />
         <Route path="/app" element={<CltApp />} />
         <Route path="/homeowner" element={<Homeowner />} />
+        <Route path="/applicant" element={<ApplicantPortal />} />
         <Route path="/gardener" element={<Gardener />} />
         <Route path="/education" element={<Education />} />
         <Route path="/certification" element={<CounselorCert />} />
         <Route path="/counselor" element={<CounselorDash />} />
         <Route path="/directory" element={<Directory />} />
-        <Route path="/resale-calculator" element={<ResaleCalculator />} />
-        <Route path="/equity" element={<EquityProjector />} />
-        <Route path="/import" element={<MagicImport />} />
-        <Route path="/hud-report" element={<HudReport />} />
-        <Route path="/applicant" element={<ApplicantPortal />} />
-        <Route path="/maintenance-request" element={<MaintenanceRequest />} />
-        <Route path="/community" element={<CommunityBoard />} />
-        <Route path="/ground-lease" element={<GroundLease />} />
       </Routes>
       <DevNav />
     </HashRouter>
