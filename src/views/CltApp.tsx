@@ -280,16 +280,101 @@ export default function CltApp() {
               </div>
               </>}
               {praecoTab==='website' && <div style={{padding:14}}>
-                <div style={{background:'white',border:'0.5px solid var(--border)',borderRadius:10,overflow:'hidden',marginBottom:12}}>
-                  <div style={{background:'var(--forest)',padding:'10px 12px',display:'flex',alignItems:'center',justifyContent:'space-between'}}><span style={{fontSize:12,color:'var(--gold)',fontWeight:500}}>rondoclt.org</span><span className="tag tag-green">Live</span></div>
-                  <div style={{padding:12}}><button className="btn full" onClick={()=>setSheet('nriSite')}>✦ NRI site assistant</button></div>
+                {/* Browser chrome preview */}
+                <div style={{background:'white',border:'0.5px solid var(--border)',borderRadius:10,overflow:'hidden',marginBottom:14,boxShadow:'0 4px 24px rgba(0,0,0,0.08)'}}>
+                  {/* Browser chrome bar */}
+                  <div style={{background:'#2A2A2A',padding:'8px 12px',display:'flex',alignItems:'center',gap:8}}>
+                    <div style={{display:'flex',gap:5}}>
+                      <div style={{width:10,height:10,borderRadius:'50%',background:'#FF5F57'}}></div>
+                      <div style={{width:10,height:10,borderRadius:'50%',background:'#FEBC2E'}}></div>
+                      <div style={{width:10,height:10,borderRadius:'50%',background:'#28C840'}}></div>
+                    </div>
+                    <div style={{flex:1,background:'#1A1A1A',borderRadius:5,padding:'4px 12px',display:'flex',alignItems:'center',gap:6}}>
+                      <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="#666" strokeWidth="1.5"><circle cx="6" cy="6" r="4"/><path d="M6 4v1M6 7v1M4 6h1M7 6h1"/></svg>
+                      <span style={{fontSize:11,color:'#999',fontFamily:'var(--sans)'}}>rondoclt.org</span>
+                    </div>
+                  </div>
+
+                  {/* Live site preview */}
+                  <div style={{background:'var(--cream)',padding:0,fontSize:0,lineHeight:0}}>
+                    {/* Mini hero */}
+                    <div style={{background:'var(--forest)',padding:'24px 20px 20px',position:'relative'}}>
+                      <div style={{position:'absolute',bottom:0,left:0,right:0,height:3,background:'linear-gradient(90deg,var(--terra) 0%,var(--gold) 50%,var(--terra) 100%)'}}></div>
+                      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}}>
+                        <span style={{fontFamily:'var(--serif-display)',fontSize:14,fontWeight:700,color:'var(--parchment)'}}>Rondo CLT<span style={{color:'var(--terra-light)'}}>.</span></span>
+                        <div style={{display:'flex',gap:12}}>
+                          {['About','Apply','Events'].map(l=><span key={l} style={{fontSize:9,color:'rgba(245,240,232,0.5)',fontFamily:'var(--sans)'}}>{l}</span>)}
+                        </div>
+                      </div>
+                      <div style={{fontFamily:'var(--serif-display)',fontSize:18,fontWeight:500,color:'var(--parchment)',lineHeight:1.2,letterSpacing:'-0.02em',marginBottom:6}}>Affordable homeownership<br/>in the <em style={{color:'var(--terra-light)',fontStyle:'italic'}}>Rondo neighborhood.</em></div>
+                      <div style={{fontFamily:'var(--serif-body)',fontSize:10,color:'rgba(245,240,232,0.6)',lineHeight:1.5,fontWeight:300,marginBottom:12}}>A community land trust preserving permanently affordable homes for families in Saint Paul, Minnesota.</div>
+                      <div style={{display:'flex',gap:8}}>
+                        <span style={{fontSize:9,padding:'5px 12px',borderRadius:3,background:'var(--terra)',color:'var(--parchment)',fontFamily:'var(--sans)',fontWeight:500}}>Apply for a home</span>
+                        <span style={{fontSize:9,padding:'5px 12px',borderRadius:3,border:'1px solid rgba(245,240,232,0.3)',color:'rgba(245,240,232,0.7)',fontFamily:'var(--sans)'}}>Learn more</span>
+                      </div>
+                    </div>
+
+                    {/* Mini content section */}
+                    <div style={{padding:'16px 20px'}}>
+                      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8,marginBottom:16}}>
+                        {[{v:'47',l:'Families'},{v:'12',l:'Years serving'},{v:'$0',l:'Foreclosures'}].map((s,i)=>
+                          <div key={i} style={{background:'white',border:'0.5px solid var(--border)',borderRadius:8,padding:'10px',textAlign:'center'}}>
+                            <div style={{fontFamily:'var(--serif-display)',fontSize:16,fontWeight:400,color:'var(--forest)',lineHeight:1}}>{s.v}</div>
+                            <div style={{fontSize:8,color:'var(--ink-faint)',marginTop:2}}>{s.l}</div>
+                          </div>
+                        )}
+                      </div>
+                      <div style={{fontFamily:'var(--serif-display)',fontSize:13,fontWeight:500,color:'var(--forest)',marginBottom:6,letterSpacing:'-0.01em'}}>A CLT keeps homes affordable — forever.</div>
+                      <div style={{fontFamily:'var(--sans)',fontSize:9,color:'var(--ink-light)',lineHeight:1.6,fontWeight:300}}>When you buy a Rondo CLT home, the land stays in trust — so the home remains affordable for the next family, and the next. You build real equity while your neighborhood stays stable.</div>
+                    </div>
+
+                    {/* Mini events */}
+                    <div style={{padding:'0 20px 16px'}}>
+                      <div style={{fontSize:8,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)',marginBottom:6}}>Upcoming</div>
+                      <div style={{background:'white',border:'0.5px solid var(--border)',borderRadius:8,overflow:'hidden'}}>
+                        {[{t:'Spring Community Gathering',d:'Apr 19 · 2–5 PM'},{t:'Annual Homeowner Assembly',d:'Apr 22 · 6:30 PM'}].map((e,i)=>
+                          <div key={i} style={{padding:'8px 10px',borderBottom:i===0?'0.5px solid var(--border-light)':'none',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                            <div><div style={{fontSize:10,fontWeight:500,color:'var(--ink)'}}>{e.t}</div><div style={{fontSize:8,color:'var(--ink-faint)'}}>{e.d}</div></div>
+                            <span style={{fontSize:8,padding:'2px 6px',borderRadius:2,background:'var(--forest)',color:'var(--parchment)'}}>RSVP</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Mini footer */}
+                    <div style={{background:'var(--forest)',padding:'12px 20px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                      <span style={{fontFamily:'var(--serif-display)',fontSize:10,color:'var(--parchment)'}}>Rondo CLT<span style={{color:'var(--terra-light)'}}>.</span></span>
+                      <span style={{fontSize:8,color:'rgba(245,240,232,0.3)'}}>Powered by Propria</span>
+                    </div>
+                  </div>
                 </div>
+
+                {/* NRI site assistant + actions */}
+                <div style={{display:'flex',gap:8,marginBottom:14}}>
+                  <button className="btn primary" style={{flex:1}} onClick={()=>setSheet('nriSite')}>✦ NRI site assistant</button>
+                  <button className="btn" style={{flex:1}}>Edit pages</button>
+                </div>
+
+                {/* Pages list */}
                 <div className="card">
-                  <div className="card-header"><span className="card-title">Pages</span></div>
-                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>Home</div><span className="tag tag-green">Live</span></div>
-                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>About our CLT</div><span className="tag tag-green">Live</span></div>
-                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>Apply for a home</div><span className="tag tag-green">Live</span></div>
-                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>News &amp; events</div><span className="tag tag-amber">Draft</span></div>
+                  <div className="card-header"><span className="card-title">Pages</span><span className="sec-action">+ Add page</span></div>
+                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>Home</div><span style={{fontSize:11,color:'var(--ink-faint)',marginRight:8}}>Updated 2d ago</span><span className="tag tag-green">Live</span></div>
+                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>About our CLT</div><span style={{fontSize:11,color:'var(--ink-faint)',marginRight:8}}>Updated 1w ago</span><span className="tag tag-green">Live</span></div>
+                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>Apply for a home</div><span style={{fontSize:11,color:'var(--ink-faint)',marginRight:8}}>Updated 3w ago</span><span className="tag tag-green">Live</span></div>
+                  <div className="cl-row"><div style={{fontSize:13,color:'var(--ink)',flex:1}}>News &amp; events</div><span style={{fontSize:11,color:'var(--ink-faint)',marginRight:8}}>NRI draft</span><span className="tag tag-amber">Draft</span></div>
+                </div>
+
+                {/* Site analytics */}
+                <div className="card" style={{marginTop:14}}>
+                  <div className="card-header"><span className="card-title">Site analytics</span><span className="card-meta">Last 30 days</span></div>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'0.5px',background:'var(--border-light)'}}>
+                    {[{v:'1,240',l:'Visitors'},{v:'3:12',l:'Avg. time'},{v:'340',l:'Apply clicks'}].map((s,i)=>
+                      <div key={i} style={{background:'white',padding:'12px',textAlign:'center'}}>
+                        <div style={{fontFamily:'var(--serif-display)',fontSize:20,fontWeight:400,color:'var(--forest)',letterSpacing:'-0.02em'}}>{s.v}</div>
+                        <div style={{fontSize:10,color:'var(--ink-faint)',marginTop:2}}>{s.l}</div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>}
             </div>
