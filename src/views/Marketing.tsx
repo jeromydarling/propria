@@ -3,6 +3,11 @@ import './Marketing.css'
 
 export default function Marketing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  function scrollTo(id: string) {
+    setMobileMenuOpen(false)
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
   return (
     <div className="mkt">
       {/* NAV */}
@@ -15,21 +20,21 @@ export default function Marketing() {
           }
         </button>
         <ul className="nav-links">
-          <li><a href="#platform">Platform</a></li>
-          <li><a href="#stewardship">Stewardship</a></li>
-          <li><a href="#network">Counselors</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#demo" className="nav-cta">Request a demo</a></li>
+          <li><a onClick={()=>scrollTo('platform')}>Platform</a></li>
+          <li><a onClick={()=>scrollTo('stewardship')}>Stewardship</a></li>
+          <li><a onClick={()=>scrollTo('network')}>Counselors</a></li>
+          <li><a onClick={()=>scrollTo('pricing')}>Pricing</a></li>
+          <li><a onClick={()=>scrollTo('demo')} className="nav-cta">Request a demo</a></li>
         </ul>
       </nav>
       {/* MOBILE MENU */}
       {mobileMenuOpen && (
         <div className="mobile-menu">
-          <a href="#platform" onClick={() => setMobileMenuOpen(false)}>Platform</a>
-          <a href="#stewardship" onClick={() => setMobileMenuOpen(false)}>Stewardship</a>
-          <a href="#network" onClick={() => setMobileMenuOpen(false)}>Counselors</a>
-          <a href="#pricing" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
-          <a href="#demo" className="mobile-menu-cta" onClick={() => setMobileMenuOpen(false)}>Request a demo</a>
+          <a onClick={()=>scrollTo('platform')}>Platform</a>
+          <a onClick={()=>scrollTo('stewardship')}>Stewardship</a>
+          <a onClick={()=>scrollTo('network')}>Counselors</a>
+          <a onClick={()=>scrollTo('pricing')}>Pricing</a>
+          <a className="mobile-menu-cta" onClick={()=>scrollTo('demo')}>Request a demo</a>
         </div>
       )}
 
@@ -42,8 +47,8 @@ export default function Marketing() {
             <h1>Property for the <em>many,</em><br/>not the few.</h1>
             <p className="hero-sub">Propria is the operating system for community land trusts — built around the insight that your core product is a multi-decade stewardship relationship with each family you serve.</p>
             <div className="hero-actions">
-              <a href="#demo" className="btn-primary">Request a demo</a>
-              <a href="#platform" className="btn-ghost">
+              <a onClick={()=>scrollTo('demo')} className="btn-primary" style={{cursor:'pointer'}}>Request a demo</a>
+              <a onClick={()=>scrollTo('platform')} className="btn-ghost" style={{cursor:'pointer'}}>
                 See the platform
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
               </a>
@@ -528,7 +533,7 @@ export default function Marketing() {
                 <li>Counselor network access</li>
                 <li>Stripe Connect payments</li>
               </ul>
-              <a href="#demo" className="btn-pricing">Start with base</a>
+              <a onClick={()=>scrollTo('demo')} className="btn-pricing" style={{cursor:'pointer'}}>Start with base</a>
             </div>
             <div className="pricing-card featured">
               <div className="pricing-plan">Per home</div>
@@ -542,7 +547,7 @@ export default function Marketing() {
                 <li>500+ homes → $1,200/mo cap</li>
                 <li>Everything in base, always</li>
               </ul>
-              <a href="#demo" className="btn-pricing">Request a demo</a>
+              <a onClick={()=>scrollTo('demo')} className="btn-pricing" style={{cursor:'pointer'}}>Request a demo</a>
             </div>
           </div>
           <p className="pricing-note">+ 1.5% on ground lease collection and contractor payments · $250 flat per resale · $0 on grant disbursements</p>
