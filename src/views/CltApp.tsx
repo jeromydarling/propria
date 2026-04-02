@@ -8,6 +8,10 @@ export default function CltApp() {
   const [stewTab, setStewTab] = useState('contact')
   const [praecoTab, setPraecoTab] = useState('email')
   const [govTab, setGovTab] = useState('board')
+  const [finTab, setFinTab] = useState('overview')
+  const [importStep, setImportStep] = useState<'upload'|'parsing'|'preview'|'done'>('upload')
+  const [leaseGenerating, setLeaseGenerating] = useState(false)
+  const [leaseGenerated, setLeaseGenerated] = useState(false)
 
   function go(name: string) {
     setScreen(name)
@@ -86,6 +90,10 @@ export default function CltApp() {
           <div className={di('settings')} onClick={() => go('settings')}>
             <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.5"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M4.2 4.2l1 1M10.8 10.8l1 1M4.2 11.8l1-1M10.8 5.2l1-1"/></svg>
             Settings
+          </div>
+          <div className={di('import')} onClick={() => go('import')}>
+            <svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><path d="M2 12v2h12v-2"/></svg>
+            Magic Import
           </div>
           <div className={di('account')} onClick={() => go('account')}>
             <svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="3"/><path d="M2 14c0-2.5 2.7-4.5 6-4.5s6 2 6 4.5"/></svg>
@@ -352,6 +360,8 @@ export default function CltApp() {
             {/* FINANCES */}
             <div className={sc('finances')}>
               <div className="screen-header"><div className="screen-header-title">Finances</div><div className="screen-header-sub">Stripe Connect · ground lease · grants</div></div>
+              <div className="tab-bar"><div className={finTab==='overview'?'tab active':'tab'} onClick={()=>setFinTab('overview')}>Overview</div><div className={finTab==='hud'?'tab active':'tab'} onClick={()=>setFinTab('hud')}>HUD-9902</div></div>
+              {finTab==='overview' && <>
               <div className="stat-row" style={{padding:14}}>
                 <div className="stat-card"><div className="stat-label">Monthly lease income</div><div className="stat-val">$2,256</div><div className="stat-sub up">94% collected</div></div>
                 <div className="stat-card"><div className="stat-label">Overdue</div><div className="stat-val">$156</div><div className="stat-sub warn">3 homeowners</div></div>
@@ -372,6 +382,20 @@ export default function CltApp() {
                 <div className="finance-stat"><span className="finance-label">Platform fee (grants)</span><span className="finance-val">$0</span></div>
                 <div className="finance-stat"><span className="finance-label">Contractor payment (Ace)</span><span className="finance-val">$340</span></div>
               </div>
+              </>}
+              {finTab==='hud' && <>
+              <div style={{padding:'12px 14px'}}><div style={{background:'var(--gold-pale)',border:'1px solid #E8D9A8',borderRadius:12,padding:'14px 16px',display:'flex',gap:10,alignItems:'center'}}><div style={{width:8,height:8,borderRadius:'50%',background:'var(--gold)',animation:'pulse 2s ease-in-out infinite',flexShrink:0}}></div><div><div style={{fontSize:13,fontWeight:500,color:'#633806'}}>Q2 2026 report ready for review</div><div style={{fontSize:12,color:'#854F0B',fontWeight:300}}>3 fields need attention before export</div></div></div></div>
+              {[{s:'Section A: Agency Info',f:[['Agency Name','Rondo CLT',true],['HCS ID','10234567',true],['Period','Q2 2026',true]]},{s:'Section B: Counseling',f:[['Clients counseled','12',true],['Pre-purchase','8',true],['Post-purchase','4',true],['Hours logged','36',false]]},{s:'Section C: Education',f:[['Group sessions','2',true],['Individual','8',true],['Certificates','3',false]]},{s:'Section D: Outcomes',f:[['Homes purchased','2',true],['Defaults prevented','1',true],['Action plans','7',true],['Referrals','4',false]]}].map((sec,si)=>
+                <div key={si} className="card" style={{margin:'0 14px 12px'}}>
+                  <div className="card-header"><span className="card-title">{sec.s}</span>{sec.f.every(f=>f[2])?<span className="tag tag-green">Complete</span>:<span className="tag tag-amber">Review</span>}</div>
+                  {sec.f.map((f,fi)=><div key={fi} className="finance-stat"><span className="finance-label" style={{color:f[2]?undefined:'var(--terra)',fontWeight:f[2]?undefined:500}}>{f[0] as string}{!f[2]&&' ⚠'}</span><span className="finance-val">{f[1] as string}</span></div>)}
+                </div>
+              )}
+              <div style={{padding:'0 14px 14px',display:'flex',gap:10}}>
+                <button className="btn" style={{flex:1}}>Save draft</button>
+                <button className="btn primary" style={{flex:2}}>Export HUD-9902 PDF →</button>
+              </div>
+              </>}
             </div>
 
             {/* SETTINGS */}
@@ -415,6 +439,70 @@ export default function CltApp() {
               <div style={{padding:'0 14px 16px'}}><button className="btn full terra">Sign out</button></div>
             </div>
 
+            {/* MAGIC IMPORT */}
+            <div className={sc('import')}>
+              <div className="screen-header"><div className="screen-header-title">Magic Import</div><div className="screen-header-sub">Upload your spreadsheet. We'll figure it out.</div></div>
+              <div style={{padding:14}}>
+                {importStep==='upload' && <div onClick={()=>{setImportStep('parsing');setTimeout(()=>setImportStep('preview'),2000)}} style={{border:'2px dashed var(--border)',borderRadius:16,padding:'40px 20px',textAlign:'center',cursor:'pointer',background:'white'}}>
+                  <div style={{fontSize:40,marginBottom:12}}>📁</div>
+                  <div style={{fontFamily:'var(--serif-display)',fontSize:18,fontWeight:500,color:'var(--forest)',marginBottom:6}}>Drop your files here</div>
+                  <div style={{fontSize:13,color:'var(--ink-light)',lineHeight:1.6,marginBottom:12}}>CSV, Excel, PDF, or photos of paper records</div>
+                  <div style={{display:'inline-block',padding:'8px 20px',borderRadius:8,background:'var(--forest)',color:'var(--parchment)',fontSize:13,fontWeight:500}}>Choose files</div>
+                  <div style={{fontSize:11,color:'var(--ink-faint)',marginTop:10}}>.csv, .xlsx, .xls, .pdf, .jpg, .png</div>
+                </div>}
+                {importStep==='parsing' && <div style={{textAlign:'center',padding:'40px 20px'}}>
+                  <div style={{width:56,height:56,borderRadius:'50%',background:'var(--gold-pale)',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 16px',fontSize:24,animation:'pulse 1.5s ease-in-out infinite'}}>✦</div>
+                  <div style={{fontFamily:'var(--serif-display)',fontSize:20,fontWeight:500,color:'var(--forest)',marginBottom:6}}>Analyzing your data...</div>
+                  <div style={{fontSize:13,color:'var(--ink-light)'}}>NRI is parsing and mapping fields</div>
+                </div>}
+                {importStep==='preview' && <>
+                  <div style={{background:'#E1F5EE',border:'1px solid #8DCFAD',borderRadius:12,padding:'12px 16px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}><span style={{fontSize:20}}>✓</span><div><div style={{fontSize:13,fontWeight:500,color:'#085041'}}>Found 47 homeowners, 3 applicants, 47 properties</div></div></div>
+                  <div className="card" style={{marginBottom:14}}>
+                    {[{n:'Maria Torres',a:'14 Oak St · Since 2020'},{n:'James Walker',a:'88 Iglehart Ave · Since 2019'},{n:'Patricia Moore',a:'56 Thomas Ave · Since 2021'},{n:'Roberto Diaz',a:'221 Minnehaha Ave · Since 2018'}].map((h,i)=>
+                      <div key={i} className="feed-item"><div className="feed-avatar av-teal">{h.n.split(' ').map(w=>w[0]).join('')}</div><div className="feed-body"><div className="feed-name">{h.n}</div><div className="feed-detail">{h.a}</div></div><span className="tag tag-green">Active</span></div>
+                    )}
+                    <div style={{padding:'8px 14px',fontSize:12,color:'var(--ink-faint)',textAlign:'center'}}>+ 43 more</div>
+                  </div>
+                  <div style={{display:'flex',gap:10}}><button className="btn" style={{flex:1}} onClick={()=>setImportStep('upload')}>Start over</button><button className="btn primary" style={{flex:2}} onClick={()=>setImportStep('done')}>Import 47 records →</button></div>
+                </>}
+                {importStep==='done' && <div style={{textAlign:'center',padding:'40px 20px'}}>
+                  <div style={{width:56,height:56,borderRadius:'50%',background:'#E1F5EE',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 16px',fontSize:24}}>✓</div>
+                  <div style={{fontFamily:'var(--serif-display)',fontSize:20,fontWeight:500,color:'var(--forest)',marginBottom:6}}>Import complete</div>
+                  <div style={{fontSize:13,color:'var(--ink-light)',marginBottom:20}}>47 homeowners, 3 applicants, and 47 properties imported.</div>
+                  <button className="btn primary" onClick={()=>setImportStep('upload')}>Import another file</button>
+                </div>}
+              </div>
+            </div>
+
+            {/* GROUND LEASE GENERATOR */}
+            <div className={sc('groundlease')}>
+              <div className="screen-header"><div className="screen-header-title">Ground Lease Generator</div><div className="screen-header-sub">Generate signing-ready documents</div></div>
+              <div style={{padding:14}}>
+                <div style={{fontSize:11,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)',marginBottom:8}}>Select template</div>
+                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:16}}>
+                  {[['Standard 99-Year','Most common',true],['Affordable Housing','HUD-compliant',false]].map(([t,d,sel],i)=>
+                    <div key={i} style={{background:sel?'var(--forest)':'white',border:sel?'2px solid var(--forest)':'1px solid var(--border)',borderRadius:12,padding:14,cursor:'pointer'}}>
+                      <div style={{fontSize:13,fontWeight:500,color:sel?'var(--parchment)':'var(--ink)',marginBottom:3}}>{t as string}</div>
+                      <div style={{fontSize:11,color:sel?'rgba(245,240,232,0.6)':'var(--ink-light)'}}>{d as string}</div>
+                    </div>
+                  )}
+                </div>
+                <div style={{fontSize:11,fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase' as const,color:'var(--ink-faint)',marginBottom:8}}>Auto-populated fields</div>
+                <div className="card" style={{marginBottom:16}}>
+                  {[['Homeowner','David & Rosa Hernandez'],['Address','14 Oak Street, Saint Paul, MN'],['Price','$201,800'],['Lease fee','$48/month'],['Term','99 years'],['Appreciation','30% (Fixed-rate)'],['CLT','Rondo Community Land Trust']].map(([l,v],i)=>
+                    <div key={i} className="finance-stat"><span className="finance-label">{l}</span><span className="finance-val">{v}</span></div>
+                  )}
+                </div>
+                {!leaseGenerated ? <button className="btn primary full" onClick={()=>{setLeaseGenerating(true);setTimeout(()=>{setLeaseGenerating(false);setLeaseGenerated(true)},1500)}} disabled={leaseGenerating}>{leaseGenerating?'Generating...':'Generate Ground Lease PDF →'}</button>
+                : <div style={{background:'#E1F5EE',border:'1px solid #8DCFAD',borderRadius:12,padding:16,textAlign:'center'}}>
+                  <div style={{fontSize:20,marginBottom:6}}>📄</div>
+                  <div style={{fontSize:14,fontWeight:500,color:'#085041',marginBottom:3}}>Document ready</div>
+                  <div style={{fontSize:12,color:'#085041',fontWeight:300,marginBottom:12}}>Hernandez_GroundLease.pdf · 24 pages</div>
+                  <div style={{display:'flex',gap:10,justifyContent:'center'}}><button className="btn">Preview</button><button className="btn primary">Download PDF</button></div>
+                </div>}
+              </div>
+            </div>
+
           </div>{/* /screens */}
 
           {/* BOTTOM NAV */}
@@ -452,6 +540,7 @@ export default function CltApp() {
             <div className="hm-item" onClick={() => go('assets')}><svg viewBox="0 0 16 16"><path d="M2 14V7.5L8 2l6 5.5V14H2z"/><path d="M6 14v-4h4v4"/></svg>Asset management</div>
             <div className="hm-item" onClick={() => go('maintenance')}><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2 1.5"/></svg>Maintenance <span className="hm-badge">1</span></div>
             <div className="hm-item" onClick={() => go('resale')}><svg viewBox="0 0 16 16"><path d="M5 2h6a1 1 0 0 1 1 1v12l-4-2.2L4 15V3a1 1 0 0 1 1-1z"/></svg>Resale engine <span className="hm-badge">1</span></div>
+            <div className="hm-item" onClick={() => go('groundlease')}><svg viewBox="0 0 16 16"><path d="M4 2h5l4 4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="M9 2v4h4"/></svg>Ground lease docs</div>
             <div className="hm-section">Community</div>
             <div className="hm-item" onClick={() => go('governance')}><svg viewBox="0 0 16 16"><rect x="2" y="5" width="12" height="9" rx="1"/><path d="M5 5V3.5a3 3 0 0 1 6 0V5"/></svg>Governance</div>
             <div className="hm-section">Account</div>
