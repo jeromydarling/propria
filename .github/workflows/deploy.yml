@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [claude/rebuild-design-project-ZCd5o]
+    branches: [main, claude/rebuild-design-project-ZCd5o]
 
 permissions:
   contents: read
