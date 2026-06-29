@@ -24,7 +24,7 @@ export default function Marketing() {
           <li><a onClick={()=>scrollTo('stewardship')}>Stewardship</a></li>
           <li><a onClick={()=>scrollTo('network')}>Counselors</a></li>
           <li><a onClick={()=>scrollTo('pricing')}>Pricing</a></li>
-          <li><a onClick={()=>scrollTo('demo')} className="nav-cta">Request a demo</a></li>
+          <li><a onClick={()=>scrollTo('demo')} className="nav-cta">See the demo</a></li>
         </ul>
       </nav>
       {/* MOBILE MENU */}
@@ -34,7 +34,7 @@ export default function Marketing() {
           <a onClick={()=>scrollTo('stewardship')}>Stewardship</a>
           <a onClick={()=>scrollTo('network')}>Counselors</a>
           <a onClick={()=>scrollTo('pricing')}>Pricing</a>
-          <a className="mobile-menu-cta" onClick={()=>scrollTo('demo')}>Request a demo</a>
+          <a className="mobile-menu-cta" onClick={()=>scrollTo('demo')}>See the demo</a>
         </div>
       )}
 
@@ -47,7 +47,7 @@ export default function Marketing() {
             <h1>Property for the <em>many,</em><br/>not the few.</h1>
             <p className="hero-sub">Propria is the operating system for community land trusts — built around the insight that your core product is a multi-decade stewardship relationship with each family you serve.</p>
             <div className="hero-actions">
-              <a onClick={()=>scrollTo('demo')} className="btn-primary" style={{cursor:'pointer'}}>Request a demo</a>
+              <a onClick={()=>scrollTo('demo')} className="btn-primary" style={{cursor:'pointer'}}>See the demo</a>
               <a onClick={()=>scrollTo('platform')} className="btn-ghost" style={{cursor:'pointer'}}>
                 See the platform
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -415,8 +415,8 @@ export default function Marketing() {
       <section id="demo" style={{background:'var(--cream)',padding:'100px 2.5rem'}}>
         <div style={{maxWidth:680,margin:'0 auto',textAlign:'center'}}>
           <p className="section-eyebrow" style={{textAlign:'center'}}>Try Propria</p>
-          <h2 className="section-title" style={{textAlign:'center',maxWidth:'none',margin:'0 auto 1rem'}}>See it for yourself.</h2>
-          <p className="section-body" style={{textAlign:'center',maxWidth:'none',margin:'0 auto 2.5rem'}}>Fill in your details and we'll give you instant access to a live demo — the same Rondo CLT environment you just saw, fully interactive, with no data saved.</p>
+          <h2 className="section-title" style={{textAlign:'center',maxWidth:'none',margin:'0 auto 1rem'}}>See the demo. <em>Right now.</em></h2>
+          <p className="section-body" style={{textAlign:'center',maxWidth:'none',margin:'0 auto 2.5rem'}}>Tell us who you are and you're in — the full Rondo CLT environment, fully interactive, no credit card required. When you're ready to bring your own data, sign up takes 2 minutes.</p>
 
           <div style={{background:'white',border:'0.5px solid var(--border)',borderRadius:12,padding:'2rem',textAlign:'left',maxWidth:480,margin:'0 auto'}}>
             <div style={{marginBottom:16}}>
@@ -443,8 +443,11 @@ export default function Marketing() {
                 <option>Other</option>
               </select>
             </div>
-            <a href="#/app" className="btn-primary" style={{display:'block',width:'100%',textAlign:'center',padding:'14px',borderRadius:3,fontFamily:'var(--sans)',fontSize:15,fontWeight:500,textDecoration:'none',border:'none',cursor:'pointer'}}>Launch demo →</a>
-            <div style={{fontSize:12,color:'var(--ink-faint)',textAlign:'center',marginTop:12,fontFamily:'var(--sans)',fontWeight:300}}>No credit card. No commitment. Instant access.</div>
+            <a href="#/app" className="btn-primary" style={{display:'block',width:'100%',textAlign:'center',padding:'14px',borderRadius:3,fontFamily:'var(--sans)',fontSize:15,fontWeight:500,textDecoration:'none',border:'none',cursor:'pointer'}}>See the demo →</a>
+            <div style={{textAlign:'center',margin:'12px 0 0'}}>
+              <a href="https://propria.app/signup" style={{fontFamily:'var(--sans)',fontSize:13,color:'var(--forest)',fontWeight:500,textDecoration:'none',cursor:'pointer'}}>or sign up now — $49/mo, cancel anytime →</a>
+            </div>
+            <div style={{fontSize:12,color:'var(--ink-faint)',textAlign:'center',marginTop:8,fontFamily:'var(--sans)',fontWeight:300}}>No credit card for the demo. Stripe checkout for signup.</div>
           </div>
         </div>
       </section>
@@ -533,7 +536,7 @@ export default function Marketing() {
                 <li>Counselor network access</li>
                 <li>Stripe Connect payments</li>
               </ul>
-              <a onClick={()=>scrollTo('demo')} className="btn-pricing" style={{cursor:'pointer'}}>Start with base</a>
+              <a href="https://propria.app/signup" className="btn-pricing" style={{cursor:'pointer'}}>Start free →</a>
             </div>
             <div className="pricing-card featured">
               <div className="pricing-plan">Per home</div>
@@ -547,7 +550,7 @@ export default function Marketing() {
                 <li>500+ homes → $1,200/mo cap</li>
                 <li>Everything in base, always</li>
               </ul>
-              <a onClick={()=>scrollTo('demo')} className="btn-pricing" style={{cursor:'pointer'}}>Request a demo</a>
+              <a href="https://propria.app/signup" className="btn-pricing" style={{cursor:'pointer'}}>Start free →</a>
             </div>
           </div>
           <p className="pricing-note">+ 1.5% on ground lease collection and contractor payments · $250 flat per resale · $0 on grant disbursements</p>
@@ -585,7 +588,7 @@ export default function Marketing() {
             <ul className="footer-links">
               <li>About CROS™</li>
               <li>Grounded Solutions</li>
-              <li>Request a demo</li>
+              <li>See the demo</li>
               <li>Contact</li>
             </ul>
           </div>
