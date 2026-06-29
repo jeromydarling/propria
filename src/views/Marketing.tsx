@@ -1,6 +1,31 @@
 import { useState } from 'react'
 import './Marketing.css'
 
+const SIGNUP_URL = 'https://propria.app/signup'
+
+function SignupBand({ variant = 'light' }: { variant?: 'light' | 'dark' | 'gold' }) {
+  const bg = variant === 'dark' ? 'var(--forest)' : variant === 'gold' ? 'var(--gold-pale)' : 'var(--parchment)'
+  const textColor = variant === 'dark' ? 'var(--parchment)' : 'var(--forest)'
+  const subColor = variant === 'dark' ? 'rgba(245,240,232,0.55)' : 'var(--ink-light)'
+  const btnBg = variant === 'gold' ? 'var(--terra)' : 'var(--terra)'
+  return (
+    <div style={{background:bg,padding:'40px 2.5rem',textAlign:'center'}}>
+      <div style={{maxWidth:600,margin:'0 auto'}}>
+        <div style={{fontFamily:'var(--serif-display)',fontSize:'clamp(20px,3vw,28px)',fontWeight:500,color:textColor,letterSpacing:'-0.02em',marginBottom:8}}>
+          {variant === 'gold' ? 'Ready to get your hours back?' : 'Start stewarding smarter today.'}
+        </div>
+        <div style={{fontFamily:'var(--sans)',fontSize:14,color:subColor,marginBottom:20,fontWeight:300}}>
+          $49/month · Every feature included · Cancel anytime
+        </div>
+        <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
+          <a href={SIGNUP_URL} style={{display:'inline-block',padding:'12px 28px',borderRadius:3,background:btnBg,color:'var(--parchment)',fontFamily:'var(--sans)',fontSize:14,fontWeight:500,textDecoration:'none',cursor:'pointer'}}>Start free →</a>
+          <a href="#/app" style={{display:'inline-block',padding:'12px 28px',borderRadius:3,border:'1.5px solid '+(variant==='dark'?'rgba(245,240,232,0.25)':'var(--forest)'),color:textColor,fontFamily:'var(--sans)',fontSize:14,fontWeight:400,textDecoration:'none',cursor:'pointer'}}>See the demo</a>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Marketing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -23,8 +48,8 @@ export default function Marketing() {
           <li><a onClick={()=>scrollTo('platform')}>Platform</a></li>
           <li><a onClick={()=>scrollTo('stewardship')}>Stewardship</a></li>
           <li><a onClick={()=>scrollTo('network')}>Counselors</a></li>
-          <li><a onClick={()=>scrollTo('pricing')}>Pricing</a></li>
-          <li><a onClick={()=>scrollTo('demo')} className="nav-cta">See the demo</a></li>
+          <li><a href="#/pricing">Pricing</a></li>
+          <li><a href={SIGNUP_URL} className="nav-cta">Start free</a></li>
         </ul>
       </nav>
       {/* MOBILE MENU */}
@@ -33,8 +58,8 @@ export default function Marketing() {
           <a onClick={()=>scrollTo('platform')}>Platform</a>
           <a onClick={()=>scrollTo('stewardship')}>Stewardship</a>
           <a onClick={()=>scrollTo('network')}>Counselors</a>
-          <a onClick={()=>scrollTo('pricing')}>Pricing</a>
-          <a className="mobile-menu-cta" onClick={()=>scrollTo('demo')}>See the demo</a>
+          <a href="#/pricing" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
+          <a className="mobile-menu-cta" href={SIGNUP_URL}>Start free →</a>
         </div>
       )}
 
@@ -225,6 +250,8 @@ export default function Marketing() {
           </div>
         </div>
       </section>
+
+      <SignupBand variant="gold" />
 
       {/* FEATURES THAT SET PROPRIA APART */}
       <section style={{background:'var(--parchment)',padding:'100px 2.5rem'}}>
@@ -516,6 +543,8 @@ export default function Marketing() {
           </div>
         </div>
       </section>
+
+      <SignupBand variant="dark" />
 
       {/* PRICING */}
       <section className="pricing-section" id="pricing">
