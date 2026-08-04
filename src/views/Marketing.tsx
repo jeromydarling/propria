@@ -591,7 +591,7 @@ export default function Marketing() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span className="footer-copy">© 2026 Propria · propria.app</span>
+          <span className="footer-copy">© 2026 Propria · propria.app · <a href="#/privacy" style={{color:'inherit',textDecoration:'none'}}>Privacy</a> · <a href="#/terms" style={{color:'inherit',textDecoration:'none'}}>Terms</a></span>
           <span className="footer-cros">A <span>CROS™</span> Platform</span>
         </div>
       </footer>
