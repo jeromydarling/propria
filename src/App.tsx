@@ -11,6 +11,8 @@ import CounselorDash from './views/CounselorDash'
 import Directory from './views/Directory'
 import ApplicantPortal from './views/ApplicantPortal'
 import Pricing from './views/Pricing'
+import Privacy from './views/Privacy'
+import Terms from './views/Terms'
 
 const NAV_ITEMS = [
   { path: '/', label: 'Marketing' },
@@ -65,6 +67,8 @@ function App() {
         <Route path="/counselor" element={<CounselorDash />} />
         <Route path="/directory" element={<Directory />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
       <DevNav />
     </HashRouter>
